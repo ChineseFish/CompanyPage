@@ -21,20 +21,20 @@ export default new Router({
           path: 'article',
           component: () => import('./views/article/index.vue'),
         }
-        , {
-          name: 'appCaseManage',
-          path: 'appCaseManage',
-          component: () => import('./views/appcase/index.vue'),
-        }, {
-          name: 'vedio',
-          path: 'vedioManage',
-          component: () => import('./views/vedio/index.vue'),
-        }, {
-          name: 'banner',
-          path: 'bannerManage',
-          component: () => import('./views/banner/index.vue'),
-        }
-      ],
+        // , {
+        //   name: 'appCaseManage',
+        //   path: 'appCaseManage',
+        //   component: () => import('./views/appcase/index.vue'),
+        // }, {
+        //   name: 'vedio',
+        //   path: 'vedioManage',
+        //   component: () => import('./views/vedio/index.vue'),
+        // }, {
+        //   name: 'banner',
+        //   path: 'bannerManage',
+        //   component: () => import('./views/banner/index.vue'),
+        // }
+      ]
     }, 
     {
       path: '/login',

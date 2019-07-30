@@ -44,7 +44,52 @@
 
 <script>
 export default {
-    name: "manager"
+  name: "manager",
+  data () {
+    return {
+      activeIndex: '1'
+    }
+  },
+  watch: {
+    $route () {
+      var routeInfo = this.$route.fullPath
+
+      if (routeInfo.indexOf('article') > -1) {
+        this.activeIndex = '1'
+        this.getFAQList()
+      } else if (routeInfo.indexOf('appCaseManage') > -1) {
+        this.activeIndex = '2'
+        this.getWikiList()
+      } else if (routeInfo.indexOf('vedioManage') > -1) {
+        this.activeIndex = '3'
+        this.getVedioList()
+      } else if (routeInfo.indexOf('bannerManage') > -1) {
+        this.activeIndex = '4'
+        this.getPaperList()
+      }
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+#container {
+  height: 100vh;
+  width: 100%;
+}
+.header-bar {
+  text-align: center;
+  color: #000000;
+  line-height: 60px;
+  font-size: 25px;
+  background: #eeeeee;
+}
+.aside-bar {
+  border-right: 1px solid #eeeeee;
+  height: 100%;
+  > .el-menu {
+    border-right: none;
+  }
+}
+</style>
 
