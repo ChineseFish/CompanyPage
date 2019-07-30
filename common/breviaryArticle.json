@@ -1,0 +1,10 @@
+{
+  "filename": "XXX.article",
+  "title": "标题",
+  "desc": "描述",
+  "publisher": "发布人",
+  "createTime": "发布时间 yyyy-MM-DD",
+  "updateTime": "发布时间 yyyy-MM-DD",
+  "img": "XXX",
+  "tags": []
+}
