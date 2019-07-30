@@ -16,16 +16,12 @@ export default {
     'pagination.currentPage': {
       handler (newVal) {
         this.listQuery.page = newVal
-      },
-      deep: true,
-      immediate: true,
+      }
     },
     'pagination.pageSize': {
       handler (newVal) {
         this.listQuery.pageNum = newVal
-      },
-      deep: true,
-      immediate: true,
+      }
     },
   },
   methods: {
@@ -55,7 +51,7 @@ export default {
     currentChange (val) {
       this.pagination.currentPage = val
       setTimeout(() => {
-        this.getList()
+        this.getList(this.pagination.currentPage)
       }, 10)
     },
     // 重置搜索数据
