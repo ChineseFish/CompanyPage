@@ -19,21 +19,8 @@ export default new Router({
         {
           name: 'article',
           path: 'article',
-          component: () => import('./views/article/index.vue'),
+          component: () => import('./views/article.vue'),
         }
-        // , {
-        //   name: 'appCaseManage',
-        //   path: 'appCaseManage',
-        //   component: () => import('./views/appcase/index.vue'),
-        // }, {
-        //   name: 'vedio',
-        //   path: 'vedioManage',
-        //   component: () => import('./views/vedio/index.vue'),
-        // }, {
-        //   name: 'banner',
-        //   path: 'bannerManage',
-        //   component: () => import('./views/banner/index.vue'),
-        // }
       ]
     }, 
     {

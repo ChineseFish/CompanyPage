@@ -6,31 +6,11 @@
         <el-menu
           :default-active="activeIndex"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
         >
           <router-link :to="{name: 'article'}">
             <el-menu-item index="1">
               <i class="el-icon-menu"></i>
               <span slot="title">文章管理</span>
-            </el-menu-item>
-          </router-link>
-          <router-link :to="{name: 'appCaseManage'}">
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title">案例管理</span>
-            </el-menu-item>
-          </router-link>
-          <router-link :to="{name: 'vedio'}">
-            <el-menu-item index="3">
-              <i class="el-icon-menu"></i>
-              <span slot="title">视频管理</span>
-            </el-menu-item>
-          </router-link>
-          <router-link :to="{name: 'banner'}">
-            <el-menu-item index="4">
-              <i class="el-icon-menu"></i>
-              <span slot="title">轮播管理</span>
             </el-menu-item>
           </router-link>
         </el-menu>
