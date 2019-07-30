@@ -1,32 +1,51 @@
 <template>
   <div id="app">
-    <fixed-box></fixed-box>
-    <header-layout></header-layout>
-    <router-view/>
-    <footer-layout></footer-layout>
+    <header></header>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+    <footer></footer>
+    <fixedBox></fixedBox>
   </div>
 </template>
 
 <script>
-import headerLayout from "@/components/header.vue";
-import footerLayout from "@/components/footer.vue";
-import fixedBox from "@/components/fixedBox.vue";
+import header from "./components/header.vue"
+import footer from "./components/footer.vue"
+import fixedBox from "./components/fixedBox.vue"
 
-export default {
-  name: "app",
-  components: { headerLayout, footerLayout, fixedBox }
-}
+  export default {
+    name: 'App',
+    components: { header, footer, fixedBox },
+    data () {
+      return {
+        
+      }
+    },
+
+    created () {
+      
+    }
+  }
 </script>
 
-<style lang="scss" type scoped>
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 1080px;
-}
+<style lang="scss" scoped type>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  display: flex;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #606266;
+}
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>
