@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev_client": "webpack-dev-server --progress --config ./client/build/webpack.dev.js",
-    "build_client": "webpack --config ./client/build/webpack.prod.js",
+    "dev_pc_client": "webpack-dev-server --progress --config ./pc_client/build/webpack.dev.js",
+    "build_pc_client": "webpack --config ./pc_client/build/webpack.prod.js",
+    "dev_mobile_client": "webpack-dev-server --progress --config ./mobile_client/build/webpack.dev.js",
+    "build_mobile_client": "webpack --config ./mobile_client/build/webpack.prod.js",
     "server": "pm2 start ./client/index.js --name=companyPage"
   },
   "dependencies": {
     "@smallwei/avue": "^1.5.3",
     "axios": "^0.18.0",
-    "cors": "^2.8.5",
     "body-parser": "^1.18.3",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
     "element-ui": "^2.4.11",
     "express": "^4.16.4",
     "flow-stoplight": "^1.0.0",
@@ -30,6 +32,7 @@
     "strip-hex-prefix": "^1.0.0",
     "underscore": "^1.9.1",
     "vue": "^2.5.21",
+    "vue-axios": "^2.1.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.1.1"
   },
