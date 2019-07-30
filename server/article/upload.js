@@ -9,45 +9,21 @@ const { recordArticleClick, recordTagClick } = require('../monitor')
 const app = process[Symbol.for("app")]
 
 app.post('/uploadArticle', checkCookie, function (req, res) {
-  if (!req.body.data) {
-    return res.json({
-      code: ERR_PARAM,
-      msg: 'uploadArticle, invalid param, need data'
-    })
-  }
-
   //
-  let uploadArticleDetail;
-
-  // check type
-  try {
-    if (typeof req.body.data === 'string') {
-      uploadArticleDetail = JSON.parse(req.body.data)
-    } else {
-      return res.json({
-        code: ERR_PARAM,
-        msg: 'uploadArticle, invalid argument type, argument data should be a JSON string'
-      })
-    }
-  } catch {
-    return res.json({
-      code: ERR_PARAM,
-      msg: 'uploadArticle, invalid argument type, argument data should be a JSON string'
-    })
-  }
+  let uploadArticleDetail = req.body;
 
   if(!uploadArticleDetail.title)
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need title`
+      msg: `uploadArticle, need title`
     })
   }
 
   if (!uploadArticleDetail.desc) {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need desc`
+      msg: `uploadArticle, need desc`
     })
   }
 
@@ -55,7 +31,7 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need publisher`
+      msg: `uploadArticle, need publisher`
     })
   }
 
@@ -63,7 +39,7 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need createTime`
+      msg: `uploadArticle, need createTime`
     })
   }
 
@@ -71,7 +47,7 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need updateTime`
+      msg: `uploadArticle, need updateTime`
     })
   }
 
@@ -79,7 +55,7 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need img`
+      msg: `uploadArticle, need img`
     })
   }
 
@@ -87,19 +63,19 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
   {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need tags and tags should be an Array`
+      msg: `uploadArticle, need tags and tags should be an Array`
     })
   }
 
   if (!uploadArticleDetail.data || !Array.isArray(uploadArticleDetail.data)) {
     return res.json({
       code: ERR_PARAM,
-      msg: `uploadArticle, invalid json string, need data and data should be an Array`
+      msg: `uploadArticle, need data and data should be an Array`
     })
   }
 
   // generate filename
-  const fileName = Date.now() + "_" + keccak256(stringToBuffer(req.body.data)).toString('hex') + '.article'
+  const fileName = Date.now() + "_" + keccak256(stringToBuffer(JSON.stringify(uploadArticleDetail))).toString('hex') + '.article'
   const filePath = path.join(ASSERTS_DIR, fileName)
   uploadArticleDetail.filename = fileName;
 
@@ -209,93 +185,68 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
 })
 
 app.post('/updateArticle', checkCookie, function (req, res) {
-  if (!req.body.data) {
-    return res.json({
-      code: ERR_PARAM,
-      msg: 'updateArticle, invalid param, need data'
-    })
-  }
-
-  //
-  let updateArticleDetail;
-
-  // check type
-  try {
-    if (typeof req.body.data === 'string') {
-      updateArticleDetail = JSON.parse(req.body.data)
-    } else {
-      return res.json({
-        code: ERR_PARAM,
-        msg: 'updateArticle, invalid argument type, argument data should be a JSON string'
-      })
-    }
-  } catch {
-    return res.json({
-      code: ERR_PARAM,
-      msg: 'updateArticle, invalid argument type, argument data should be a JSON string'
-    })
-  }
+  let updateArticleDetail = req.body;
 
   if (!updateArticleDetail.filename) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need filename`
+      msg: `updateArticle, need filename`
     })
   }
 
   if (!updateArticleDetail.title) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need title`
+      msg: `updateArticle, need title`
     })
   }
 
   if (!updateArticleDetail.desc) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need desc`
+      msg: `updateArticle, need desc`
     })
   }
 
   if (!updateArticleDetail.publisher) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need publisher`
+      msg: `updateArticle, need publisher`
     })
   }
 
   if (!updateArticleDetail.createTime) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need createTime`
+      msg: `updateArticle, need createTime`
     })
   }
 
   if (!updateArticleDetail.updateTime) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need updateTime`
+      msg: `updateArticle, need updateTime`
     })
   }
 
   if (!updateArticleDetail.img) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need img`
+      msg: `updateArticle, need img`
     })
   }
 
   if (!updateArticleDetail.tags || !Array.isArray(updateArticleDetail.tags)) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need tags and tags should be an Array`
+      msg: `updateArticle, need tags and tags should be an Array`
     })
   }
 
   if (!updateArticleDetail.data || !Array.isArray(updateArticleDetail.data)) {
     return res.json({
       code: ERR_PARAM,
-      msg: `updateArticle, invalid json string, need data and data should be an Array`
+      msg: `updateArticle, need data and data should be an Array`
     })
   }
 
@@ -308,7 +259,7 @@ app.post('/updateArticle', checkCookie, function (req, res) {
     
     return res.json({
       code: ERR_ARTICLE_NOT_EXIST,
-      msg: `updateArticle, article ${fileName} not exists`
+      msg: `updateArticle, article ${updateArticleDetail.filename} not exists`
     })
   }
 
@@ -388,8 +339,7 @@ app.post('/updateArticle', checkCookie, function (req, res) {
 
       res.json({
         code: SUCCESS,
-        msg: '',
-        data: fileName
+        msg: ''
       })
     })
 })

@@ -1,4 +1,3 @@
-const process = require('process')
 const async = require('async')
 const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX } = require('../common/constant')
 
@@ -30,7 +29,7 @@ module.exports.recordArticleClick = function(filename)
 		function(value, cb) {
 			value.clickNum++
 
-			process.db.put(key, JSON.stringify(value), err => {
+			process[Symbol.for("db")].put(key, JSON.stringify(value), err => {
 				cb(err)
 			});
 		}], err => {
@@ -46,7 +45,7 @@ module.exports.recordTagClick = function(tag)
 
 	async.waterfall([
 		function(cb) {
-			process.db.get(key, function (err, value) {
+			process[Symbol.for("db")].get(key, function (err, value) {
 			  if(err) 
 			  {
 			    if(err.notFound) 
@@ -68,7 +67,7 @@ module.exports.recordTagClick = function(tag)
 		function(value, cb) {
 			value.clickNum++
 
-			process.db.put(key, JSON.stringify(value), err => {
+			process[Symbol.for("db")].put(key, JSON.stringify(value), err => {
 				cb(err)
 			})
 		}], err => {

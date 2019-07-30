@@ -40,7 +40,7 @@ app.get('/getArticle', function (req, res) {
     res.json({
       code: SUCCESS,
       msg: '',
-      data: data
+      data: JSON.parse(data)
     })
 
     recordArticleClick(req.query.filename)
@@ -64,6 +64,20 @@ app.get('/getBreviaryArticleList', function (req, res) {
     })
   }
 
+  if (req.query.page <= 0)
+  {
+    return res.json({
+      code: ERR_PARAM,
+      msg: 'getBreviaryArticleList, page should bigger than 0'
+    })
+  }
+
+  if (req.query.pageNum <= 0) {
+    return res.json({
+      code: ERR_PARAM,
+      msg: 'getBreviaryArticleList, pageNum should bigger than 0'
+    })
+  }
 
   req.query.title = req.query.title || ""
   req.query.tags = req.query.tags || "[]"
@@ -99,13 +113,13 @@ app.get('/getBreviaryArticleList', function (req, res) {
   {
     for(j = 0; j < req.query.tags.length; j++)
     {
-      if (breviaryArticles[i].find(tag => tag === req.query.tags[j]))
+      if (breviaryArticles[i].tags.find(tag => tag === req.query.tags[j]))
       {
         break;
       }
     }
 
-    if (j !== req.query.tags.length)
+    if (j !== req.query.tags.length || req.query.tags.length === 0)
     {
       filteredTagsArticles.push(breviaryArticles[i])
     }
@@ -115,9 +129,9 @@ app.get('/getBreviaryArticleList', function (req, res) {
   let filteredTitleArticles = []
   for(let i = 0; i < filteredTagsArticles.length; i++)
   {
-    if(filteredTagsArticles[i].title.findIndex(req.query.title) >= 0)
+    if (req.query.title === "" || filteredTagsArticles[i].title.indexOf(req.query.title) >= 0)
     {
-      filteredTitleArticles.push(JSON.stringify(filteredTagsArticles[i]))
+      filteredTitleArticles.push(filteredTagsArticles[i])
     }
   }
 
@@ -125,7 +139,7 @@ app.get('/getBreviaryArticleList', function (req, res) {
   const total = filteredTitleArticles.length;
 
   // range
-  filteredTitleArticles = filteredTitleArticles.splice(req.query.page * req.query.pageNum, req.query.pageNum);
+  filteredTitleArticles = filteredTitleArticles.splice((req.query.page - 1) * req.query.pageNum, req.query.pageNum);
 
   res.json({
     code: SUCCESS,
@@ -140,19 +154,18 @@ app.get('/getBreviaryArticleList', function (req, res) {
   {
     recordTagClick(req.query.tags[i])
   }
-  
 })
 
 
-app.get('/delArticle', checkCookie, function (req, res) {
-  if (!req.query.filename) {
+app.post('/delArticle', checkCookie, function (req, res) {
+  if (!req.body.filename) {
     return res.json({
       code: ERR_PARAM,
       msg: 'delArticle, invalid param, need filename'
     })
   }
 
-  const filePath = path.join(ASSERTS_DIR, req.query.filename)
+  const filePath = path.join(ASSERTS_DIR, req.body.filename)
 
   // check filepath
   try {
@@ -160,7 +173,7 @@ app.get('/delArticle', checkCookie, function (req, res) {
   } catch {
     return res.json({
       code: ERR_ARTICLE_NOT_EXIST,
-      msg: `delArticle, article ${req.query.filename} not exists`
+      msg: `delArticle, article ${req.body.filename} not exists`
     })
   }
 
@@ -171,7 +184,7 @@ app.get('/delArticle', checkCookie, function (req, res) {
     },
     function(cb) {
       // del breviary article
-      const breviaryFileName = req.query.filename.split('.', 1)[0] + ".breviaryArticle"
+      const breviaryFileName = req.body.filename.split('.', 1)[0] + ".breviaryArticle"
       const breviaryFilePath = path.join(ASSERTS_DIR, breviaryFileName)
     
       fs.unlink(breviaryFilePath, cb)
@@ -183,7 +196,7 @@ app.get('/delArticle', checkCookie, function (req, res) {
         })
       }
 
-      process[Symbo.for("cache")].update();
+      process[Symbol.for("cache")].update();
 
       res.json({
         code: SUCCESS,

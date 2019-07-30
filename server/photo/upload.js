@@ -7,13 +7,11 @@ const { keccak256, stringToBuffer, Buffer } = require('../../common/util')
 const multiparty = require('multiparty')
 const {checkCookie} = require("../user/cookie")
 
-const app = process.app
+const app = process[Symbol.for("app")]
 
 app.post('/uploadPhoto', checkCookie, function (req, res) {
   let ext = null
   let fileData = []
-
-  const EACH_READ_SIZE = 2048
 
   // parse a file upload
   var form = new multiparty.Form()

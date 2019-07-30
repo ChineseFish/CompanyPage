@@ -47,17 +47,19 @@ log4js.useLogger(app, logger)
 //
 process.on('uncaughtException', function (err) {
   errlogger.error(err.stack)
-})
+  
+  process.exit(1);
+});
 
-// require('./user')
-// require('./article')
-// require('./photo')
+require('./user')
+require('./article')
+require('./photo')
 
 // init cache
 cache.initFsCache()
-// cache.initDbCache()
+cache.initDbCache()
 
-process[Symbo.for("stoplight")].await(() => {
+process[Symbol.for("stoplight")].await(() => {
   const server = app.listen(8080, function () {
     let host = server.address().address
     console.log('server listening at http://%s:%s', host, 8080)

@@ -8,12 +8,12 @@ const async = require('async')
 module.exports.update = module.exports.initFsCache = function(cb)
 {
 	// 文章
-	const fileNameDetails = [];
+	let fileNameDetails = [];
 	const breviaryArticles = [];
 
 	// 标签
 	const tagsMap = new Map()
-	const tags = [];
+	let tags = [];
 
 	async.waterfall([
  		function(cb) {
@@ -65,7 +65,7 @@ module.exports.update = module.exports.initFsCache = function(cb)
 
 					if (!tagsMap.has(tag))
 					{
-						tagsMap.set(tag) = 1
+						tagsMap.set(tag, 1)
 					}
 					else
 					{
@@ -109,8 +109,8 @@ module.exports.initDbCache = function()
 	function init()
 	{
 		//
-		const artilces = []
-		const tags = []
+		let artilces = []
+		let tags = []
 
 		const hotTags = [];
 		const hotArticles = []
