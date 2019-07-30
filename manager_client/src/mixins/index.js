@@ -8,43 +8,24 @@ export default {
         total: 0, // 总条数
         pageSizes: [10, 20, 30, 40, 50],
       },
-      listQuery: {},
       tableLoading: false,
+      searchForm: {
+        title: "",
+        tags: ""
+      },
     }
-  },
-  watch: {
-    'pagination.currentPage': {
-      handler (newVal) {
-        this.listQuery.page = newVal
-      }
-    },
-    'pagination.pageSize': {
-      handler (newVal) {
-        this.listQuery.pageNum = newVal
-      }
-    },
   },
   methods: {
     // 列表
-    getList () {},
-    // 列表搜索
-    handleFilter () {
-      for (let key in this.listQuery) {
-        if (this.listQuery[key] === '') {
-          this.listQuery[key] = undefined
-        }
-      }
-      this.pagination.currentPage = 1
-      setTimeout(() => {
-        this.getList()
-      }, 10)
+    getList (page) {
+
     },
     // 分页显示个数
     sizeChange (val) {
       this.pagination.currentPage = 1
       this.pagination.pageSize = val
       setTimeout(() => {
-        this.getList()
+        this.getList(1)
       }, 10)
     },
     // 分页当前页
@@ -53,12 +34,6 @@ export default {
       setTimeout(() => {
         this.getList(this.pagination.currentPage)
       }, 10)
-    },
-    // 重置搜索数据
-    handleReset () {
-      this.resetFormData(this.listQuery)
-      this.listQuery.page = this.pagination.currentPage
-      this.listQuery.pageNum = this.pagination.pageSize
-    },
+    }
   },
 }

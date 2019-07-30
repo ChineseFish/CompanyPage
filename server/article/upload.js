@@ -27,14 +27,6 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
     })
   }
 
-  if(!uploadArticleDetail.publisher)
-  {
-    return res.json({
-      code: ERR_PARAM,
-      msg: `uploadArticle, need publisher`
-    })
-  }
-
   if(!uploadArticleDetail.createTime)
   {
     return res.json({
@@ -89,7 +81,6 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
           "filename": uploadArticleDetail.filename,
           "title": uploadArticleDetail.title,
           "desc": uploadArticleDetail.desc,
-          "publisher": uploadArticleDetail.publisher,
           "createTime": uploadArticleDetail.createTime,
           "updateTime": uploadArticleDetail.updateTime,
           "img": uploadArticleDetail.img,
@@ -121,7 +112,6 @@ app.post('/uploadArticle', checkCookie, function (req, res) {
           "filename": uploadArticleDetail.filename,
           "title": uploadArticleDetail.title,
           "desc": uploadArticleDetail.desc,
-          "publisher": uploadArticleDetail.publisher,
           "createTime": uploadArticleDetail.createTime,
           "updateTime": uploadArticleDetail.updateTime,
           "img": uploadArticleDetail.img,
@@ -208,13 +198,6 @@ app.post('/updateArticle', checkCookie, function (req, res) {
     })
   }
 
-  if (!updateArticleDetail.publisher) {
-    return res.json({
-      code: ERR_PARAM,
-      msg: `updateArticle, need publisher`
-    })
-  }
-
   if (!updateArticleDetail.createTime) {
     return res.json({
       code: ERR_PARAM,
@@ -269,7 +252,6 @@ app.post('/updateArticle', checkCookie, function (req, res) {
         "filename": updateArticleDetail.filename,
         "title": updateArticleDetail.title,
         "desc": updateArticleDetail.desc,
-        "publisher": updateArticleDetail.publisher,
         "createTime": updateArticleDetail.createTime,
         "updateTime": updateArticleDetail.updateTime,
         "img": updateArticleDetail.img,
@@ -301,7 +283,6 @@ app.post('/updateArticle', checkCookie, function (req, res) {
         "filename": updateArticleDetail.filename,
         "title": updateArticleDetail.title,
         "desc": updateArticleDetail.desc,
-        "publisher": updateArticleDetail.publisher,
         "createTime": updateArticleDetail.createTime,
         "updateTime": updateArticleDetail.updateTime,
         "img": updateArticleDetail.img,
