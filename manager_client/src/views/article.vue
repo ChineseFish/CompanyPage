@@ -1,9 +1,8 @@
 <template>
   <div>
     <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
-      <el-button type="primary" @click="serviceVisible=true">新增服务</el-button>
-      <el-button type="primary" @click="caseVisible=true">新增案例</el-button>
-      <el-button type="primary" @click="stateVisible=true">新增动态</el-button>
+      <el-button type="primary" @click="showCreateCase">新增案例</el-button>
+      <el-button type="primary" @click="showCreateState">新增动态</el-button>
     </div>
     <avue-crud
       :table-loading="tableLoading"
@@ -23,109 +22,44 @@
         </div>
       </template>
     </avue-crud>
-    <el-dialog title="服务" :visible.sync="serviceVisible" width="80%">
-        <el-form label-width="60px">
-          <el-form-item label="img">
-            <el-upload
-              action="/uploadPhoto"
-              :show-file-list="false"
-              :on-success="uploadHeaderImgSuccess"
-              :on-error="uploadHeaderImgError">
-                <el-button type="primary">上传封面图片</el-button>
-            </el-upload>
+    <article-dialog v-bind:dialogVisible.sync="dialogVisible" @createArticle="createArticle">
+      <template v-slot:content>
+        <template v-if="stateVisible">
+          <el-form-item label="content">
+            <article-data-list :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
-          <el-form-item label="title">
-              <el-input v-model="article.title"></el-input>
+        </template>
+        <template v-if="caseVisible">
+          <el-form-item label="gallery">
+            <article-data-list :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
-          <el-form-item label="desc">
-              <el-input v-model="article.desc"></el-input>
+          <el-form-item label="detail">
+            <el-input v-model="createCaseDetail"></el-input>
           </el-form-item>
-          <el-form-item label="tags">
-            <div>
-              <el-tag
-                :key="tag"
-                v-for="tag in articleTags"
-                closable
-                :disable-transitions="false"
-                @close="closeTag(tag)">
-                {{tag}}
-              </el-tag>
-              <el-input
-                class="input-new-tag"
-                v-if="addTagVisible"
-                v-model="tagValue"
-                ref="saveTagInput"
-                size="small"
-                @keyup.enter.native="comfirmAddTag"
-                @blur="comfirmAddTag"
-              >
-              </el-input>
-              <el-button v-else class="button-new-tag" size="small" @click="editAddTag">+ New Tag</el-button>
-            </div>
-          </el-form-item>
-        </el-form>
-        <div style="display:flex;margin-top:10px;margin-bottom:10px;">
-          <el-select v-model="itemType" style="width:100%;margin-right:10px;">
-            <el-option value="text" label="文本"></el-option>
-            <el-option value="imgUpload" label="图片上传"></el-option>
-            <el-option value="imgUrl" label="图片链接"></el-option>
-            <el-option value="vedioUrl" label="视频链接"></el-option>
-          </el-select>
-          <el-button type="primary" @click="addArticleItem">新增</el-button>
-        </div>
-        <avue-crud
-          ref="crud"
-          :option="articleContentTableOption"
-          v-model="articleContentTableData"
-        >
-          <template slot-scope="scope" slot="menu">
-            <el-button
-              type="primary"
-              @click="articleContentEdit(scope.row)"
-              v-if="scope.row.type !== 'imgUpload'"
-            >{{scope.row.$cellEdit ? '保存' : '修改'}}</el-button>
-            <el-upload
-              action="/uploadPhoto"
-              :show-file-list="false"
-              :on-success="uploadArticleContentImgSuccess(scope.row)"
-              :on-error="uploadArticleContentImgError"
-              v-if="scope.row.type==='imgUpload'"
-            >
-              <el-button type="primary">上传图片</el-button>
-            </el-upload>
-            <el-button type="primary" @click="deleteArticleContent(scope.row)">删除</el-button>
-          </template>
-        </avue-crud>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="serviceVisible = false">取 消</el-button>
-            <el-button type="primary" @click="createArticle">确 定</el-button>
-        </span>
-    </el-dialog>
+        </template>
+      </template>
+    </article-dialog>
   </div>
 </template>
 
 <script>
-import mixins from '../mixins/index.js'
+import mixins from '../mixins/index.js';
+import articleDialog from './articleDialog.vue';
+import articleDataList from './articleDataList.vue'
 
 export default {
   name: 'appCase',
   mixins: [mixins],
+  components: { articleDialog, articleDataList },
   data () {
     return {
-      itemType: "",
-      article: {
-        filename: "",
-        title: "",
-        desc: "",
-        createTime: "",
-        updateTime: "",
-        img: "",
-        tags: [],
-        data: []
-      },
-      serviceVisible: false,
+      dialogVisible: false,
       caseVisible: false,
       stateVisible: false,
+
+      createCaseDetail: "",
+      createServiceDetail: "",
+
       mainTableData: [],
       mainTableOption: {
         header: false,
@@ -136,7 +70,7 @@ export default {
           {
             label: '封面图片',
             prop: 'breviaryImg',
-            slot: true,
+            solt: true,
             align: 'center'
           }, {
             label: '文章名称',
@@ -166,33 +100,54 @@ export default {
             prop: 'menu',
             solt: true,
             align: 'center'
-          },
+          }
         ]
       },
-      articleContentTableData: [],
-      articleContentTableOption: {
-        header: false,
-        menu: false,
-        page: true,
-        border: true,
-        column: [
-          {
-            label: '类型',
-            prop: 'type',
-          }, {
-            label: '内容',
-            prop: 'content'
-          }, {
-            label: '菜单',
-            prop: 'menu',
-            solt: true,
-            align: 'center'
-          },
-        ]
+
+      stateArticleContentItemTypeArray: [{
+        value: "text",
+        label: "文本"
       },
-      articleTags: ['', '标签二', '标签三'],
-      addTagVisible: false,
-      tagValue: ''
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }],
+
+      serviceArticleContentItemTypeArray: [
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }],
+
+      caseArticleContentItemTypeArray: [
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }]
     }
   },
 
@@ -201,36 +156,33 @@ export default {
     this.getList(1);
   },
 
-  methods: {
-    uploadArticleContentImgSuccess(row)
-    {
-      if (code !== 0) {
-        this.$message.error(`upload article content img failed, ${msg}`)
-
-        if(code === 7)
-        {
-          return this.$router.push({ path: '/login' })
-        }
+  watch: {
+    dialogVisible: function(newValue, oldValue) {
+      if(newValue === false)
+      {
+        this.serviceVisible = this.caseVisible = this.stateVisible = false;
       }
-      
-      this.articleContentTableData[row.$index].content = data;
+    }
+  },
 
-      this.$message.success('upload success')
+  methods: {
+    showCreateCase: function() {
+      this.dialogVisible = true;
+
+      this.caseVisible = true;
     },
-    uploadArticleContentImgError()
-    {
-      this.$message.error(`upload article content failed, ${err}`);
-    },
-    deleteArticleContent(row)
-    {
-      this.articleContentTableData.splice(row.$index, 1)
+    showCreateState: function() {
+      this.dialogVisible = true;
+
+      this.stateVisible = true;
     },
     createArticle()
     {
       article.beginTime = Date.now();
       article.updateTime = Date.now();
+      article.tags = this.articleTags;
       article.data = this.articleContentTableData;
-
+  
       this.$axios.post("/createArticle", article).then(({ code, data, msg }) => {
         if(code !== 0)
         {
@@ -241,18 +193,7 @@ export default {
         this.getList(1);
       })
     },
-    addArticleItem()
-    {
-      this.articleContentTableData.push({
-        type: this.itemType,
-        data: ''
-      });
-    },
-    articleContentEdit(row)
-    {
-      // open row cell
-      this.$refs.crud.rowCell(row, row.$index)
-    },
+   
     getList(page) {
       this.tableLoading = true
       this.$axios.get("/getBreviaryArticleList", {
@@ -271,54 +212,6 @@ export default {
       }).finally(() => {
         this.tableLoading = false;
       })
-    },
-    uploadArticle()
-    {
-
-    },
-    searchChange(params) {
-      getList(page)
-    },
-
-    uploadHeaderImgSuccess({ code, msg, data })
-    {
-      if (code !== 0) {
-        this.$message.error(`upload header img failed, ${msg}`)
-
-        if(code === 7)
-        {
-          return this.$router.push({ path: '/login' })
-        }
-      }
-
-      this.article.img = data;
-      
-      this.$message.success('upload success')
-    },
-
-    uploadHeaderImgError(err)
-    {
-      this.$message.error(`upload header img failed, ${err}`);
-    },
-
-    closeTag(tag) {
-      this.articleTags.splice(this.articleTags.indexOf(tag), 1);
-    },
-
-    editAddTag() {
-      this.addTagVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
-    comfirmAddTag() {
-      let tagValue = this.tagValue;
-      if (tagValue) {
-        this.articleTags.push(tagValue);
-      }
-      this.addTagVisible = false;
-      this.tagValue = '';
     }
   },
   created () {
@@ -342,5 +235,12 @@ export default {
     width: 90px;
     margin-left: 10px;
     vertical-align: bottom;
+  }
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
   }
 </style>
