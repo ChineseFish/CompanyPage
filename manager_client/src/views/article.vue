@@ -13,6 +13,9 @@
       :data="mainTableData"
       :option="mainTableOption"
     >
+    <template slot="img" slot-scope="scope">
+      <img :src="`/getBreviaryPhoto?width:100px&heigth&100pxfilename=${scope.row.img}`">
+    </template>
       <template slot-scope="scope" slot="menu">
         <div style="display:flex;justify-content:flex-end;">
           <el-button type="primary" @click="handleUpdate(scope.row)">修改</el-button>
@@ -24,7 +27,6 @@
         <el-form label-width="60px">
           <el-form-item label="img">
             <el-upload
-              class="upload-demo2"
               action="/uploadPhoto"
               :show-file-list="false"
               :on-success="uploadHeaderImg"
@@ -62,17 +64,16 @@
             <el-button
               type="primary"
               @click="editCell(scope.row, scope.row.$index)"
-              :text="scope.row.$cellEdit ? '保存' : '修改'"
               v-if="scope.row.type !== 'imgUpload'"
-            ></el-button>
+            >{{scope.row.$cellEdit ? '保存' : '修改'}}</el-button>
             <el-upload
               action="/uploadPhoto"
               :show-file-list="false"
               :on-success="uploadSuccess"
               :on-error="uploadError"
-              v-if="scope.row.type==='img'"
+              v-if="scope.row.type==='imgUpload'"
             >
-              <el-button type="primary" @click="uploadRowIndex(scope.row.$index)">上传图片</el-button>
+              <el-button type="primary">上传图片</el-button>
             </el-upload>
             <el-button type="primary" @click="handleDelete(scope.row.$index)">删除</el-button>
           </template>
@@ -115,6 +116,9 @@ export default {
         border: true,
         column: [
           {
+            label: '封面图片',
+            prop: 'img',
+          }, {
             label: '文章名称',
             prop: 'title',
           }, {
@@ -156,7 +160,7 @@ export default {
             label: '类型',
             prop: 'type',
           }, {
-            label: 'content',
+            label: '内容',
             prop: 'content'
           }, {
             label: '菜单',
