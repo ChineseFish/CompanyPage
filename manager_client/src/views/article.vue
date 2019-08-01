@@ -13,9 +13,9 @@
       :data="mainTableData"
       :option="mainTableOption"
     >
-    <template slot="img" slot-scope="scope">
-      <img :src="`/getBreviaryPhoto?width:100px&heigth&100pxfilename=${scope.row.img}`">
-    </template>
+      <template slot-scope="scope" slot="breviaryImg">
+        <img :src="`/getBreviaryPhoto?width=100&height=100&filename=${scope.row.img}`">
+      </template>
       <template slot-scope="scope" slot="menu">
         <div style="display:flex;justify-content:flex-end;">
           <el-button type="primary" @click="handleUpdate(scope.row)">修改</el-button>
@@ -29,8 +29,8 @@
             <el-upload
               action="/uploadPhoto"
               :show-file-list="false"
-              :on-success="uploadHeaderImg"
-              :on-error="uploadError">
+              :on-success="uploadHeaderImgSuccess"
+              :on-error="uploadHeaderImgError">
                 <el-button type="primary">上传封面图片</el-button>
             </el-upload>
           </el-form-item>
@@ -41,7 +41,27 @@
               <el-input v-model="article.desc"></el-input>
           </el-form-item>
           <el-form-item label="tags">
-              <el-input v-model="article.tags"></el-input>
+            <div>
+              <el-tag
+                :key="tag"
+                v-for="tag in articleTags"
+                closable
+                :disable-transitions="false"
+                @close="closeTag(tag)">
+                {{tag}}
+              </el-tag>
+              <el-input
+                class="input-new-tag"
+                v-if="addTagVisible"
+                v-model="tagValue"
+                ref="saveTagInput"
+                size="small"
+                @keyup.enter.native="comfirmAddTag"
+                @blur="comfirmAddTag"
+              >
+              </el-input>
+              <el-button v-else class="button-new-tag" size="small" @click="editAddTag">+ New Tag</el-button>
+            </div>
           </el-form-item>
         </el-form>
         <div style="display:flex;margin-top:10px;margin-bottom:10px;">
@@ -55,32 +75,30 @@
         </div>
         <avue-crud
           ref="crud"
-          :data="articleTableData"
-          :option="articleTableOption"
-          v-model="formData"
-          @row-update="rowUpdate"
+          :option="articleContentTableOption"
+          v-model="articleContentTableData"
         >
           <template slot-scope="scope" slot="menu">
             <el-button
               type="primary"
-              @click="editCell(scope.row, scope.row.$index)"
+              @click="articleContentEdit(scope.row)"
               v-if="scope.row.type !== 'imgUpload'"
             >{{scope.row.$cellEdit ? '保存' : '修改'}}</el-button>
             <el-upload
               action="/uploadPhoto"
               :show-file-list="false"
-              :on-success="uploadSuccess"
-              :on-error="uploadError"
+              :on-success="uploadArticleContentImgSuccess(scope.row)"
+              :on-error="uploadArticleContentImgError"
               v-if="scope.row.type==='imgUpload'"
             >
               <el-button type="primary">上传图片</el-button>
             </el-upload>
-            <el-button type="primary" @click="handleDelete(scope.row.$index)">删除</el-button>
+            <el-button type="primary" @click="deleteArticleContent(scope.row)">删除</el-button>
           </template>
         </avue-crud>
         <span slot="footer" class="dialog-footer">
             <el-button @click="serviceVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveCreate">确 定</el-button>
+            <el-button type="primary" @click="createArticle">确 定</el-button>
         </span>
     </el-dialog>
   </div>
@@ -117,7 +135,9 @@ export default {
         column: [
           {
             label: '封面图片',
-            prop: 'img',
+            prop: 'breviaryImg',
+            slot: true,
+            align: 'center'
           }, {
             label: '文章名称',
             prop: 'title',
@@ -128,29 +148,29 @@ export default {
             dicData: [
               { label: 'a', value: 'a' },
               { label: 'b', value: 'b' },
-            ],
+            ]
           }, {
             label: '发布人',
-            prop: 'publisher',
+            prop: 'publisher'
           }, {
             label: '描述',
-            prop: 'desc',
+            prop: 'desc'
           }, {
             label: '创建时间',
-            prop: 'createTime',
+            prop: 'createTime'
           }, {
             label: '修改时间',
-            prop: 'updateTime',
+            prop: 'updateTime'
           }, {
             label: '菜单',
             prop: 'menu',
             solt: true,
-            align: 'center',
+            align: 'center'
           },
         ]
       },
-      articleTableData: [],
-      articleTableOption: {
+      articleContentTableData: [],
+      articleContentTableOption: {
         header: false,
         menu: false,
         page: true,
@@ -169,7 +189,10 @@ export default {
             align: 'center'
           },
         ]
-      }
+      },
+      articleTags: ['', '标签二', '标签三'],
+      addTagVisible: false,
+      tagValue: ''
     }
   },
 
@@ -179,17 +202,56 @@ export default {
   },
 
   methods: {
+    uploadArticleContentImgSuccess(row)
+    {
+      if (code !== 0) {
+        this.$message.error(`upload article content img failed, ${msg}`)
+
+        if(code === 7)
+        {
+          return this.$router.push({ path: '/login' })
+        }
+      }
+      
+      this.articleContentTableData[row.$index].content = data;
+
+      this.$message.success('upload success')
+    },
+    uploadArticleContentImgError()
+    {
+      this.$message.error(`upload article content failed, ${err}`);
+    },
+    deleteArticleContent(row)
+    {
+      this.articleContentTableData.splice(row.$index, 1)
+    },
+    createArticle()
+    {
+      article.beginTime = Date.now();
+      article.updateTime = Date.now();
+      article.data = this.articleContentTableData;
+
+      this.$axios.post("/createArticle", article).then(({ code, data, msg }) => {
+        if(code !== 0)
+        {
+          this.$message.error(msg);
+        }
+
+        // get List
+        this.getList(1);
+      })
+    },
     addArticleItem()
     {
-      this.articleTableData.push({
+      this.articleContentTableData.push({
         type: this.itemType,
         data: ''
       });
     },
-
-    editCell(row, index)
+    articleContentEdit(row)
     {
-      this.$refs.crud.rowCell(row, index)
+      // open row cell
+      this.$refs.crud.rowCell(row, row.$index)
     },
     getList(page) {
       this.tableLoading = true
@@ -217,9 +279,68 @@ export default {
     searchChange(params) {
       getList(page)
     },
+
+    uploadHeaderImgSuccess({ code, msg, data })
+    {
+      if (code !== 0) {
+        this.$message.error(`upload header img failed, ${msg}`)
+
+        if(code === 7)
+        {
+          return this.$router.push({ path: '/login' })
+        }
+      }
+
+      this.article.img = data;
+      
+      this.$message.success('upload success')
+    },
+
+    uploadHeaderImgError(err)
+    {
+      this.$message.error(`upload header img failed, ${err}`);
+    },
+
+    closeTag(tag) {
+      this.articleTags.splice(this.articleTags.indexOf(tag), 1);
+    },
+
+    editAddTag() {
+      this.addTagVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    comfirmAddTag() {
+      let tagValue = this.tagValue;
+      if (tagValue) {
+        this.articleTags.push(tagValue);
+      }
+      this.addTagVisible = false;
+      this.tagValue = '';
+    }
   },
   created () {
     this.getList(1)
   },
 }
 </script>
+
+<style>
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+</style>
