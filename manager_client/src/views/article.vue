@@ -1,9 +1,8 @@
 <template>
   <div>
     <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
-      <el-button type="primary" @click="serviceVisible=true">新增服务</el-button>
-      <el-button type="primary" @click="caseVisible=true">新增案例</el-button>
-      <el-button type="primary" @click="stateVisible=true">新增动态</el-button>
+      <el-button type="primary" @click="showCreateCase">新增案例</el-button>
+      <el-button type="primary" @click="showCreateState">新增动态</el-button>
     </div>
     <avue-crud
       :table-loading="tableLoading"
@@ -13,6 +12,9 @@
       :data="mainTableData"
       :option="mainTableOption"
     >
+      <template slot-scope="scope" slot="breviaryImg">
+        <img :src="`/getBreviaryPhoto?width=100&height=100&filename=${scope.row.img}`">
+      </template>
       <template slot-scope="scope" slot="menu">
         <div style="display:flex;justify-content:flex-end;">
           <el-button type="primary" @click="handleUpdate(scope.row)">修改</el-button>
@@ -20,93 +22,44 @@
         </div>
       </template>
     </avue-crud>
-    <el-dialog title="服务" :visible.sync="serviceVisible" width="80%">
-        <el-form label-width="60px">
-          <el-form-item label="img">
-            <el-upload
-              class="upload-demo2"
-              action="/uploadPhoto"
-              :show-file-list="false"
-              :on-success="uploadHeaderImg"
-              :on-error="uploadError">
-                <el-button type="primary">上传封面图片</el-button>
-            </el-upload>
+    <article-dialog v-bind:dialogVisible.sync="dialogVisible" @createArticle="createArticle">
+      <template v-slot:content>
+        <template v-if="stateVisible">
+          <el-form-item label="content">
+            <article-data-list :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
-          <el-form-item label="title">
-              <el-input v-model="article.title"></el-input>
+        </template>
+        <template v-if="caseVisible">
+          <el-form-item label="gallery">
+            <article-data-list :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
-          <el-form-item label="desc">
-              <el-input v-model="article.desc"></el-input>
+          <el-form-item label="detail">
+            <el-input v-model="createCaseDetail"></el-input>
           </el-form-item>
-          <el-form-item label="tags">
-              <el-input v-model="article.tags"></el-input>
-          </el-form-item>
-        </el-form>
-        <div style="display:flex;margin-top:10px;margin-bottom:10px;">
-          <el-select v-model="itemType" style="width:100%;margin-right:10px;">
-            <el-option value="text" label="文本"></el-option>
-            <el-option value="imgUpload" label="图片上传"></el-option>
-            <el-option value="imgUrl" label="图片链接"></el-option>
-            <el-option value="vedioUrl" label="视频链接"></el-option>
-          </el-select>
-          <el-button type="primary" @click="addArticleItem">新增</el-button>
-        </div>
-        <avue-crud
-          ref="crud"
-          :data="articleTableData"
-          :option="articleTableOption"
-          v-model="formData"
-          @row-update="rowUpdate"
-        >
-          <template slot-scope="scope" slot="menu">
-            <el-button
-              type="primary"
-              @click="editCell(scope.row, scope.row.$index)"
-              :text="scope.row.$cellEdit ? '保存' : '修改'"
-              v-if="scope.row.type !== 'imgUpload'"
-            ></el-button>
-            <el-upload
-              action="/uploadPhoto"
-              :show-file-list="false"
-              :on-success="uploadSuccess"
-              :on-error="uploadError"
-              v-if="scope.row.type==='img'"
-            >
-              <el-button type="primary" @click="uploadRowIndex(scope.row.$index)">上传图片</el-button>
-            </el-upload>
-            <el-button type="primary" @click="handleDelete(scope.row.$index)">删除</el-button>
-          </template>
-        </avue-crud>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="serviceVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveCreate">确 定</el-button>
-        </span>
-    </el-dialog>
+        </template>
+      </template>
+    </article-dialog>
   </div>
 </template>
 
 <script>
-import mixins from '../mixins/index.js'
+import mixins from '../mixins/index.js';
+import articleDialog from './articleDialog.vue';
+import articleDataList from './articleDataList.vue'
 
 export default {
   name: 'appCase',
   mixins: [mixins],
+  components: { articleDialog, articleDataList },
   data () {
     return {
-      itemType: "",
-      article: {
-        filename: "",
-        title: "",
-        desc: "",
-        createTime: "",
-        updateTime: "",
-        img: "",
-        tags: [],
-        data: []
-      },
-      serviceVisible: false,
+      dialogVisible: false,
       caseVisible: false,
       stateVisible: false,
+
+      createCaseDetail: "",
+      createServiceDetail: "",
+
       mainTableData: [],
       mainTableOption: {
         header: false,
@@ -115,6 +68,11 @@ export default {
         border: true,
         column: [
           {
+            label: '封面图片',
+            prop: 'breviaryImg',
+            solt: true,
+            align: 'center'
+          }, {
             label: '文章名称',
             prop: 'title',
           }, {
@@ -124,48 +82,72 @@ export default {
             dicData: [
               { label: 'a', value: 'a' },
               { label: 'b', value: 'b' },
-            ],
+            ]
           }, {
             label: '发布人',
-            prop: 'publisher',
+            prop: 'publisher'
           }, {
             label: '描述',
-            prop: 'desc',
+            prop: 'desc'
           }, {
             label: '创建时间',
-            prop: 'createTime',
+            prop: 'createTime'
           }, {
             label: '修改时间',
-            prop: 'updateTime',
-          }, {
-            label: '菜单',
-            prop: 'menu',
-            solt: true,
-            align: 'center',
-          },
-        ]
-      },
-      articleTableData: [],
-      articleTableOption: {
-        header: false,
-        menu: false,
-        page: true,
-        border: true,
-        column: [
-          {
-            label: '类型',
-            prop: 'type',
-          }, {
-            label: 'content',
-            prop: 'content'
+            prop: 'updateTime'
           }, {
             label: '菜单',
             prop: 'menu',
             solt: true,
             align: 'center'
-          },
+          }
         ]
-      }
+      },
+
+      stateArticleContentItemTypeArray: [{
+        value: "text",
+        label: "文本"
+      },
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }],
+
+      serviceArticleContentItemTypeArray: [
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }],
+
+      caseArticleContentItemTypeArray: [
+      {
+        value: "imgUpload",
+        label: "图片上传"
+      },
+      {
+        value: "imgUrl",
+        label: "图片链接"
+      },
+      {
+        value: "vedioUrl",
+        label: "视频链接"
+      }]
     }
   },
 
@@ -174,19 +156,44 @@ export default {
     this.getList(1);
   },
 
-  methods: {
-    addArticleItem()
-    {
-      this.articleTableData.push({
-        type: this.itemType,
-        data: ''
-      });
-    },
+  watch: {
+    dialogVisible: function(newValue, oldValue) {
+      if(newValue === false)
+      {
+        this.serviceVisible = this.caseVisible = this.stateVisible = false;
+      }
+    }
+  },
 
-    editCell(row, index)
-    {
-      this.$refs.crud.rowCell(row, index)
+  methods: {
+    showCreateCase: function() {
+      this.dialogVisible = true;
+
+      this.caseVisible = true;
     },
+    showCreateState: function() {
+      this.dialogVisible = true;
+
+      this.stateVisible = true;
+    },
+    createArticle()
+    {
+      article.beginTime = Date.now();
+      article.updateTime = Date.now();
+      article.tags = this.articleTags;
+      article.data = this.articleContentTableData;
+  
+      this.$axios.post("/createArticle", article).then(({ code, data, msg }) => {
+        if(code !== 0)
+        {
+          this.$message.error(msg);
+        }
+
+        // get List
+        this.getList(1);
+      })
+    },
+   
     getList(page) {
       this.tableLoading = true
       this.$axios.get("/getBreviaryArticleList", {
@@ -205,17 +212,35 @@ export default {
       }).finally(() => {
         this.tableLoading = false;
       })
-    },
-    uploadArticle()
-    {
-
-    },
-    searchChange(params) {
-      getList(page)
-    },
+    }
   },
   created () {
     this.getList(1)
   },
 }
 </script>
+
+<style>
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+</style>
