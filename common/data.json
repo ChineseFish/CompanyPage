@@ -1,4 +1,4 @@
 {
-  "type": "1表示文字，2表示本地图片，3表示本地视频，4表示远程图片，5表示远程视频",
+  "type": "text, imgUpload, imgUrl, vedioUrl",
   "data": "文字或者URI"
 }
