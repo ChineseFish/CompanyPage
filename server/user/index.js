@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
-const { ERR_SERVER_INNER, ERR_LOGIN_FAILED, SUCCESS, USER, PASSWORD } = require('../../common/constant')
-const { keccak256, stringToBuffer } = require('../../common/util')
+const { ERR_SERVER_INNER, ERR_LOGIN_FAILED, SUCCESS, USER, PASSWORD } = require('../../depends/constant')
+const { keccak256, stringToBuffer } = require('../../depends/util')
 const cookie = require('cookie');
 
 const app = process[Symbol.for("app")];

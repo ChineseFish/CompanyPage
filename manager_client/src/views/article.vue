@@ -474,3 +474,14 @@ export default {
     font-size: 12px;
   }
 </style>
+
+<style lang="scss" scoped>
+img {
+  cursor: pointer;
+  transition: all 0.6s;
+  &:hover {
+    transform: scale(1.5);
+  }
+}
+
+</style>

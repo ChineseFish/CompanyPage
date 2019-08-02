@@ -1,5 +1,5 @@
 const async = require('async')
-const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX } = require('../common/constant')
+const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX } = require('../depends/constant')
 
 module.exports.recordArticleClick = function(filename)
 {

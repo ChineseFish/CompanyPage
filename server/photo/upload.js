@@ -2,8 +2,8 @@ const process = require('process')
 const path = require('path')
 const fs = require('fs')
 const Gm = require('gm').subClass({ imageMagick: true }) // use imageMagick as photo processor
-const { ERR_SERVER_INNER, SUCCESS, ERR_PARAM, ERR_PHOTO_EXT_INVALID, ERR_ASSERT_HAS_EXIST, ERR_OTH, ASSERTS_DIR, TMP_DIR, CONTENT_TYPE } = require('../../common/constant')
-const { keccak256, stringToBuffer, Buffer } = require('../../common/util')
+const { ERR_SERVER_INNER, SUCCESS, ERR_PARAM, ERR_PHOTO_EXT_INVALID, ERR_ASSERT_HAS_EXIST, ERR_OTH, ASSERTS_DIR, TMP_DIR, CONTENT_TYPE } = require('../../depends/constant')
+const { keccak256, stringToBuffer, Buffer } = require('../../depends/util')
 const multiparty = require('multiparty')
 const {checkCookie} = require("../user/cookie")
 

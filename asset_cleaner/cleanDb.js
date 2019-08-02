@@ -1,15 +1,17 @@
 const levelup = require('levelup')
 const leveldown = require('leveldown')
 
-levelDbInstance = levelup(leveldown('../server/mydb'))
+const logger = process[Symbol.for("logger")]
 
-module.exports = function (cb) {
+const levelDbInstance = levelup(leveldown('../server/mydb'))
+
+module.exports = async function () {
   //
   const dbArtilcesSet = []
   const dbTagsSet = []
 
-  levelDbInstance.createReadStream()
-    .on('data', function (data) {
+  await new Promise((resolve, reject) => {
+    levelDbInstance.createReadStream().on('data', function (data) {
       const key = data.key.toString()
       const value = JSON.parse(data.value.toString())
 
@@ -28,29 +30,38 @@ module.exports = function (cb) {
       else {
         throw new Error(`db is dirty, invalid prefix ${prefix}`)
       }
-    })
-    .on('error', function (err) {
-      throw new Error(`db createReadStream failed, ${err}`)
-    })
-    .on('end', function () {
+    }).on('error', function (err) {
+      reject(`cleanDb, db createReadStream failed, ${err}`)
+    }).on('end', function () {
 
       (async () => {
-        const validTagsSet = process[Symbol.for("validTagsSet")];
+
+        const validArticlesSet = process[Symbol.for("validArticlesSet")];
         for (let dbArtilce of [...dbArtilcesSet]) {
-          if (!validTagsSet.find(dbArtilce)) {
+          if (!validArticlesSet.find(dbArtilce)) {
             await dbDel(dbArtilce);
+
+            logger.info(`cleanDb, clear invalid hot article ${dbArtilce}`)
           }
         }
 
-        const validArticlesSet = process[Symbol.for("validArticlesSet")];
+        const validTagsSet = process[Symbol.for("validTagsSet")];
         for (let dbTag of [...dbTagsSet]) {
-          if (!validArticlesSet.find(dbTag)) {
+          if (!validTagsSet.find(dbTag)) {
             await dbDel(dbTag);
+
+            logger.info(`cleanDb, clear invalid hot tag ${dbTag}`)
           }
         }
-      })().then(cb).catch(cb)
+      })().then(() => {
+        resolve()
+      }).catch(err => {
+        reject(`cleanDb, throw exception, ${err}`)
+      })
     })
+  });
 }
+
 
 
 const dbDel = async key => {

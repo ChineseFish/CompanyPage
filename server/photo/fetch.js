@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const Gm = require('gm').subClass({ imageMagick: true }) // use imageMagick as photo processor
-const { ERR_SERVER_INNER, ERR_PARAM, ERR_PHOTO_EXT_INVALID, ERR_ASSERT_NOT_EXIST, ASSERTS_DIR, CONTENT_TYPE } = require('../../common/constant')
+const { ERR_SERVER_INNER, ERR_PARAM, ERR_PHOTO_EXT_INVALID, ERR_ASSERT_NOT_EXIST, ASSERTS_DIR, CONTENT_TYPE } = require('../../depends/constant')
 
 const app = process[Symbol.for("app")]
 

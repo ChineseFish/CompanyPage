@@ -1,5 +1,5 @@
 const cookie = require('cookie');
-const { ERR_COOKIE_INVALID } = require('../../common/constant')
+const { ERR_COOKIE_INVALID } = require('../../depends/constant')
 
 module.exports.checkCookie = function (req, res, next) {
   // Parse the cookies on the request

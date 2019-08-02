@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const { ERR_ARTICLE_NOT_EXIST, ERR_SERVER_INNER, SUCCESS, ERR_PARAM, ASSERTS_DIR } = require('../../common/constant')
+const { ERR_ARTICLE_NOT_EXIST, ERR_SERVER_INNER, SUCCESS, ERR_PARAM, ASSERTS_DIR } = require('../../depends/constant')
 const _ = require('underscore')
 const async = require('async')
 const { checkCookie } = require("../user/cookie")

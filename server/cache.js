@@ -1,7 +1,7 @@
 const process = require('process')
 const path = require('path')
 const fs = require('fs')
-const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX, ASSERTS_DIR } = require('../common/constant')
+const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX, ASSERTS_DIR } = require('../depends/constant')
 const _ = require('underscore')
 const async = require('async')
 
