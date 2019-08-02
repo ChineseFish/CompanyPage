@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-dialog :title="title" :visible.sync="dialogVisible" width="80%" @close="closeDialog">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="80%" @close="closeDialog">
         <el-form label-width="60px">
           <el-form-item label="img">
             <div style="display:flex;justify-content:center;">
-              <img v-show="article.img !== ''" :src="`/getBreviaryPhoto?width=100&height=100&filename=${article.img}`">
+              <img style="width=200px;height:200px;" v-show="article.img !== ''" :src="`/getPhoto?filename=${article.img}`">
               <el-upload
                 action="/uploadPhoto"
                 :show-file-list="false"
@@ -24,17 +24,15 @@
             <div style="display:flex;justify-content:flex-start;">
               <el-dropdown style="margin-left:10px" trigger="click" @command="selectMainTag">
                 <el-tag style="width:200px;" :disable-transitions="false">
-                  {{mainTag}}<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{tagsMap[mainTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-tag>
                 <el-dropdown-menu style="width:200px;" slot="dropdown">
-                  <el-dropdown-item command="state">动态</el-dropdown-item>
-                  <el-dropdown-item command="service">服务</el-dropdown-item>
-                  <el-dropdown-item command="case">案例</el-dropdown-item>
+                  <el-dropdown-item v-for="(val, key) in tagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <el-tag
-                :key="tag"
-                v-for="tag in article.tags"
+                :key="index"
+                v-for="(tag, index) in article.tags"
                 closable
                 :disable-transitions="false"
                 @close="closeTag(tag)">
@@ -57,6 +55,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false;">取 消</el-button>
+          <el-button type="primary" @click="preview">预 览</el-button>
           <el-button type="primary" @click="articleOptFinish">确 定</el-button>
         </span>
     </el-dialog>
@@ -68,27 +67,34 @@ export default {
   name: 'articleDialog',
   data () {
     return {
-      article: {
-        title: "",
-        desc: "",
-        img: "",
-        tags: []
-      },
-
+      // if open add tag
       addTagVisible: false,
       addTagValue: '',
-      mainTag: "text"
+      
+      // tags map
+      tagsMap: {
+        state: "动态",
+        service: "服务",
+        case: "案例"
+      },
+      mainTag: "state"
     }
   },
 
   props: {
-    title: {
+    dialogTitle: {
       type: String,
       default: ""
     },
     dialogVisible: {
       type: Boolean,
       default: false
+    },
+    article: {
+      title: "",
+      desc: "",
+      img: "",
+      tags: []
     }
   },
 
@@ -97,7 +103,41 @@ export default {
     
   },
 
+  watch: {
+    article: {
+      handler: function (newValue, oldValue) {
+        this.$emit('update:article', this.article);
+      },
+      deep: true
+    },
+
+    dialogVisible: function(newValue, oldValue) {
+      if(newValue === false)
+      {
+        return;
+      }
+
+      // handle tags
+      this.article.tags = this.article.tags.filter(tag => {
+        if(this.tagsMap[tag])
+        {
+          this.mainTag = tag;
+
+          return false;
+        }
+
+        return true;
+      })
+    }
+  },
+
   methods: {
+    preview()
+    {
+      this.$emit("preview", this.mainTag);
+
+      this.dialogVisible = false;
+    },
     closeDialog()
     {
       this.$emit('update:dialogVisible', this.dialogVisible);
@@ -105,7 +145,10 @@ export default {
 
     articleOptFinish()
     {
-      this.$emit('articleOptFinish', this.article)
+      // record mainTag
+      this.article.tags.push(this.mainTag);
+
+      this.$emit('articleOptFinish')
     },
 
     uploadHeaderImgSuccess({ code, msg, data })
@@ -180,4 +223,15 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+</style>
+
+<style lang="scss" scoped>
+img {
+  cursor: pointer;
+  transition: all 0.6s;
+  &:hover {
+    transform: scale(1.5);
+  }
+}
+
 </style>

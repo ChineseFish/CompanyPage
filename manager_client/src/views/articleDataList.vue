@@ -6,14 +6,19 @@
       </el-select>
       <el-button type="primary" @click="addArticleContentItem()">新增</el-button>
     </div>
-    <avue-crud :data="articleContentTableData" :option="articleContentTableOption">
+    <avue-crud 
+    :data="articleContentTableData" 
+    :option="articleContentTableOption">
+      <template slot-scope="scope" slot="type">
+        <span>{{articleContentItemTypeMap[scope.row.type]}}</span>
+      </template>
       <template slot-scope="scope" slot="data">
         <!-- 服务器上面的图片，不支持修改 -->
         <img v-if="scope.row.type === 'imgUpload' && scope.row.data !== ''" :src="`/getBreviaryPhoto?width=100&height=100&filename=${scope.row.data}`">
         <!-- 支持修改的内容 -->
         <el-input 
         :ref="'inputData' + scope.row.$index"
-        v-if="scope.row.ifEditing" 
+        v-show="scope.row.ifEditing"
         v-model="articleContentTableData[scope.row.$index].data"
         @keyup.enter.native="scope.row.ifEditing=false"
         @blur="scope.row.ifEditing=false"></el-input>
@@ -21,7 +26,7 @@
           <!-- 图片链接 -->
           <img v-if="scope.row.type === 'imgUrl'" :src="scope.row.data">
           <!-- 视频链接 -->
-          <video v-if="scope.row.type === 'vedioUrl'" :src="scope.row.data"  width="320" height="240" controls="controls">
+          <video v-if="scope.row.type === 'videoUrl'" :src="scope.row.data"  width="320" height="240" controls="controls">
             Your browser does not support the video tag.
           </video>
           <!-- 普通文字 -->
@@ -76,8 +81,6 @@ export default {
   mixins: [mixins],
   data() {
     return {
-      addArticleContentItemType: "",
-      
       articleContentTableOption: {
         header: false,
         menu: false,
@@ -86,7 +89,8 @@ export default {
         column: [
           {
             label: '类型',
-            prop: 'type'
+            prop: 'type',
+            solt: true
           }, {
             label: '内容',
             prop: 'data',
@@ -97,18 +101,30 @@ export default {
             solt: true,
             align: 'center'
           },
-        ],
+        ]
+      },
 
-        uploadingImgIndex: 0
+      // remark which row is upload img
+      uploadingImgIndex: 0,
+
+      // remark which item type to add
+      addArticleContentItemType: "",
+      articleContentItemTypeMap: {
+        text: "文本",
+        imgUpload: "图片上传",
+        imgUrl: "图片链接",
+        videoUrl: "视频链接"
       }
     }
   },
 
   props: {
+    // article data list
     articleContentTableData: {
       type: Array,
       default: []
     },
+    // article data type list
     articleContentItemTypeArray: {
       type: Array,
       default: []
@@ -160,22 +176,7 @@ export default {
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
       });
 
-      if(this.addArticleContentItemType !== 'imgUpload')
-      {
-        (async () => {
-          let input = this.$refs[`inputData${this.articleContentTableData.length - 1}`]
-          while(input === undefined || input === null)
-          {
-            await new Promise(resolve => {
-              setTimeout(() => {
-                input = this.$refs[`inputData${this.articleContentTableData.length - 1}`];
-
-                resolve();
-              })
-            })
-          }
-        })();
-      }
+      this._articleContentItemFocus(this.articleContentTableData.length - 1, this.addArticleContentItemType)
     },
     addArticleContentItemUp(row)
     {
@@ -184,6 +185,8 @@ export default {
         data: '',
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
       });
+
+      this._articleContentItemFocus(row.$index, this.addArticleContentItemType)
     },
     addArticleContentItemNext(row)
     {
@@ -192,6 +195,8 @@ export default {
         data: '',
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
       });
+
+      this._articleContentItemFocus(row.$index + 1, this.addArticleContentItemType)
     },
     deleteArticleContentItem(row)
     {
@@ -200,9 +205,42 @@ export default {
     editArticleContentItem(row)
     {
       this.articleContentTableData[row.$index].ifEditing = true;
+
+      this._articleContentItemFocus(row.$index)
+    },
+
+    _articleContentItemFocus(index, articleContentItemType)
+    {
+      if(articleContentItemType !== 'imgUpload')
+      {
+        (async () => {
+          let input = this.$refs[`inputData${index}`]
+          while(input === undefined || input === null)
+          {
+            await new Promise(resolve => {
+              setTimeout(() => {
+                input = this.$refs[`inputData${index}`];
+
+                resolve();
+              })
+            })
+          }
+
+          input.focus();
+        })();
+      }
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+img {
+  cursor: pointer;
+  transition: all 0.6s;
+  &:hover {
+    transform: scale(1.5);
+  }
+}
 
+</style>

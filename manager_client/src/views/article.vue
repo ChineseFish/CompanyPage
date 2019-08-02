@@ -1,47 +1,77 @@
 <template>
   <div>
-    <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
-      <el-button type="primary" @click="showCreateCase">新增案例</el-button>
-      <el-button type="primary" @click="showCreateService">新增服务</el-button>
-      <el-button type="primary" @click="showCreateState">新增动态</el-button>
+    <div v-if="previewServiceVisible === false && previewCaseVisible === false && previewStateVisible === false">
+      <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
+        <el-button type="primary" @click="showCreateCase">新增案例</el-button>
+        <el-button type="primary" @click="showCreateService">新增服务</el-button>
+        <el-button type="primary" @click="showCreateState">新增动态</el-button>
+      </div>
+      <avue-crud
+        :table-loading="tableLoading"
+        @size-change="sizeChange"
+        @current-change="currentChange"
+        :page="pagination"
+        :data="mainTableData"
+        :option="mainTableOption"
+      >
+        <template slot-scope="scope" slot="img">
+          <img :src="`/getBreviaryPhoto?width=100&height=100&filename=${scope.row.img}`">
+        </template>
+        <template slot-scope="scope" slot="createTime">
+          <span>{{new Date(scope.row.createTime).Format("yyyy-MM-dd hh:mm")}}</span>
+        </template>
+        <template slot-scope="scope" slot="updateTime">
+          <span>{{new Date(scope.row.updateTime).Format("yyyy-MM-dd hh:mm")}}</span>
+        </template>
+        <template slot-scope="scope" slot="menu">
+          <div style="display:flex;justify-content:flex-end;">
+            <el-button type="primary" @click="updateArticle(scope.row)">修改</el-button>
+            <el-button type="primary" @click="deleteArticle(scope.row)">删除</el-button>
+          </div>
+        </template>
+      </avue-crud>
+      <article-dialog v-bind:dialogVisible.sync="dialogVisible" v-bind:article.sync="article" @articleOptFinish="articleOptFinish" @preview="preview">
+        <template v-slot:content>
+          <template v-if="stateVisible">
+            <el-form-item label="content">
+              <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
+            </el-form-item>
+          </template>
+          <template v-if="caseVisible">
+            <el-form-item label="gallery">
+              <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
+            </el-form-item>
+          </template>
+          <template v-if="serviceVisible">
+            <el-form-item label="detail">
+              <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="serviceArticleContentItemTypeArray"></article-data-list>
+            </el-form-item>
+          </template>
+        </template>
+      </article-dialog>
     </div>
-    <avue-crud
-      :table-loading="tableLoading"
-      @size-change="sizeChange"
-      @current-change="currentChange"
-      :page="pagination"
-      :data="mainTableData"
-      :option="mainTableOption"
-    >
-      <template slot-scope="scope" slot="breviaryImg">
-        <img :src="`/getBreviaryPhoto?width=100&height=100&filename=${scope.row.img}`">
-      </template>
-      <template slot-scope="scope" slot="menu">
-        <div style="display:flex;justify-content:flex-end;">
-          <el-button type="primary" @click="updateArticle(scope.row)">修改</el-button>
-          <el-button type="primary" @click="deleteArticle(scope.row)">删除</el-button>
-        </div>
-      </template>
-    </avue-crud>
-    <article-dialog v-bind:dialogVisible.sync="dialogVisible" @articleOptFinish="articleOptFinish">
-      <template v-slot:content>
-        <template v-if="stateVisible">
-          <el-form-item label="content">
-            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
-          </el-form-item>
-        </template>
-        <template v-if="caseVisible">
-          <el-form-item label="gallery">
-            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
-          </el-form-item>
-        </template>
-        <template v-if="serviceVisible">
-          <el-form-item label="detail">
-            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="serviceArticleContentItemTypeArray"></article-data-list>
-          </el-form-item>
-        </template>
-      </template>
-    </article-dialog>
+    <div v-if="previewServiceVisible === true || previewCaseVisible === true || previewStateVisible === true">
+      <case-article 
+      v-if="previewCaseVisible === true" 
+      :previewVisible="previewCaseVisible"
+      :previewArticle="previewArticle">
+        <el-button type="primary" @click="previewCaseVisible = false">返 回</el-button>
+      </case-article>
+
+      <service-article 
+      v-if="previewServiceVisible === true" 
+      :previewVisible="previewServiceVisible"
+      :previewArticle="previewArticle">
+        <el-button type="primary" @click="previewServiceVisible = false">返 回</el-button>
+      </service-article>
+
+      <state-article 
+      v-if="previewStateVisible === true" 
+      :previewVisible="previewStateVisible"
+      :previewArticle="previewArticle">
+        <el-button type="primary" @click="previewStateVisible = false">返 回</el-button>
+      </state-article>
+    </div>
   </div>
 </template>
 
@@ -50,21 +80,59 @@ import mixins from '../mixins/index.js';
 import articleDialog from './articleDialog.vue';
 import articleDataList from './articleDataList.vue'
 
+import caseArticle from '../../../web_depends/articleTemplate/caseArticle.vue'
+import serviceArticle from '../../../web_depends/articleTemplate/serviceArticle.vue'
+import stateArticle from '../../../web_depends/articleTemplate/stateArticle.vue'
+
 export default {
   name: 'appCase',
   mixins: [mixins],
-  components: { articleDialog, articleDataList },
+  components: { articleDialog, articleDataList, caseArticle, serviceArticle, stateArticle },
   data () {
     return {
+      // remark update ro create action
+      articleOptType: "",
+
+      //
+      updatingFileName: "",
+
+      // if show preview
+      previewServiceVisible: false,
+      previewCaseVisible: false,
+      previewStateVisible: false,
+
+      //
+      previewArticle: {
+        title: "",
+        desc: "",
+        img: "",
+        tags: [],
+        createTime: 0,
+        updateTime: 0,
+        data: []
+      },
+
+      // if show main dialog
       dialogVisible: false,
+
+      // if show data list
       serviceVisible: false,
       caseVisible: false,
       stateVisible: false,
 
-      createCaseOrServiceDetail: "",
-
+      // article common item
+      article: {
+        title: "",
+        desc: "",
+        img: "",
+        tags: [],
+        createTime: 0,
+        updateTime: 0
+      },
+      // article data list
       articleContentTableData: [],
 
+      // breviary article list
       mainTableData: [],
       mainTableOption: {
         header: false,
@@ -74,7 +142,7 @@ export default {
         column: [
           {
             label: '封面图片',
-            prop: 'breviaryImg',
+            prop: 'img',
             solt: true,
             align: 'center'
           }, {
@@ -96,10 +164,12 @@ export default {
             prop: 'desc'
           }, {
             label: '创建时间',
-            prop: 'createTime'
+            prop: 'createTime',
+            solt: true
           }, {
             label: '修改时间',
-            prop: 'updateTime'
+            prop: 'updateTime',
+            solt: true
           }, {
             label: '菜单',
             prop: 'menu',
@@ -109,6 +179,7 @@ export default {
         ]
       },
 
+      // data list items
       stateArticleContentItemTypeArray: [{
         value: "text",
         label: "文本"
@@ -122,10 +193,11 @@ export default {
         label: "图片链接"
       },
       {
-        value: "vedioUrl",
+        value: "videoUrl",
         label: "视频链接"
       }],
 
+      // data list items
       serviceArticleContentItemTypeArray: [
       {
         value: "imgUpload",
@@ -141,9 +213,10 @@ export default {
         min: 1
       }],
 
+      // data list items
       caseArticleContentItemTypeArray: [
       {
-        value: "vedioUrl",
+        value: "videoUrl",
         label: "视频链接",
         fix: 1,
       },
@@ -164,73 +237,105 @@ export default {
     dialogVisible: function(newValue, oldValue) {
       if(newValue === false)
       {
-        this.serviceVisible = this.caseVisible = this.stateVisible = false;
+        this.serviceVisible = this.caseVisible = this.stateVisible = this.serviceVisible = false;
       }
     }
   },
 
   methods: {
-    articleOptFinish: function (article) {
-      
+    preview: function(mainTag)
+    {
+      switch(mainTag)
+      {
+        case 'state':
+          {
+            this.previewStateVisible = true;
+          }
+          break;
+        case 'service':
+          {
+            this.previewServiceVisible = true;
+          }
+          break;
+        case 'case':
+          {
+            this.previewCaseVisible = true;
+          }
+          break;
+      }
+
+      this.previewArticle.title = this.article.title;
+      this.previewArticle.desc = this.article.desc;
+      this.previewArticle.img = this.article.img;
+      this.previewArticle.tags = this.article.tags;
+      this.previewArticle.createTime = Date.now();
+      this.previewArticle.updateTime = Date.now();
+      this.previewArticle.data = this.articleContentTableData.map(item => {
+        return {
+          type: item.type,
+          data: item.data
+        }
+      });
     },
-    updateArticle: function(row) {
-      this.$axios.get("/getArticle", {
-        filename: row.filename
+    articleOptFinish: function () {
+      switch(this.articleOptType)
+      {
+        case "create":
+          {
+            this.commitCreateArticle();
+          }
+          break;
+        case "update":
+          {
+            this.commitUpdateArticle()
+          }
+          break;
+      }
+    },
+    commitCreateArticle()
+    {
+      this.$axios.post("/uploadArticle", {
+        title: this.article.title, 
+        desc: this.article.desc, 
+        img: this.article.img, 
+        tags: this.article.tags,
+        createTime: Date.now(),
+        updateTime: Date.now(),
+        data: this.articleContentTableData.map(item => {
+          return {
+            type: item.type,
+            data: item.data
+          }
+        })
       }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
           this.$message.error(msg);
         }
 
-        this.articleContentTableData = data.data;
-        
-        this.dialogVisible = true;
+        this.
 
-        
-        
-        
-
-        if(this.tags.find("state"))
-        {
-          this.stateVisible = true;
-        }
-        else if(this.tags.find("service"))
-        {
-          this.serviceVisible = true;
-        }
-        else
-        {
-          this.caseVisible = true;
-        }
+        // get List
+        this.getList(1);
       })
     },
-    deleteArticle: function(row) {
-      
-      "delArticle"
-    },
-    showCreateCase: function() {
-      this.dialogVisible = true;
-
-      this.caseVisible = true;
-    },
-    showCreateService: function() {
-      this.dialogVisible = true;
-
-      this.serviceVisible = true;
-    },
-    showCreateState: function() {
-      this.dialogVisible = true;
-
-      this.stateVisible = true;
-    },
-    createArticle()
+    commitUpdateArticle()
     {
-      article.beginTime = Date.now();
-      article.updateTime = Date.now();
-      article.tags = this.articleTags;
-      article.data = this.articleContentTableData;
-  
-      this.$axios.post("/createArticle", article).then(({ code, data, msg }) => {
+      this.$axios.post("/updateArticle", {
+        filename: this.updatingFileName,
+        title: this.article.title, 
+        desc: this.article.desc, 
+        img: this.article.img, 
+        tags: this.article.tags,
+        createTime: this.article.createTime,
+        updateTime: Date.now(),
+        data: this.articleContentTableData.map(item => {
+          return {
+            type: item.type,
+            data: item.data
+          }
+        })
+      }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
           this.$message.error(msg);
@@ -240,12 +345,82 @@ export default {
         this.getList(1);
       })
     },
+    updateArticle: function(row) {
+
+      this.updatingFileName = row.filename;
+
+      this.$axios.get("/getArticle", {
+        filename: row.filename
+      }).then(({ code, data, msg }) => {
+        if(code !== 0)
+        {
+          this.$message.error(msg);
+        }
+
+        // init article
+        this.article = {
+          title: data.title,
+          desc: data.desc,
+          img: data.img,
+          tags: data.tags,
+          createTime: data.createTime,
+          updateTime: data.updateTime
+        }
+
+        // init data list
+        this.articleContentTableData = data.data;
+        
+        // show
+        this.dialogVisible = true;
+
+        if(this.mainTableData[row.$index].tags.find(tag => tag === "state"))
+        {
+          this.stateVisible = true;
+        }
+        else if(this.mainTableData[row.$index].tags.find(tag => tag === "service"))
+        {
+          this.serviceVisible = true;
+        }
+        else
+        {
+          this.caseVisible = true;
+        }
+
+        //
+        this.articleOptType = "update";
+      })
+    },
+    deleteArticle: function(row) {
+      
+      
+    },
+    showCreateCase: function() {
+      this.dialogVisible = true;
+
+      this.caseVisible = true;
+
+      this.articleOptType = "create";
+    },
+    showCreateService: function() {
+      this.dialogVisible = true;
+
+      this.serviceVisible = true;
+
+      this.articleOptType = "create";
+    },
+    showCreateState: function() {
+      this.dialogVisible = true;
+
+      this.stateVisible = true;
+
+      this.articleOptType = "create";
+    },
    
     getList(page) {
       this.tableLoading = true
       this.$axios.get("/getBreviaryArticleList", {
         page: page,
-        pageNum: 1,
+        pageNum: this.pagination.pageSize,
         title: this.searchForm.title === "" ? undefined :  this.searchForm.title,
         tags: this.searchForm.tags === "" ? undefined : this.searchForm.tags.split(",")
       }).then(({ code, data, msg }) => {
@@ -290,15 +465,4 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
-</style>
-
-<style lang="scss">
-img {
-  cursor: pointer;
-  transition: all 0.6s;
-  &:hover {
-    transform: scale(1.5);
-  }
-}
-
 </style>
