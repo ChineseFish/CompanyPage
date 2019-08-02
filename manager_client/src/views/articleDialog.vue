@@ -3,13 +3,16 @@
     <el-dialog :title="title" :visible.sync="dialogVisible" width="80%" @close="closeDialog">
         <el-form label-width="60px">
           <el-form-item label="img">
-            <el-upload
-              action="/uploadPhoto"
-              :show-file-list="false"
-              :on-success="uploadHeaderImgSuccess"
-              :on-error="uploadHeaderImgError">
-                <el-button type="primary">上传封面图片</el-button>
-            </el-upload>
+            <div style="display:flex;justify-content:center;">
+              <img v-show="article.img !== ''" :src="`/getBreviaryPhoto?width=100&height=100&filename=${article.img}`">
+              <el-upload
+                action="/uploadPhoto"
+                :show-file-list="false"
+                :on-success="uploadHeaderImgSuccess"
+                :on-error="uploadHeaderImgError">
+                  <el-button type="primary">上传封面图片</el-button>
+              </el-upload>
+            </div>
           </el-form-item>
           <el-form-item label="title">
               <el-input v-model="article.title"></el-input>
@@ -24,14 +27,14 @@
                   {{mainTag}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-tag>
                 <el-dropdown-menu style="width:200px;" slot="dropdown">
-                  <el-dropdown-item command="文章">文章</el-dropdown-item>
-                  <el-dropdown-item command="服务">服务</el-dropdown-item>
-                  <el-dropdown-item command="案例">案例</el-dropdown-item>
+                  <el-dropdown-item command="state">动态</el-dropdown-item>
+                  <el-dropdown-item command="service">服务</el-dropdown-item>
+                  <el-dropdown-item command="case">案例</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <el-tag
                 :key="tag"
-                v-for="tag in articleTags"
+                v-for="tag in article.tags"
                 closable
                 :disable-transitions="false"
                 @close="closeTag(tag)">
@@ -54,7 +57,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false;">取 消</el-button>
-          <el-button type="primary" @click="createArticle">确 定</el-button>
+          <el-button type="primary" @click="articleOptFinish">确 定</el-button>
         </span>
     </el-dialog>
   </div>
@@ -72,7 +75,6 @@ export default {
         tags: []
       },
 
-      articleTags: [],
       addTagVisible: false,
       addTagValue: '',
       mainTag: "text"
@@ -80,8 +82,14 @@ export default {
   },
 
   props: {
-    title: "",
-    dialogVisible: false
+    title: {
+      type: String,
+      default: ""
+    },
+    dialogVisible: {
+      type: Boolean,
+      default: false
+    }
   },
 
   created()
@@ -95,9 +103,9 @@ export default {
       this.$emit('update:dialogVisible', this.dialogVisible);
     },
 
-    createArticle()
+    articleOptFinish()
     {
-      this.$emit('createArticle', article)
+      this.$emit('articleOptFinish', this.article)
     },
 
     uploadHeaderImgSuccess({ code, msg, data })
@@ -129,7 +137,7 @@ export default {
     addTag() {
       let addTagValue = this.addTagValue;
       if (addTagValue) {
-        this.articleTags.push(addTagValue);
+        this.article.tags.push(addTagValue);
       }
       this.addTagVisible = false;
       this.addTagValue = '';
@@ -143,7 +151,7 @@ export default {
     },
 
     closeTag(tag) {
-      this.articleTags.splice(this.articleTags.indexOf(tag), 1);
+      this.article.tags.splice(this.article.tags.indexOf(tag), 1);
     }
   }
 }

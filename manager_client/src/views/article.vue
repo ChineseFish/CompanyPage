@@ -2,6 +2,7 @@
   <div>
     <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
       <el-button type="primary" @click="showCreateCase">新增案例</el-button>
+      <el-button type="primary" @click="showCreateService">新增服务</el-button>
       <el-button type="primary" @click="showCreateState">新增动态</el-button>
     </div>
     <avue-crud
@@ -17,24 +18,26 @@
       </template>
       <template slot-scope="scope" slot="menu">
         <div style="display:flex;justify-content:flex-end;">
-          <el-button type="primary" @click="handleUpdate(scope.row)">修改</el-button>
-          <el-button type="primary" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" @click="updateArticle(scope.row)">修改</el-button>
+          <el-button type="primary" @click="deleteArticle(scope.row)">删除</el-button>
         </div>
       </template>
     </avue-crud>
-    <article-dialog v-bind:dialogVisible.sync="dialogVisible" @createArticle="createArticle">
+    <article-dialog v-bind:dialogVisible.sync="dialogVisible" @articleOptFinish="articleOptFinish">
       <template v-slot:content>
         <template v-if="stateVisible">
           <el-form-item label="content">
-            <article-data-list :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
+            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
         </template>
         <template v-if="caseVisible">
           <el-form-item label="gallery">
-            <article-data-list :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
+            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
+        </template>
+        <template v-if="serviceVisible">
           <el-form-item label="detail">
-            <el-input v-model="createCaseDetail"></el-input>
+            <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="serviceArticleContentItemTypeArray"></article-data-list>
           </el-form-item>
         </template>
       </template>
@@ -54,11 +57,13 @@ export default {
   data () {
     return {
       dialogVisible: false,
+      serviceVisible: false,
       caseVisible: false,
       stateVisible: false,
 
-      createCaseDetail: "",
-      createServiceDetail: "",
+      createCaseOrServiceDetail: "",
+
+      articleContentTableData: [],
 
       mainTableData: [],
       mainTableOption: {
@@ -124,29 +129,28 @@ export default {
       serviceArticleContentItemTypeArray: [
       {
         value: "imgUpload",
-        label: "图片上传"
+        label: "图片上传",
       },
       {
         value: "imgUrl",
-        label: "图片链接"
+        label: "图片链接",
       },
       {
-        value: "vedioUrl",
-        label: "视频链接"
+        value: "text",
+        label: "文章",
+        min: 1
       }],
 
       caseArticleContentItemTypeArray: [
       {
-        value: "imgUpload",
-        label: "图片上传"
-      },
-      {
-        value: "imgUrl",
-        label: "图片链接"
-      },
-      {
         value: "vedioUrl",
-        label: "视频链接"
+        label: "视频链接",
+        fix: 1,
+      },
+      {
+        value: "text",
+        label: "文章",
+        min: 1
       }]
     }
   },
@@ -166,10 +170,53 @@ export default {
   },
 
   methods: {
+    articleOptFinish: function (article) {
+      
+    },
+    updateArticle: function(row) {
+      this.$axios.get("/getArticle", {
+        filename: row.filename
+      }).then(({ code, data, msg }) => {
+        if(code !== 0)
+        {
+          this.$message.error(msg);
+        }
+
+        this.articleContentTableData = data.data;
+        
+        this.dialogVisible = true;
+
+        
+        
+        
+
+        if(this.tags.find("state"))
+        {
+          this.stateVisible = true;
+        }
+        else if(this.tags.find("service"))
+        {
+          this.serviceVisible = true;
+        }
+        else
+        {
+          this.caseVisible = true;
+        }
+      })
+    },
+    deleteArticle: function(row) {
+      
+      "delArticle"
+    },
     showCreateCase: function() {
       this.dialogVisible = true;
 
       this.caseVisible = true;
+    },
+    showCreateService: function() {
+      this.dialogVisible = true;
+
+      this.serviceVisible = true;
     },
     showCreateState: function() {
       this.dialogVisible = true;
@@ -220,7 +267,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .el-tag + .el-tag {
     margin-left: 10px;
   }
@@ -243,4 +290,15 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+</style>
+
+<style lang="scss">
+img {
+  cursor: pointer;
+  transition: all 0.6s;
+  &:hover {
+    transform: scale(1.5);
+  }
+}
+
 </style>
