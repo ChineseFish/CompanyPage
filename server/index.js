@@ -37,7 +37,7 @@ process[Symbol.for("stoplight")] = new Stoplight()
 process[Symbol.for("cache")] = cache
 process[Symbol.for("breviaryArticles")] = []
 process[Symbol.for("tags")] = []
-process[Symbol.for("db")] = levelup(leveldown('./server/mydb'))
+process[Symbol.for("db")] = levelup(leveldown(path.join(__dirname, './mydb')))
 process[Symbol.for("hotArticles")] = [];
 process[Symbol.for("hotTags")] = [];
 

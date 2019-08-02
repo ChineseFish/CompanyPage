@@ -1,9 +1,10 @@
 const levelup = require('levelup')
 const leveldown = require('leveldown')
+const path = require("path");
 
 const logger = process[Symbol.for("logger")]
 
-const levelDbInstance = levelup(leveldown('../server/mydb'))
+const levelDbInstance = levelup(leveldown(path.join(__dirname, '../server/mydb')))
 
 module.exports = async function () {
   //

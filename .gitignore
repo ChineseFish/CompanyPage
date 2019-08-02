@@ -3,6 +3,7 @@ node_modules
 server/dist
 server/logs
 server/mydb
+asset_cleaner/logs
 
 # local env files
 .env.local
