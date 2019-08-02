@@ -310,10 +310,13 @@ export default {
       }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
-          this.$message.error(msg);
+          return this.$message.error(msg);
         }
 
-        this.
+        this.dialogVisible = false;
+
+        //
+        this.$message.success("创建成功")
 
         // get List
         this.getList(1);
@@ -338,8 +341,13 @@ export default {
       }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
-          this.$message.error(msg);
+          return this.$message.error(msg);
         }
+
+        this.dialogVisible = false;
+
+        //
+        this.$message.success("修改成功")
 
         // get List
         this.getList(1);
