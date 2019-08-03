@@ -3,25 +3,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+import ElementUI from 'element-ui';
 import '~/../../web_depends/assets/css/theme-green/index.css'
+import axios from './net/axios';
+import Avue from '@smallwei/avue/lib/index.js'
+import Axios from 'axios'
 
-import { TableColumn, Table, DatePicker, Dialog, Card, Button, Select, Input, Notification, Menu, Submenu, MenuItemGroup, MenuItem } from 'element-ui';
-
-Vue.use(TableColumn);
-Vue.use(Table);
-Vue.use(DatePicker);
-Vue.use(Dialog);
-Vue.use(Card);
-Vue.use(Button);
-Vue.use(Select);
-Vue.use(Input);
-Vue.use(Menu);
-Vue.use(Submenu);
-Vue.use(MenuItemGroup);
-Vue.use(MenuItem);
+Vue.use(Avue, Axios)
+Vue.use(ElementUI, {
+	size: 'medium'
+});
 
 Vue.config.productionTip = false
 
+Vue.prototype.$axios = axios;
 Vue.prototype.$notify = {
 	success: opts => {
 		Notification.success(opts);
@@ -36,8 +31,30 @@ Vue.prototype.$notify = {
 	}
 }
 
+// 对Date的扩展，将 Date 转化为指定格式的String
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+// 例子： 
+// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+Date.prototype.Format = function (fmt) { //author: meizz 
+	var o = {
+		"M+": this.getMonth() + 1, //月份 
+		"d+": this.getDate(), //日 
+		"h+": this.getHours(), //小时 
+		"m+": this.getMinutes(), //分 
+		"s+": this.getSeconds(), //秒 
+		"q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		"S": this.getMilliseconds() //毫秒 
+	};
+	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	for (var k in o)
+		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	return fmt;
+}
+
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')

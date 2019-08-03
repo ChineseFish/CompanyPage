@@ -1,22 +1,24 @@
 <template>
-  <div id="app">
-    <header></header>
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
-    <footer></footer>
-    <fixedBox></fixedBox>
+  <div id="app" style="display:flex;flex-direction:column;align-items:center;">
+    <fixed-header></fixed-header>
+    <div style="position:fixed;width:100%;top:100px;">
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
+    </div>
+    <fixed-footer></fixed-footer>
+    <fixed-box></fixed-box>
   </div>
 </template>
 
 <script>
-import header from "./components/header.vue"
-import footer from "./components/footer.vue"
+import fixedHeader from "./components/fixedHeader.vue"
+import fixedFooter from "./components/fixedFooter.vue"
 import fixedBox from "./components/fixedBox.vue"
 
   export default {
     name: 'App',
-    components: { header, footer, fixedBox },
+    components: { fixedHeader, fixedFooter, fixedBox },
     data () {
       return {
         
