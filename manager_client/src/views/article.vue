@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div v-if="previewServiceVisible === false && previewCaseVisible === false && previewStateVisible === false">
+    <div v-show="previewServiceVisible === false && previewStateVisible === false">
       <div style="display:flex;justify-content:flex-end;margin-top: 20px;margin-bottom:20px;">
-        <el-button type="primary" @click="showCreateCase">新增案例</el-button>
         <el-button type="primary" @click="showCreateService">新增服务</el-button>
         <el-button type="primary" @click="showCreateState">新增动态</el-button>
       </div>
@@ -37,11 +36,6 @@
               <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="stateArticleContentItemTypeArray"></article-data-list>
             </el-form-item>
           </template>
-          <template v-if="caseVisible">
-            <el-form-item label="gallery">
-              <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="caseArticleContentItemTypeArray"></article-data-list>
-            </el-form-item>
-          </template>
           <template v-if="serviceVisible">
             <el-form-item label="detail">
               <article-data-list v-bind:articleContentTableData.sync="articleContentTableData" :articleContentItemTypeArray="serviceArticleContentItemTypeArray"></article-data-list>
@@ -50,14 +44,7 @@
         </template>
       </article-dialog>
     </div>
-    <div v-if="previewServiceVisible === true || previewCaseVisible === true || previewStateVisible === true">
-      <case-article 
-      v-if="previewCaseVisible === true" 
-      :previewVisible="previewCaseVisible"
-      :previewArticle="previewArticle">
-        <el-button type="primary" @click="previewCaseVisible = false">返 回</el-button>
-      </case-article>
-
+    <div v-show="previewServiceVisible === true || previewStateVisible === true">
       <service-article 
       v-if="previewServiceVisible === true" 
       :previewVisible="previewServiceVisible"
@@ -80,14 +67,13 @@ import mixins from '../mixins/index.js';
 import articleDialog from './articleDialog.vue';
 import articleDataList from './articleDataList.vue'
 
-import caseArticle from '../../../web_depends/articleTemplate/caseArticle.vue'
 import serviceArticle from '../../../web_depends/articleTemplate/serviceArticle.vue'
 import stateArticle from '../../../web_depends/articleTemplate/stateArticle.vue'
 
 export default {
-  name: 'appCase',
+  name: 'article',
   mixins: [mixins],
-  components: { articleDialog, articleDataList, caseArticle, serviceArticle, stateArticle },
+  components: { articleDialog, articleDataList, serviceArticle, stateArticle },
   data () {
     return {
       // remark update ro create action
@@ -98,7 +84,6 @@ export default {
 
       // if show preview
       previewServiceVisible: false,
-      previewCaseVisible: false,
       previewStateVisible: false,
 
       //
@@ -117,7 +102,6 @@ export default {
 
       // if show data list
       serviceVisible: false,
-      caseVisible: false,
       stateVisible: false,
 
       // article common item
@@ -200,30 +184,20 @@ export default {
       // data list items
       serviceArticleContentItemTypeArray: [
       {
+        value: "text",
+        label: "文本"
+      },
+      {
         value: "imgUpload",
-        label: "图片上传",
+        label: "图片上传"
       },
       {
         value: "imgUrl",
-        label: "图片链接",
+        label: "图片链接"
       },
-      {
-        value: "text",
-        label: "文章",
-        min: 1
-      }],
-
-      // data list items
-      caseArticleContentItemTypeArray: [
       {
         value: "videoUrl",
-        label: "视频链接",
-        fix: 1,
-      },
-      {
-        value: "text",
-        label: "文章",
-        min: 1
+        label: "视频链接"
       }]
     }
   },
@@ -237,7 +211,7 @@ export default {
     dialogVisible: function(newValue, oldValue) {
       if(newValue === false)
       {
-        this.serviceVisible = this.caseVisible = this.stateVisible = this.serviceVisible = false;
+        this.serviceVisible = this.stateVisible =  false;
       }
     }
   },
@@ -245,25 +219,6 @@ export default {
   methods: {
     preview: function(mainTag)
     {
-      switch(mainTag)
-      {
-        case 'state':
-          {
-            this.previewStateVisible = true;
-          }
-          break;
-        case 'service':
-          {
-            this.previewServiceVisible = true;
-          }
-          break;
-        case 'case':
-          {
-            this.previewCaseVisible = true;
-          }
-          break;
-      }
-
       this.previewArticle.title = this.article.title;
       this.previewArticle.desc = this.article.desc;
       this.previewArticle.img = this.article.img;
@@ -276,6 +231,20 @@ export default {
           data: item.data
         }
       });
+
+      switch(mainTag)
+      {
+        case 'state':
+          {
+            this.previewStateVisible = true;
+          }
+          break;
+        case 'service':
+          {
+            this.previewServiceVisible = true;
+          }
+          break;
+      }
     },
     articleOptFinish: function () {
       switch(this.articleOptType)
@@ -362,7 +331,7 @@ export default {
       }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
-          this.$message.error(msg);
+          return this.$message.error(msg);
         }
 
         // init article
@@ -385,13 +354,9 @@ export default {
         {
           this.stateVisible = true;
         }
-        else if(this.mainTableData[row.$index].tags.find(tag => tag === "service"))
-        {
-          this.serviceVisible = true;
-        }
         else
         {
-          this.caseVisible = true;
+          this.serviceVisible = true;
         }
 
         //
@@ -399,15 +364,18 @@ export default {
       })
     },
     deleteArticle: function(row) {
-      
-      
-    },
-    showCreateCase: function() {
-      this.dialogVisible = true;
+      this.$axios.post("/delArticle", {
+        filename: row.filename
+      }).then(({ code, data, msg }) => {
+        if(code !== 0)
+        {
+          return this.$message.error(msg);
+        }
 
-      this.caseVisible = true;
+        this.getList(1);
 
-      this.articleOptType = "create";
+        this.$message.success("delete success");
+      });
     },
     showCreateService: function() {
       this.dialogVisible = true;
@@ -434,7 +402,7 @@ export default {
       }).then(({ code, data, msg }) => {
         if(code !== 0)
         {
-          this.$message.error(msg);
+          return this.$message.error(msg);
         }
 
         this.mainTableData = data.data;

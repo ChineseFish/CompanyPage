@@ -74,8 +74,7 @@ export default {
       // tags map
       tagsMap: {
         state: "动态",
-        service: "服务",
-        case: "案例"
+        service: "服务"
       },
       mainTag: "state"
     }
@@ -100,7 +99,17 @@ export default {
 
   created()
   {
-    
+    // handle tags
+    this.article.tags = this.article.tags.filter(tag => {
+      if(this.tagsMap[tag])
+      {
+        this.mainTag = tag;
+
+        return false;
+      }
+
+      return true;
+    })
   },
 
   watch: {
@@ -135,8 +144,6 @@ export default {
     preview()
     {
       this.$emit("preview", this.mainTag);
-
-      this.dialogVisible = false;
     },
     closeDialog()
     {
