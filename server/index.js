@@ -65,4 +65,3 @@ process[Symbol.for("stoplight")].await(() => {
     console.log('server listening at http://%s:%s', host, 8080)
   })
 })
-
