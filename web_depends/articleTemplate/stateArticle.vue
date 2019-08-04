@@ -1,40 +1,36 @@
 <template>
-  <div style="display:flex;flex-direction:column;align-items:center;width:100%">
+  <div style="display:flex;flex-direction:column;align-items:center;">
     <slot></slot>
-    <div style="fontSize:50px;border-bottom: 1px solid #dcdfe6;width:80%;padding:20px;">
+    <div class="title">
       <strong>{{previewArticle.title}}</strong>
     </div>
+    
     <div
-      style="display:flex;justify-content:flex-start;margin-top:20px;margin-bottom:20px;width:50%;"
+      style="display:flex;justify-content:flex-start;margin-top:20px;margin-bottom:20px;width:100%;"
     >
-      <span>摘要</span>
-      <strong>{{previewArticle.desc}}</strong>
+      <el-card shadow="always" style="width:100%;display:flex;">
+        <span>摘要</span>
+        <strong>{{previewArticle.desc}}</strong>
+      </el-card>
     </div>
 
-    <img style="width:80%;margin-top:20px;" :src="`/getPhoto?filename=${previewArticle.img}`" />
+    <img style="width:60%;margin-top:20px;" :src="`/getPhoto?filename=${previewArticle.img}`" />
     <template v-for="(item, index) in previewArticle.data">
       <div
-        style="display:flex;justify-
-      :flex-start;width:80%;margin-top:20px;"
+        class="text"
         v-if="item.type === 'text'"
         :key="index"
       >
-        <span>{{item.data}}</span>
+        &nbsp&nbsp&nbsp&nbsp<pre>{{item.data}}</pre>
       </div>
-      <div v-if="item.type === 'imgUpload'" :key="index">
-        <img style="width:80%;margin-top:20px;" :src="`/getPhoto?filename=${item.data}`" />
-      </div>
-      <div v-if="item.type === 'imgUrl'" :key="index">
-        <img style="width:80%;margin-top:20px;" :src="item.data" />
-      </div>
-      <div v-if="item.type === 'videoUrl'" :key="index">
-        <video
-          :src="item.data"
-          width="800px"
-          height="600px"
-          controls="controls"
-        >Your browser does not support the video tag.</video>
-      </div>
+      <img v-if="item.type === 'imgUrl'" :key="index" class="img" :src="`/getPhoto?filename=${item.data}`" />
+      <img v-if="item.type === 'imgUrl'" :key="index" class="img" :src="item.data" />
+      <video
+        v-if="item.type === 'videoUrl'" :key="index"
+        :src="item.data"
+        controls="controls"
+        class="video"
+      >Your browser does not support the video tag.</video>
     </template>
   </div>
 </template>
@@ -66,15 +62,7 @@ export default {
 </script>
 
 <style scoped>
-div {
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-  font-size: 22px;
-  color: #909399;
-  font-weight: 400;
-  line-height: 2em;
-  word-break: break-all; /*支持IE，chrome，FF不支持*/
-  word-wrap: break-word; /*支持IE，chrome，FF*/
-  overflow: hidden;
-}
+@import './article.css';
+
 </style>
 

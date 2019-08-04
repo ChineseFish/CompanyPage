@@ -1,35 +1,37 @@
 <template>
-  <div style="display:flex;flex-direction:column;align-items:center;width:100%">
+  <div style="display:flex;flex-direction:column;align-items:center;">
     <slot></slot>
-    <div style="fontSize:50px;border-bottom: 1px solid #dcdfe6;width:80%;padding:20px;">
+    <div class="title" style="margin-bottom:40px;">
       <strong>{{previewArticle.title}}</strong>
     </div>
 
-    <div style="margin-top:20px;margin-bottom:20px;border-bottom: 1px solid #dcdfe6;width:80%;padding:20px;">
-      <video :src="videoUrl" controls="controls">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    
-    <div style="width:50%;border-bottom: 1px solid #dcdfe6;padding:20px;">
-      <el-carousel :interval="4000" type="card" width="100%">
+    <video :src="videoUrl" controls="controls" class="video">
+      Your browser does not support the video tag.
+    </video>
+
+    <div style="width:80%;border-top: 1px solid #dcdfe6;border-bottom: 1px solid #dcdfe6;margin-top:80px;padding-top:80px;padding-bottom:80px;">
+      <el-carousel :interval="4000" type="card">
         <el-carousel-item v-for="(img, index) in imgs" :key="index">
-          <img v-if="img.type==='imgUpload'" style :src="`/getPhoto?filename=${img.data}`" />
-          <img v-if="img.type==='imgUrl'" style :src="img.data" />
+          <img v-if="img.type==='imgUpload'" style="width:100%" :src="`/getPhoto?filename=${img.data}`" />
+          <img v-if="img.type==='imgUrl'" style="width:100%" :src="img.data" />
         </el-carousel-item>
       </el-carousel>
     </div>
 
-    <div style="display:flex;justify-content:flex-start;width:80%;font-size:40px;margin-bottom:20px">
-      <strong>详细信息</strong>
+    <div
+      style="display:flex;justify-content:flex-start;margin-top:80px;margin-bottom:20px;width:100%;"
+    >
+      <el-card shadow="always"  style="display:flex;width:100%;">
+        <strong>详细信息</strong>
+      </el-card>
     </div>
-
+   
     <template v-for="(item, index) in detailData">
-      <div style="display:flex;justify-
-      :flex-start;width:80%;margin-top:20px;" :key="index">
-        <span>{{item}}</span>
+      <div class="text" :key="index">
+        &nbsp&nbsp&nbsp&nbsp<span>{{item}}</span>
       </div>
     </template>
+
   </div>
 </template>
 
@@ -77,6 +79,8 @@ export default {
 </script>
 
 <style scoped>
+@import './article.css';
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
@@ -91,17 +95,6 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
-}
-
-div {
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-  font-size: 22px;
-  color: #909399;
-  font-weight: 400;
-  line-height: 2em;
-  word-break: break-all; /*支持IE，chrome，FF不支持*/
-  word-wrap: break-word; /*支持IE，chrome，FF*/
-  overflow: hidden;
 }
 </style>
 

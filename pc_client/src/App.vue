@@ -1,10 +1,9 @@
 <template>
   <div id="app" style="display:flex;flex-direction:column;align-items:center;">
     <fixed-header></fixed-header>
-    <div style="position:fixed;width:100%;top:100px;">
-      <keep-alive>
-        <router-view/>
-      </keep-alive>
+    <div style="width:80%;min-width:1280px;margin-top:100px;margin-bottom:100px;">
+      <navigator></navigator>
+      <router-view/>
     </div>
     <fixed-footer></fixed-footer>
     <fixed-box></fixed-box>
@@ -15,10 +14,11 @@
 import fixedHeader from "./components/fixedHeader.vue"
 import fixedFooter from "./components/fixedFooter.vue"
 import fixedBox from "./components/fixedBox.vue"
+import navigator from "./components/navigator.vue"
 
   export default {
     name: 'App',
-    components: { fixedHeader, fixedFooter, fixedBox },
+    components: { fixedHeader, fixedFooter, fixedBox, navigator },
     data () {
       return {
         

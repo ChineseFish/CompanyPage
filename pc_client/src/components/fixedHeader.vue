@@ -1,10 +1,12 @@
 <template>
-  <div style="position:fixed;width:100%;height:100px;">this is header</div>
+  <div style="position:fixed;width:80%;min-width:1280px;height:100px;display:flex;align-items:center;">
+    <span>Header</span>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "header",
+  name: "fixedHeader",
   data() {
     return {};
   },

@@ -14,8 +14,24 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import('./views/home.vue')
     }, {
-      name: 'state',
+      path: '/service',
+      name: 'service',
+      component: () => import('./views/service.vue'),
+    }, {
+      path: '/service/:tag',
+      name: 'serviceTag',
+      component: () => import('./views/service.vue'),
+    }, {
+      path: '/article/:filename',
+      name: 'article',
+      component: () => import('./views/articleWrapper.vue'),
+    }, {
       path: '/state',
+      name: 'state',
+      component: () => import('./views/state.vue'),
+    }, {
+      path: '/state/:tag',
+      name: 'stateTag',
       component: () => import('./views/state.vue'),
     }
   ]

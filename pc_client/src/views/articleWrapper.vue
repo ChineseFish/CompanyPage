@@ -1,0 +1,53 @@
+<template>
+  <div>
+    <service-article
+      v-if="whichArticleToShow === 'service'"
+      :previewVisible="true"
+      :previewArticle="article"
+    ></service-article>
+    <state-article v-else :previewVisible="true" :previewArticle="article"></state-article>
+  </div>
+</template>
+
+<script>
+import serviceArticle from "../../../web_depends/articleTemplate/serviceArticle.vue";
+import stateArticle from "../../../web_depends/articleTemplate/stateArticle.vue";
+
+export default {
+  name: "articleWrapper",
+  components: { serviceArticle, stateArticle },
+  data: function() {
+    return {
+      article: {},
+
+      whichArticleToShow: ""
+    };
+  },
+
+  created: function() {
+    this.$axios
+      .get("/getArticle", {
+        filename: this.$route.params.filename
+      })
+      .then(({ code, data, msg }) => {
+        if (code !== 0) {
+          return this.$message.error(msg);
+        }
+
+        this.article = data;
+
+        if (this.article.tags.find(tag => tag === "service")) {
+          this.whichArticleToShow = "service";
+        } else {
+          this.whichArticleToShow = "state";
+        }
+      });
+  },
+
+  methods: {}
+};
+</script>
+
+<style scoped>
+</style>
+
