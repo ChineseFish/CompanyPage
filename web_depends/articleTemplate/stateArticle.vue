@@ -1,5 +1,5 @@
 <template>
-  <div class="content" style="display:flex;flex-direction:column;align-items:center;">
+  <div class="content">
     <slot></slot>
     <div class="title">
       <strong>{{previewArticle.title}}</strong>

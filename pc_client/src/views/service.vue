@@ -3,56 +3,42 @@
     <div class="serviceHeaderImg">
       <span>服务项目</span>
     </div>
-    <div style="display:flex;">
-      <span class="headerTags">商业活动</span>
-      <span class="headerTags">文艺演出</span>
-      <span class="headerTags">数字展馆</span>
-      <span class="headerTags">光影亮化</span>
-      <span class="headerTags">沉浸空间</span>
-      <span class="headerTags">创意互动</span>
+    <div style="width:80%;">
+      <div style="display:flex;">
+        <span class="headerTags">商业活动</span>
+        <span class="headerTags">文艺演出</span>
+        <span class="headerTags">数字展馆</span>
+        <span class="headerTags">光影亮化</span>
+        <span class="headerTags">沉浸空间</span>
+        <span class="headerTags">创意互动</span>
+      </div>
+      <div style="width:100%;dispaly:flex;">
+        <el-row v-for="(articleSet, index) in articleContentTableData" :key="index">
+          <el-col :span="8" v-for="(article, index) in articleSet" :key="index">
+            <el-card class="card" :body-style="{ padding: '0px' }" shadow="hover">
+              <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image" @click="checkArticle(article)">
+              <div style="padding: 14px;">
+                <span>{{article.title}}</span>
+                <div class="bottom clearfix">
+                  <time class="time">{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          @size-change="sizeChange"
+          @current-change="currentChange"
+          @prev-click="prePage"
+          @next-click="nextPage"
+          :total="pagination.total">
+        </el-pagination>
+      </div>
     </div>
-    <avue-crud 
-    style="width:100%;"
-    :table-loading="tableLoading"
-    :page="pagination"
-    :data="articleContentTableData" 
-    :option="articleContentTableOption"
-    @size-change="sizeChange"
-    @current-change="currentChange">
-      <template slot-scope="scope" slot="articleOne">
-         <el-card class="card" v-if="scope.row.articleOne" :body-style="{ padding: '0px' }" shadow="hover">
-          <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${scope.row.articleOne.img}`" class="image" @click="checkArticle(scope.row.articleOne)">
-          <div style="padding: 14px;">
-            <span>{{scope.row.articleOne.title}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ new Date(scope.row.articleOne.updateTime).Format("yyyy-MM-dd")}}</time>
-            </div>
-          </div>
-        </el-card>
-      </template>
-      <template slot-scope="scope" slot="articleTwo">
-         <el-card class="card" v-if="scope.row.articleTwo" :body-style="{ padding: '0px' }" shadow="hover">
-          <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${scope.row.articleTwo.img}`" class="image" @click="checkArticle(scope.row.articleTwo)">
-          <div style="padding: 14px;">
-            <span>{{scope.row.articleTwo.title}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ new Date(scope.row.articleTwo.updateTime).Format("yyyy-MM-dd")}}</time>
-            </div>
-          </div>
-        </el-card>
-      </template>
-      <template slot-scope="scope" slot="articleThree">
-         <el-card class="card" v-if="scope.row.articleThree" :body-style="{ padding: '0px' }" shadow="hover">
-          <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${scope.row.articleThree.img}`" class="image" @click="checkArticle(scope.row.articleThree)">
-          <div style="padding: 14px;">
-            <span>{{scope.row.articleThree.title}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ new Date(scope.row.articleThree.updateTime).Format("yyyy-MM-dd")}}</time>
-            </div>
-          </div>
-        </el-card>
-      </template>
-    </avue-crud >
   </div>
 </template>
 
@@ -64,33 +50,7 @@ import mixins from '../mixins';
     mixins: [mixins],
     data () {
       return {
-        articleContentTableData: [],
-        articleContentTableOption: {
-          border: false,
-          menu: false,
-          showHeader: false,
-          page: true,
-          sortable: true,
-          addBtn: false,
-          columnBtn: false,
-          refreshBtn: false,
-          column: [{
-              label: 'content',
-              prop: 'articleOne',
-              solt: true
-            },
-            {
-              label: 'content',
-              prop: 'articleTwo',
-              solt: true
-            },
-            {
-              label: 'content',
-              prop: 'articleThree',
-              solt: true
-            }
-          ]
-        }
+        articleContentTableData: []
       }
     },
 
@@ -139,17 +99,15 @@ import mixins from '../mixins';
 
             if(i % 3 === 0)
             {
-              tableData[index] = {
-                articleOne: article
-              }
+              tableData[index] = [ article ];
             }
             else if(i % 3 === 1)
             {
-              tableData[index].articleTwo = article
+              tableData[index].push(article);
             }
             else
             {
-              tableData[index].articleThree = article
+              tableData[index].push(article)
             }
           }
 
@@ -202,6 +160,7 @@ import mixins from '../mixins';
     cursor: pointer;
     width: 400px;
     height: 350px;
+    margin: 40px;
   }
   img {
     width: 400px;

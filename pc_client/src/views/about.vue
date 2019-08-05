@@ -1,7 +1,7 @@
 <template>
   <div class='container'>
     <div class="aboutHeaderImg">
-      <span>关于</span>
+      <span>关于增强</span>
     </div>
   </div>
 </template>

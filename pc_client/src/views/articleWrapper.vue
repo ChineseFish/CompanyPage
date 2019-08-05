@@ -1,15 +1,17 @@
 <template>
-  <div>
+  <div style="display:flex;flex-direction:column;align-items:center;">
     <div :class="whichArticleToShow === 'service' ? 'serviceHeaderImg' : 'stateHeaderImg'">
       <span v-if="whichArticleToShow === 'service'">增强网络动态</span>
       <span v-else>服务项目</span>
     </div>
-    <service-article
-      v-if="whichArticleToShow === 'service'"
-      :previewVisible="true"
-      :previewArticle="article"
-    ></service-article>
-    <state-article v-else :previewVisible="true" :previewArticle="article"></state-article>
+    <div style="width:80%;">
+      <service-article
+        v-if="whichArticleToShow === 'service'"
+        :previewVisible="true"
+        :previewArticle="article"
+      ></service-article>
+      <state-article v-else :previewVisible="true" :previewArticle="article"></state-article>
+    </div>
   </div>
 </template>
 
