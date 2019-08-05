@@ -1,5 +1,5 @@
 <template>
-    <div style="position:fixed;width:100px;height:100px;top:50%;right:0px;">
+    <div style="position:fixed;width:100px;height:100px;top:50%;right:0px;display:flex;justify-content:center;">
         this is fiexed box
     </div>
 </template>

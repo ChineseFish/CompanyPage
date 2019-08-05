@@ -1,5 +1,12 @@
 <template>
   <div class='container'>
+    <div class="stateHeaderImg">
+      <span>增强网络动态</span>
+    </div>
+    <div style="display:flex;">
+      <span class="headerTags">公司动态</span>
+      <span class="headerTags">行业动态</span>
+    </div>
     <avue-crud 
     style="width:100%;height:100%;"
     :table-loading="tableLoading"
@@ -104,18 +111,10 @@ import mixins from '../mixins';
 </script>
 
 <style lang="scss" type scoped>
-.container
-{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
+@import "../assets/css/common.scss";
 </style>
 
-<style>
+<style lang="scss" scoped>
   .button {
     padding: 0;
     float: right;

@@ -1,5 +1,5 @@
 <template>
-  <div style="display:flex;flex-direction:column;align-items:center;">
+  <div class="content" style="display:flex;flex-direction:column;align-items:center;">
     <slot></slot>
     <div class="title">
       <strong>{{previewArticle.title}}</strong>
@@ -61,8 +61,8 @@ export default {
 };
 </script>
 
-<style scoped>
-@import './article.css';
+<style lang="scss" scoped>
+@import './article.scss';
 
 </style>
 

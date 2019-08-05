@@ -11,7 +11,7 @@ import Axios from 'axios'
 
 Vue.use(Avue, Axios)
 Vue.use(ElementUI, {
-	size: 'medium'
+	size: 'big'
 });
 
 Vue.config.productionTip = false

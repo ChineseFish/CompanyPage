@@ -1,5 +1,16 @@
 <template>
   <div class='container'>
+    <div class="serviceHeaderImg">
+      <span>服务项目</span>
+    </div>
+    <div style="display:flex;">
+      <span class="headerTags">商业活动</span>
+      <span class="headerTags">文艺演出</span>
+      <span class="headerTags">数字展馆</span>
+      <span class="headerTags">光影亮化</span>
+      <span class="headerTags">沉浸空间</span>
+      <span class="headerTags">创意互动</span>
+    </div>
     <avue-crud 
     style="width:100%;"
     :table-loading="tableLoading"
@@ -154,15 +165,7 @@ import mixins from '../mixins';
 </script>
 
 <style lang="scss" type scoped>
-.container
-{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
+@import "../assets/css/common.scss";
 </style>
 
 <style>

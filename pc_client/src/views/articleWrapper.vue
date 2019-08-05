@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div :class="whichArticleToShow === 'service' ? 'serviceHeaderImg' : 'stateHeaderImg'">
+      <span v-if="whichArticleToShow === 'service'">增强网络动态</span>
+      <span v-else>服务项目</span>
+    </div>
     <service-article
       v-if="whichArticleToShow === 'service'"
       :previewVisible="true"
@@ -48,6 +52,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../assets/css/common.scss";
 </style>
 
