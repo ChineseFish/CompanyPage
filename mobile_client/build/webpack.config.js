@@ -3,6 +3,8 @@ const HtmlWebpackplugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
+    // 指定打包模式
+    mode: 'development',
     entry: [
         // Babel默认只转换新的JavaScript句法（syntax），而不转换新的API.
         // 比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，
@@ -14,7 +16,7 @@ module.exports = {
     ],
     output: {
         // 配置打包文件输出的目录
-        path: path.resolve(__dirname, '../../server/dist'),
+        path: path.resolve(__dirname, '../../web_transaction_server/dist'),
         // 生成的js文件名称
         filename: 'js/[name].[hash:8].js',
         // chunkname就是未被列在entry中，但有些场景需要被打包出来的文件命名配置。

@@ -1,24 +1,35 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div style="display:flex;flex-direction:column;align-items:center;z-index:1999;">
+    <fixed-header></fixed-header>
+    <div style="width:100%;min-width:1280px;margin-bottom:100px;">
+      <router-view/>
+    </div>
+    <fixed-footer></fixed-footer>
+    <fixed-box></fixed-box>
   </div>
 </template>
 
 <script>
-export default {
-  components: {},
-}
+import fixedHeader from "./components/fixedHeader.vue"
+import fixedFooter from "./components/fixedFooter.vue"
+import fixedBox from "./components/fixedBox.vue"
+
+
+  export default {
+    name: 'App',
+    components: { fixedHeader, fixedFooter, fixedBox },
+    data () {
+      return {
+        
+      }
+    },
+
+    created () {
+      
+    }
+  }
 </script>
 
-<style lang="scss">
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 1080px;
-}
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+<style lang="scss" scoped type>
+
 </style>

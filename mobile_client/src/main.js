@@ -1,57 +1,60 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import ElementUI from 'element-ui'
-import Axios from 'axios'
-import VueAxios from 'vue-axios'
-import Avue from '@smallwei/avue/lib/index.js'
-
-import 'element-ui/lib/theme-chalk/index.css'
+import store from './store'
 import './registerServiceWorker'
-import '@/assets/iconfonts/iconfont.css'
-import '@/style/common.scss'
-import '@smallwei/avue/lib/theme-chalk/index.css'
+import ElementUI from 'element-ui';
+import '~/../../web_depends/assets/css/theme-green/index.css'
+import axios from './net/axios';
+import Avue from '@smallwei/avue/lib/index.js'
+import Axios from 'axios'
 
-import banner from '@/components/banner'
-import crumbs from '@/components/crumbs'
-import channel from '@/components/channel'
-import description from '@/components/description'
-import listTitle from '@/components/listTitle'
-import GovButton from '@/components/govButton/index'
-import GovSearchBar from '@/components/govSearchBar/index'
-import GovDialog from '@/components/govDialog/index'
-
-const components = [
-  banner,
-  crumbs,
-  channel,
-  description,
-  listTitle,
-  GovButton,
-  GovSearchBar,
-  GovDialog,
-]
-
-components.forEach(component => {
-  Vue.component(component.name, component)
-})
+Vue.use(Avue, Axios)
+Vue.use(ElementUI, {
+	size: 'big'
+});
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
-Vue.use(Avue, Axios)
-Vue.use(VueAxios, Axios)
 
-Axios.interceptors.response.use((response) => {
-  if (response.data.code === 7) {
-    router.push({ path: '/login' })
-    ElementUI.Message.error('用户未登录，请先登录')
-    return Promise.reject(response)
-  } else {
-    return Promise.resolve(response)
-  }
-})
+Vue.prototype.$axios = axios;
+Vue.prototype.$notify = {
+	success: opts => {
+		Notification.success(opts);
+	},
+
+	error: opts => {
+		Notification.error(opts);
+	},
+
+	warn: opts => {
+		Notification.warning(opts);
+	}
+}
+
+// 对Date的扩展，将 Date 转化为指定格式的String
+// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
+// 例子： 
+// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+Date.prototype.Format = function (fmt) { //author: meizz 
+	var o = {
+		"M+": this.getMonth() + 1, //月份 
+		"d+": this.getDate(), //日 
+		"h+": this.getHours(), //小时 
+		"m+": this.getMinutes(), //分 
+		"s+": this.getSeconds(), //秒 
+		"q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		"S": this.getMilliseconds() //毫秒 
+	};
+	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	for (var k in o)
+		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	return fmt;
+}
 
 new Vue({
-  router,
-  render: h => h(App),
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')
