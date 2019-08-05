@@ -6,7 +6,9 @@ import './registerServiceWorker'
 import ElementUI from 'element-ui';
 import '~/../../web_depends/assets/css/theme-green/index.css'
 import axios from './net/axios';
+import Mint from 'mint-ui';
 
+Vue.use(Mint);
 Vue.use(ElementUI, {
 	size: 'big'
 });
