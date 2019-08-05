@@ -6,10 +6,7 @@ import './registerServiceWorker'
 import ElementUI from 'element-ui';
 import '~/../../web_depends/assets/css/theme-green/index.css'
 import axios from './net/axios';
-import Avue from '@smallwei/avue/lib/index.js'
-import Axios from 'axios'
 
-Vue.use(Avue, Axios)
 Vue.use(ElementUI, {
 	size: 'big'
 });
