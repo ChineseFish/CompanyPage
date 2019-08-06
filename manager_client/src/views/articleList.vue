@@ -20,6 +20,12 @@
         <el-table-column prop="title" label="标题"></el-table-column>
 
         <el-table-column prop="desc" label="描述"></el-table-column>
+        
+        <el-table-column label="标签">
+          <template slot-scope="scope">
+            <span>{{scope.row.tags.join('、')}}</span>
+          </template>
+        </el-table-column>
 
         <el-table-column label="创建时间">
           <template slot-scope="scope">

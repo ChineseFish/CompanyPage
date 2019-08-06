@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss">
-div {
+body div {
   font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   font-size: 21px;
   color: #909399;

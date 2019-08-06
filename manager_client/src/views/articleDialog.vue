@@ -20,32 +20,19 @@
           <el-form-item label="desc">
               <el-input v-model="article.desc"></el-input>
           </el-form-item>
+
           <el-form-item label="tags">
             <div style="display:flex;justify-content:flex-start;align-items:center;">
-              <el-dropdown style="margin-right:10px;" trigger="click" @command="selectMainTag">
-                <el-tag style="width:200px;" :disable-transitions="false">
-                  {{tagsMap[mainTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
-                </el-tag>
-                <el-dropdown-menu style="width:200px;" slot="dropdown">
-                  <el-dropdown-item v-for="(val, key) in tagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <strong style="margin-right:10px;width:200px;text-align:center;">
+                {{mainTagsMap[mainTag]}}
+              </strong>
 
-              <el-dropdown v-if="mainTag === 'service'" style="margin-right:10px;" trigger="click" @command="selectServiceSubTag">
+              <el-dropdown style="margin-right:10px;" trigger="click" @command="selectTag">
                 <el-tag style="width:200px;" :disable-transitions="false">
-                  {{serviceTagsMap[serviceSubTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{allTagsMap[subTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-tag>
                 <el-dropdown-menu style="width:200px;" slot="dropdown">
-                  <el-dropdown-item v-for="(val, key) in serviceTagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-
-              <el-dropdown v-else style="margin-right:10px;" trigger="click" @command="selectStateSubTag">
-                <el-tag style="width:200px;" :disable-transitions="false">
-                  {{stateTagsMap[stateSubTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
-                </el-tag>
-                <el-dropdown-menu style="width:200px;" slot="dropdown">
-                  <el-dropdown-item v-for="(val, key) in stateTagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
+                  <el-dropdown-item v-for="(val, key) in allTagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
 
@@ -92,23 +79,38 @@ export default {
       addTagValue: '',
       
       // tags map
-      tagsMap: {
+      mainTagsMap: {
         state: "动态",
         service: "服务"
       },
       mainTag: "state",
 
       serviceTagsMap: {
-        one: "测试1",
-        two: "测试1"
+        serviceBusiness: "商业活动",
+        serviceShow: "文艺演出",
+        serviceGallery: "数字展馆",
+        serviceLight: "光影亮化",
+        serviceImmerse: "沉浸空间",
+        serviceInteract: "创意互动",
       },
-      serviceSubTag: "one",
 
       stateTagsMap: {
-        one: "测试2",
-        two: "测试2"
+        stateCompany: "公司动态",
+        stateIndustry: "行业动态"
       },
-      stateSubTag: "one",
+
+      allTagsMap: {
+        serviceBusiness: "商业活动",
+        serviceShow: "文艺演出",
+        serviceGallery: "数字展馆",
+        serviceLight: "光影亮化",
+        serviceImmerse: "沉浸空间",
+        serviceInteract: "创意互动",
+
+        stateCompany: "公司动态",
+        stateIndustry: "行业动态"
+      },
+      subTag: "serviceBusiness"
     }
   },
 
@@ -133,13 +135,29 @@ export default {
   {
     // handle tags
     this.article.tags = this.article.tags.filter(tag => {
-      if(this.tagsMap[tag])
+      if(this.serviceTagsMap[tag])
       {
-        this.mainTag = tag;
+        this.mainTag = 'service';
+        this.subTag = tag;
 
         return false;
       }
 
+      if(this.stateTagsMap[tag])
+      {
+        this.mainTag = 'state'
+        this.subTag = tag;
+
+        return false;
+      }
+
+      if(this.mainTagsMap[tag])
+      {
+        this.mainTag = tag;
+        
+        return false;
+      }
+      
       return true;
     })
   },
@@ -160,26 +178,49 @@ export default {
 
       // handle tags
       this.article.tags = this.article.tags.filter(tag => {
-        if(this.tagsMap[tag])
+        if(this.serviceTagsMap[tag])
+        {
+          this.mainTag = 'service';
+          this.subTag = tag;
+
+          return false;
+        }
+
+        if(this.stateTagsMap[tag])
+        {
+          this.mainTag = 'state'
+          this.subTag = tag;
+
+          return false;
+        }
+
+        if(this.mainTagsMap[tag])
         {
           this.mainTag = tag;
-
+          
           return false;
         }
 
         return true;
       })
+    },
+
+    subTag: function(newValue) {
+      if(this.serviceTagsMap[newValue])
+      {
+        this.mainTag = 'service';
+      }
+      else
+      {
+        this.mainTag = 'state'
+      }
     }
   },
 
   methods: {
-    selectServiceSubTag()
+    selectTag(tag)
     {
-
-    },
-    selectStateSubTag()
-    {
-
+      this.subTag = tag;
     },
     preview()
     {
@@ -194,6 +235,7 @@ export default {
     {
       // record mainTag
       this.article.tags.push(this.mainTag);
+      this.article.tags.push(this.subTag);
 
       this.$emit('articleOptFinish')
     },
@@ -219,11 +261,6 @@ export default {
       this.$message.error(`upload header img failed, ${err}`);
     },
 
-    selectMainTag(tag)
-    {
-      this.mainTag = tag;
-    },
-
     addTag() {
       let addTagValue = this.addTagValue;
       if (addTagValue) {
@@ -247,7 +284,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .el-tag + .el-tag {
     margin-left: 10px;
   }
