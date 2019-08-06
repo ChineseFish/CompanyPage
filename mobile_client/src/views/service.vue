@@ -3,7 +3,7 @@
     <div class="serviceHeaderImg">
       <span>服务项目</span>
     </div>
-    <div style="width:80%;">
+    <div style="width:100%;">
       <div style="display:flex;">
         <span class="headerTags">商业活动</span>
         <span class="headerTags">文艺演出</span>
@@ -12,20 +12,18 @@
         <span class="headerTags">沉浸空间</span>
         <span class="headerTags">创意互动</span>
       </div>
-      <div style="width:100%;dispaly:flex;">
-        <el-row v-for="(articleSet, index) in articleContentTableData" :key="index">
-          <el-col :span="8" v-for="(article, index) in articleSet" :key="index">
-            <el-card class="card" :body-style="{ padding: '0px' }" shadow="hover">
-              <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image" @click="checkArticle(article)">
-              <div style="padding: 14px;">
-                <span>{{article.title}}</span>
-                <div class="bottom clearfix">
-                  <time class="time">{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
-                </div>
+      <div style="width:100%;dispaly:flex;flex-direction:column;">
+        <el-card v-for="(article, index) in articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover" @click="checkArticle(article)">
+          <div style="display:flex;align-items:center;">
+            <img :src="`/getBreviaryPhoto?width=125&height=100&filename=${article.img}`" style="width:125px;height:100px;">
+            <div style="padding:14px;">
+              <span>{{article.title}}</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
               </div>
-            </el-card>
-          </el-col>
-        </el-row>
+            </div>
+          </div>
+        </el-card>
       </div>
       <div style="display:flex;justify-content:flex-end;">
         <el-pagination
@@ -90,28 +88,7 @@ import mixins from '../mixins';
             tableDataTotal.push(article)
           }
 
-          let tableData = [];
-          for(let i = 0; i < tableDataTotal.length; i++)
-          {
-            let article = tableDataTotal[i];
-
-            const index = Math.floor(i / 3);
-
-            if(i % 3 === 0)
-            {
-              tableData[index] = [ article ];
-            }
-            else if(i % 3 === 1)
-            {
-              tableData[index].push(article);
-            }
-            else
-            {
-              tableData[index].push(article)
-            }
-          }
-
-          this.articleContentTableData = tableData;
+          this.articleContentTableData = tableDataTotal;
 
           this.pagination.total = data.total;
         }).finally(() => {
@@ -142,29 +119,21 @@ import mixins from '../mixins';
     float: right;
   }
 
-  .image {
-    width: 100%;
-    display: block;
-  }
-
   .clearfix:before,
   .clearfix:after {
-      display: table;
-      content: "";
+    display: table;
+    content: "";
   }
   
   .clearfix:after {
-      clear: both
+    clear: both
   }
   .card {
     cursor: pointer;
-    width: 400px;
-    height: 350px;
-    margin: 40px;
-  }
-  img {
-    width: 400px;
-    height: 250px;
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 </style>
 

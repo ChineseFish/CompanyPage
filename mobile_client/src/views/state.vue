@@ -107,7 +107,7 @@ import mixins from '../mixins';
   }
 
   .image {
-    width: 400px;
+    width: 100px;
     display: block;
   }
 
@@ -123,16 +123,12 @@ import mixins from '../mixins';
   .card {
     cursor: pointer;
     width: 100%;
-    height: 250px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
-  img {
-    width: 400px;
-    height: 250px;
-  }
-  div{
-      font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  div {
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
     font-size: 18px;
     color: #909399;
     font-weight: 400;

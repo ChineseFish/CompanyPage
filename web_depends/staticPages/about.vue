@@ -18,5 +18,5 @@
 </script>
 
 <style lang="scss" type scoped>
-@import "../assets/css/common.scss";
+@import "../../pc_client/src/assets/css/common.scss";
 </style>

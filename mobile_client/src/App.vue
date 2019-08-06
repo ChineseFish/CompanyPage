@@ -1,7 +1,7 @@
 <template>
-  <div style="display:flex;flex-direction:column;align-items:center;z-index:1999;">
+  <div style="display:flex;flex-direction:column;align-items:center;">
     <fixed-header></fixed-header>
-    <div style="width:100%;min-width:1280px;margin-bottom:100px;">
+    <div style="position:absolute;z-index:-1;width:100%;top:0px;margin-bottom:100px;">
       <router-view/>
     </div>
     <fixed-footer></fixed-footer>
