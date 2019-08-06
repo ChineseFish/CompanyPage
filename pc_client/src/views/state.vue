@@ -12,7 +12,7 @@
           <el-card v-for="(article, index) of articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover">
               <div style="display: flex;flex-direction: row;" @click="checkArticle(article)">
                   <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image">
-                  <div style="display:flex;flex-direction:column;padding: 14px;">
+                  <div style="display:flex;flex-direction:column;padding:10px;">
                       <span>{{article.title}}</span>
                       <div class="clearfix">
                           <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
@@ -22,7 +22,7 @@
               </div>
           </el-card>
       </div>
-      <div style="display:flex;justify-content:flex-end;">
+      <div style="display:flex;justify-content:flex-end;margin-top:20px;">
         <el-pagination
           background
           layout="prev, pager, next"
@@ -122,10 +122,9 @@ import mixins from '../mixins';
   }
   .card {
     cursor: pointer;
-    width: 100%;
+    width: 98%;
     height: 250px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 40px 0px 0px 0px;
   }
   img {
     width: 400px;

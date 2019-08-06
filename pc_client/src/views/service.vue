@@ -17,8 +17,8 @@
           <el-col :span="8" v-for="(article, index) in articleSet" :key="index">
             <el-card class="card" :body-style="{ padding: '0px' }" shadow="hover">
               <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image" @click="checkArticle(article)">
-              <div style="padding: 14px;">
-                <span>{{article.title}}</span>
+              <div style="display:flex;flex-direction:column;align-items:center;padding: 14px;background-color: rgba(0, 0, 0, 0.12);">
+                <span style="font-size:30px;">{{article.title}}</span>
                 <div class="bottom clearfix">
                   <time class="time">{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
                 </div>
@@ -127,35 +127,11 @@ import mixins from '../mixins';
 </style>
 
 <style>
-.time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
   .image {
     width: 100%;
     display: block;
   }
 
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .clearfix:after {
-      clear: both
-  }
   .card {
     cursor: pointer;
     width: 400px;

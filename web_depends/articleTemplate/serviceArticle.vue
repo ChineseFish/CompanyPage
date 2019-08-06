@@ -28,7 +28,7 @@
    
     <template v-for="(item, index) in detailData">
       <div class="text" :key="index">
-        &nbsp&nbsp&nbsp&nbsp<span>{{item}}</span>
+        <p>&nbsp&nbsp&nbsp&nbsp{{item}}</p>
       </div>
     </template>
 

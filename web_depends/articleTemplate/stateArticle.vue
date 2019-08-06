@@ -21,7 +21,7 @@
         v-if="item.type === 'text'"
         :key="index"
       >
-        &nbsp&nbsp&nbsp&nbsp<pre>{{item.data}}</pre>
+        <p>&nbsp&nbsp&nbsp&nbsp{{item.data}}</p>
       </div>
       <img v-if="item.type === 'imgUrl'" :key="index" class="img" :src="`/getPhoto?filename=${item.data}`" />
       <img v-if="item.type === 'imgUrl'" :key="index" class="img" :src="item.data" />
