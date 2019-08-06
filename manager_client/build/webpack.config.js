@@ -27,7 +27,7 @@ module.exports = {
         contentBase: false,
         compress: true,
         hot: true,
-        port: 7070,
+        port: 8000,
         proxy: {
             '/': {
                 target: 'http://127.0.0.1:8080/',
