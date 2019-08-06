@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <router-view></router-view>
   </div>
 </template>
@@ -19,15 +19,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped type>
-#app {
-  display: flex;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #606266;
-  width: 100%;
-  height: 1000px;
+<style lang="scss">
+div {
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  font-size: 21px;
+  color: #909399;
+  font-weight: 400;
+  line-height: 2em;
+  word-break: break-all; /*支持IE，chrome，FF不支持*/
+  word-wrap: break-word; /*支持IE，chrome，FF*/
+  overflow: hidden;
 }
 </style>

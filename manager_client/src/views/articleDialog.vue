@@ -21,8 +21,8 @@
               <el-input v-model="article.desc"></el-input>
           </el-form-item>
           <el-form-item label="tags">
-            <div style="display:flex;justify-content:flex-start;">
-              <el-dropdown style="margin-left:10px" trigger="click" @command="selectMainTag">
+            <div style="display:flex;justify-content:flex-start;align-items:center;">
+              <el-dropdown style="margin-right:10px;" trigger="click" @command="selectMainTag">
                 <el-tag style="width:200px;" :disable-transitions="false">
                   {{tagsMap[mainTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-tag>
@@ -30,7 +30,27 @@
                   <el-dropdown-item v-for="(val, key) in tagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
+
+              <el-dropdown v-if="mainTag === 'service'" style="margin-right:10px;" trigger="click" @command="selectServiceSubTag">
+                <el-tag style="width:200px;" :disable-transitions="false">
+                  {{serviceTagsMap[serviceSubTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
+                </el-tag>
+                <el-dropdown-menu style="width:200px;" slot="dropdown">
+                  <el-dropdown-item v-for="(val, key) in serviceTagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+
+              <el-dropdown v-else style="margin-right:10px;" trigger="click" @command="selectStateSubTag">
+                <el-tag style="width:200px;" :disable-transitions="false">
+                  {{stateTagsMap[stateSubTag]}}<i class="el-icon-arrow-down el-icon--right"></i>
+                </el-tag>
+                <el-dropdown-menu style="width:200px;" slot="dropdown">
+                  <el-dropdown-item v-for="(val, key) in stateTagsMap" :key="'dropDown_' + key" :command="key">{{val}}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+
               <el-tag
+                style="margin-right:10px;"
                 :key="index"
                 v-for="(tag, index) in article.tags"
                 closable
@@ -76,7 +96,19 @@ export default {
         state: "动态",
         service: "服务"
       },
-      mainTag: "state"
+      mainTag: "state",
+
+      serviceTagsMap: {
+        one: "测试1",
+        two: "测试1"
+      },
+      serviceSubTag: "one",
+
+      stateTagsMap: {
+        one: "测试2",
+        two: "测试2"
+      },
+      stateSubTag: "one",
     }
   },
 
@@ -141,6 +173,14 @@ export default {
   },
 
   methods: {
+    selectServiceSubTag()
+    {
+
+    },
+    selectStateSubTag()
+    {
+
+    },
     preview()
     {
       this.$emit("preview", this.mainTag);

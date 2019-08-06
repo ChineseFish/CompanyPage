@@ -1,7 +1,9 @@
 <template>
-  <div id="container">
-    <el-header class="header-bar">后台管理中心</el-header>
-    <router-view></router-view>
+  <div class="container">
+    <el-header class="headerBar">后台管理中心</el-header>
+    <div style="width:80%;">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -10,23 +12,26 @@ export default {
   name: "manager",
   data () {
     return {
-      activeIndex: '1'
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#container {
-  height: 100vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
-.header-bar {
+
+.headerBar {
+  width: 100%;
   text-align: center;
-  color: #000000;
   line-height: 60px;
-  font-size: 25px;
-  background: #eeeeee;
+  font-size: 40px;
+  padding: 40px;
+  margin-bottom: 40px;
 }
 </style>
 

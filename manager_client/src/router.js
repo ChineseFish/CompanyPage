@@ -9,7 +9,7 @@ export default new Router({
     {
       name: 'manager',
       path: '/',
-      redirect: { name: 'article' },
+      redirect: { name: 'articleList' },
       component: () => import('./views/manager.vue'),
       meta: {
         label: '后台管理',
@@ -17,9 +17,9 @@ export default new Router({
       },
       children: [
         {
-          name: 'article',
-          path: 'article',
-          component: () => import('./views/article.vue'),
+          name: 'articleList',
+          path: 'articleList',
+          component: () => import('./views/articleList.vue'),
         }
       ]
     }, 
