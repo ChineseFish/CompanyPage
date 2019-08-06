@@ -1,9 +1,9 @@
-const cleanDb = require("./cleanDb");
-const cleanFs = require("./cleanFs");
-
 const log4js = require('./logConfig')
 const logger = process[Symbol.for("logger")] = log4js.getLogger();
 const errlogger = process[Symbol.for("errLogger")] = log4js.getLogger('err');
+
+const cleanDb = require("./cleanDb");
+const cleanFs = require("./cleanFs");
 
 (async () => {
     await cleanFs();

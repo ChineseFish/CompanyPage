@@ -1,6 +1,7 @@
 const levelup = require('levelup')
 const leveldown = require('leveldown')
 const path = require("path");
+const { MONITOR_ARTICLE_KEY_PREFIX, MONITOR_TAG_KEY_PREFIX } = require('../depends/constant')
 
 const logger = process[Symbol.for("logger")]
 
@@ -8,8 +9,8 @@ const levelDbInstance = levelup(leveldown(path.join(__dirname, '../server/mydb')
 
 module.exports = async function () {
   //
-  const dbArtilcesSet = []
-  const dbTagsSet = []
+  const dbArtilcesSet = new Set()
+  const dbTagsSet = new Set()
 
   await new Promise((resolve, reject) => {
     levelDbInstance.createReadStream().on('data', function (data) {
@@ -39,7 +40,7 @@ module.exports = async function () {
 
         const validArticlesSet = process[Symbol.for("validArticlesSet")];
         for (let dbArtilce of [...dbArtilcesSet]) {
-          if (!validArticlesSet.find(dbArtilce)) {
+          if (!validArticlesSet.has(dbArtilce)) {
             await dbDel(dbArtilce);
 
             logger.info(`cleanDb, clear invalid hot article ${dbArtilce}`)
@@ -48,7 +49,7 @@ module.exports = async function () {
 
         const validTagsSet = process[Symbol.for("validTagsSet")];
         for (let dbTag of [...dbTagsSet]) {
-          if (!validTagsSet.find(dbTag)) {
+          if (!validTagsSet.has(dbTag)) {
             await dbDel(dbTag);
 
             logger.info(`cleanDb, clear invalid hot tag ${dbTag}`)
