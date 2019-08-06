@@ -12,14 +12,14 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('./views/about.vue')
+      component: () => import('../../web_depends/staticPages/about.vue')
     }, {
       path: '/joinUs',
       name: 'joinUs',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('./views/joinUs.vue')
+      component: () => import('../../web_depends/staticPages/joinUs.vue')
     }, {
       path: '/service',
       name: 'service',

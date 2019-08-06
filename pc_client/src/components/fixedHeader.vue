@@ -1,7 +1,7 @@
 <template>
   <div class="fixedHeader">
     <div style="width:80%;min-width:1280px;height:100px;display:flex;align-items:center;">
-      <span style="margin-right:80px;font-size:35px;">增强网络科技</span>
+      <span style="margin-right:80px;font-size:25px;">增强网络科技</span>
       <navigator></navigator>
     </div>
   </div>

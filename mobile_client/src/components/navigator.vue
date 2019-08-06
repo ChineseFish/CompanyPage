@@ -1,7 +1,7 @@
 <template>
     <div style="width:100%;display:flex;justify-content:flex-end;">
         <el-button icon="el-icon-tickets" @click="showNavPage=!showNavPage"></el-button>
-        <div v-show="showNavPage" class="nav">
+        <div v-show="showNavPage" class="nav" @click="showNavPage=false;">
             <router-link class="router" :to="{path: '/'}">关于倾影</router-link>
             <router-link class="router" :to="{path: '/joinUs'}">招商加盟</router-link>
             <router-link class="router" :to="{path: '/service'}">服务项目</router-link>
@@ -39,7 +39,7 @@ export default {
 .nav {
     position:fixed;
     width:100%;
-    height:240px;
+    height:100%;
     top:50px;
     display:flex;
     flex-direction:column;

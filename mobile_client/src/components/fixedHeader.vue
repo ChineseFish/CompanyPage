@@ -1,9 +1,7 @@
 <template>
   <div class="fixedHeader">
-    <div style="width:100%;;display:flex;align-items:flex-start;">
-      <span style="font-size:25px;width:250px;">增强网络科技</span>
+      <span style="font-size:25px;width:250px;margin-left:10px;">增强网络科技</span>
       <navigator></navigator>
-    </div>
   </div>
   
 </template>
@@ -29,7 +27,8 @@ export default {
   color: white;
   position: fixed;
   display: flex;
-  width: 100%;
+  align-items:center;
+  width:100%;;
   height: 50px;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.42);

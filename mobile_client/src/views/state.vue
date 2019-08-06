@@ -3,12 +3,12 @@
     <div class="stateHeaderImg">
       <span>增强网络动态</span>
     </div>
-    <div style="width:80%;">
+    <div style="width:100%;">
       <div style="display:flex;">
         <span class="headerTags">公司动态</span>
         <span class="headerTags">行业动态</span>
       </div>
-      <div style="width:100%;height:100%;">
+      <div style="width:100%;">
           <el-card v-for="(article, index) of articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover">
               <div style="display: flex;flex-direction: row;" @click="checkArticle(article)">
                   <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image">
