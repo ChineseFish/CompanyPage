@@ -1,8 +1,8 @@
 <template>
-    <div style="width:100%;display:flex;justify-content:flex-end;">
+    <div style="width:100%;display:flex;justify-content:flex-end;margin-right:10px;">
         <el-button icon="el-icon-tickets" @click="showNavPage=!showNavPage"></el-button>
         <div v-show="showNavPage" class="nav" @click="showNavPage=false;">
-            <router-link class="router" :to="{path: '/'}">关于倾影</router-link>
+            <router-link class="router" :to="{path: '/'}">关于增强网络</router-link>
             <router-link class="router" :to="{path: '/joinUs'}">招商加盟</router-link>
             <router-link class="router" :to="{path: '/service'}">服务项目</router-link>
             <router-link class="router" :to="{path: '/state'}">网络动态</router-link>

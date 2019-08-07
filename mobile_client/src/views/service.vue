@@ -3,7 +3,7 @@
     <div class="serviceHeaderImg">
       <span>服务项目</span>
     </div>
-    <div style="width:100%;">
+    <div style="width:95%;">
       <div style="display:flex;">
         <span class="headerTags">商业活动</span>
         <span class="headerTags">文艺演出</span>
@@ -12,18 +12,18 @@
         <span class="headerTags">沉浸空间</span>
         <span class="headerTags">创意互动</span>
       </div>
-      <div style="width:100%;dispaly:flex;flex-direction:column;">
-        <el-card v-for="(article, index) in articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover" @click="checkArticle(article)">
-          <div style="display:flex;align-items:center;">
-            <img :src="`/getBreviaryPhoto?width=125&height=100&filename=${article.img}`" style="width:125px;height:100px;">
-            <div style="padding:14px;">
-              <span>{{article.title}}</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
-              </div>
-            </div>
+    <el-divider></el-divider>
+     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+          <div
+          v-for="(article, index) of articleContentTableData" 
+          :key="index" 
+          class="card" >
+              <img :src="`/getPhoto?filename=${article.img}`" width="100%" @click="checkArticle(article)">
+              <strong>{{article.title}}</strong>
+              <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
+              <p>{{article.desc}}</p>
           </div>
-        </el-card>
+          <el-divider></el-divider>
       </div>
       <div style="display:flex;justify-content:flex-end;">
         <el-pagination
@@ -99,51 +99,7 @@ import mixins from '../mixins';
   }
 </script>
 
-<style lang="scss" type scoped>
+<style lang="scss" type>
 @import "../assets/css/common.scss";
-</style>
-
-<style>
-.time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  
-  .clearfix:after {
-    clear: both
-  }
-  .card {
-    cursor: pointer;
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  div {
-    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-    font-size: 18px;
-    color: #909399;
-    font-weight: 400;
-    line-height: 2em;
-    word-break: break-all; /*支持IE，chrome，FF不支持*/
-    word-wrap: break-word; /*支持IE，chrome，FF*/
-    overflow: hidden;
-  }
 </style>
 

@@ -3,24 +3,23 @@
     <div class="stateHeaderImg">
       <span>增强网络动态</span>
     </div>
-    <div style="width:100%;">
+    <div style="width:95%;">
       <div style="display:flex;">
         <span class="headerTags">公司动态</span>
         <span class="headerTags">行业动态</span>
       </div>
-      <div style="width:100%;">
-          <el-card v-for="(article, index) of articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover">
-              <div style="display: flex;flex-direction: row;" @click="checkArticle(article)">
-                  <img :src="`/getBreviaryPhoto?width=250&height=200&filename=${article.img}`" class="image">
-                  <div style="display:flex;flex-direction:column;padding: 14px;">
-                      <span>{{article.title}}</span>
-                      <div class="clearfix">
-                          <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
-                      </div>
-                      <span>{{article.desc}}</span>
-                  </div>
-              </div>
-          </el-card>
+      <el-divider></el-divider>
+      <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+          <div
+          v-for="(article, index) of articleContentTableData" 
+          :key="index" 
+          class="card" >
+              <img :src="`/getPhoto?filename=${article.img}`" width="100%" @click="checkArticle(article)">
+              <strong>{{article.title}}</strong>
+              <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
+              <p>{{article.desc}}</p>
+          </div>
+          <el-divider></el-divider>
       </div>
       <div style="display:flex;justify-content:flex-end;">
         <el-pagination
@@ -96,46 +95,7 @@ import mixins from '../mixins';
   }
 </script>
 
-<style lang="scss" type scoped>
-@import "../assets/css/common.scss";
-</style>
-
 <style lang="scss" scoped>
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100px;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .clearfix:after {
-      clear: both
-  }
-  .card {
-    cursor: pointer;
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  div {
-    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-    font-size: 18px;
-    color: #909399;
-    font-weight: 400;
-    line-height: 2em;
-    word-break: break-all; /*支持IE，chrome，FF不支持*/
-    word-wrap: break-word; /*支持IE，chrome，FF*/
-    overflow: hidden;
-  }
+@import "../assets/css/common.scss";
 </style>
 

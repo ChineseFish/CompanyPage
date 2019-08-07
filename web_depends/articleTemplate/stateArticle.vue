@@ -5,16 +5,14 @@
       <strong>{{previewArticle.title}}</strong>
     </div>
     
-    <div
-      style="display:flex;justify-content:flex-start;margin-top:20px;margin-bottom:20px;width:100%;"
-    >
-      <el-card shadow="always" style="width:100%;display:flex;">
-        <span>摘要</span>
-        <strong>{{previewArticle.desc}}</strong>
+    <div class="desc">
+      <el-card shadow="always" style="width:100%;">
+        <strong>摘要</strong>
+        <p>{{previewArticle.desc}}</p>
       </el-card>
     </div>
 
-    <img style="width:60%;margin-top:20px;" :src="`/getPhoto?filename=${previewArticle.img}`" />
+    <img :src="`/getPhoto?filename=${previewArticle.img}`" />
     <template v-for="(item, index) in previewArticle.data">
       <div
         class="text"
@@ -63,6 +61,5 @@ export default {
 
 <style lang="scss" scoped>
 @import './article.scss';
-
 </style>
 

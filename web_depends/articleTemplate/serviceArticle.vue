@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <slot></slot>
-    <div class="title" style="margin-bottom:40px;">
+    <div class="title">
       <strong>{{previewArticle.title}}</strong>
     </div>
 
@@ -18,9 +18,7 @@
       </el-carousel>
     </div>
 
-    <div
-      style="display:flex;justify-content:flex-start;margin-top:80px;margin-bottom:20px;width:100%;"
-    >
+    <div class="detail">
       <el-card shadow="always"  style="display:flex;width:100%;">
         <strong>详细信息</strong>
       </el-card>
