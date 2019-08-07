@@ -30,6 +30,6 @@ import fixedBox from "./components/fixedBox.vue"
   }
 </script>
 
-<style lang="scss" scoped type>
+<style lang="scss" scoped>
 
 </style>

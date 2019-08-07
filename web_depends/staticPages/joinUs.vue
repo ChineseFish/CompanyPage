@@ -4,45 +4,44 @@
       <span>招商加盟</span>
     </div>
 
-    <div style="width:80%;height:100%;display:flex;flex-direction:column;align-items:center;">
-      <div class="joinUsPartOne">
-        <div style="width:400px;height:300px;background-color: rgba(46, 144, 115, 0.86);color:white;padding:20px;margin-right:20px;">
+    <div class="joinUsPart1">
+      <div class="joinUsPart1-1">
+        <div class="joinUsPart1-1-1">
           <strong>市场前景</strong>
           <p>市场潜力大，发展空间大，作为多媒体视觉创新行业，竞争力小，潜力无限，硬件设备条件优越，随着人们生活水平的提高，创新、视觉、艺术、科技等精神需求逐年提高。</p>
         </div>
       </div>
     </div>
-    <div>
-      <img src="../assets/imgs/joinUs2.png" alt="" title="" width="100%" height="100%">
+    <div class="joinUsCircle">
+      <img src="../assets/imgs/joinUs2.png" alt="" title="">
     </div>
-    <div style="position:relative;display:flex;flex-direction:row;justify-content:center;top:-270px;left:10px;">
-      <div style="display:flex;flex-direction:column;align-items:flex-end;width:600px;text-align:right;margin-right:100px;margin-top:200px;">
-        <div v-for="(ele, index) in advantagesLeft" :key="index" style="width:100%;margin-top:20px;">
+    <div class="joinUsPart2">
+      <div class="joinUsPart2-1">
+        <div v-for="(ele, index) in advantagesLeft" :key="index" class="joinUsPart2-1-1">
           <strong>{{ele.title}}</strong>
           <p>{{ele.data}}</p>
         </div>
       </div>
-      <img src="../assets/imgs/joinUs3.png" alt="" title="" width="130px" height="910px">
-      <div style="display:flex;flex-direction:column;align-items:flex-start;width:600px;text-align:left;margin-left:100px;margin-top:100px;">
-        <div v-for="(ele, index) in advantagesRight" :key="index" style="width:100%;margin-top:20px;">
+      <img src="../assets/imgs/joinUs3.png" alt="" title="">
+      <div class="joinUsPart2-2">
+        <div v-for="(ele, index) in advantagesRight" :key="index" class="joinUsPart2-2-1">
           <strong>{{ele.title}}</strong>
           <p>{{ele.data}}</p>
         </div>
       </div>
     </div>
-    <div style="width:80%;display:flex;">
-      <div style="width:600px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;background-color: rgba(40, 124, 101, 1);">
-        <div style="width:100%;height:100%;flex-direction:column;display:flex;justify-content:center;align-items:center;">
+    <div class="joinUsPart3">
+      <div class="joinUsPart3-1">
+        <div class="joinUsPart3-1-1">
            <p style="color:white;">扶持计划</p>
         </div>
-        <div style="width:100%;height:200px;flex-direction:column;display:flex;justify-content:center;align-items:center;border-top-color: rgba(255, 189, 67, 1);border-top-style: solid;border-top-width: 10px;background-color: rgba(0, 0, 0, 1);">
+        <div class="joinUsPart3-1-2">
           <strong>加盟热线：</strong>
           <p>400-0988850</p>
         </div>
-        
       </div>
      
-      <div style="display:flex;flex-direction:column;margin-left:20px;margin-top:20px;margin-bottom:10px;">
+      <div class="joinUsPart3-2">
         <div v-for="(ele, index) in supports" :key="index">
           <strong>{{ele.title}}</strong>
           <p>{{ele.data}}</p>
@@ -50,47 +49,47 @@
       </div>
     </div>
     
-    <div style="width:80%;display:flex;flex-direction:column;margin-top:100px;">
-      <el-row style="margin-top:40px;display:flex;align-items:center;">
-        <el-col :span="14" style="padding-right:50px;">
+    <div class="joinUsPart4">
+      <div class="joinUsPart4-1">
+        <div class="joinUsPart4-1-1">
           <div style="display:flex;align-items:flex-start;">
             <img src="../assets/imgs/joinUs4-1.png">
             <strong style="margin:10px;">售后服务</strong>
           </div>
           <p v-for="(el, index) in joinFlow[0]" :key="index">{{el}}</p>
-        </el-col>
-        <el-col :span="10" style="display:flex;justify-content:flex-end;">
+        </div>
+        <div class="joinUsPart4-1-2">
           <img src="../assets/imgs/joinUs4.jpg">
-        </el-col>
-      </el-row>
+        </div>
+      </div>
 
-      <el-row style="margin-top:40px;display:flex;align-items:center;">
-        <el-col :span="14">
+      <div class="joinUsPart4-1">
+        <div class="joinUsPart4-1-1">
           <img src="../assets/imgs/joinUs5.jpg">
-        </el-col>
-        <el-col :span="10" style="padding-left:50px;display:flex;justify-content:flex-end">
-          <div>
-            <div style="display:flex;align-items:flex-start;">
+        </div>
+        <div class="joinUsPart4-1-2">
+          <div style="display:flex;flex-direction:column;">
+            <div style="display:flex;justify-content:flex-start;align-items:flex-start;">
               <img src="../assets/imgs/joinUs5-1.png">
               <strong style="margin:10px;">加盟流程</strong>
             </div>
             <p v-for="(el, index) in joinFlow[1]" :key="index">{{el}}</p>
           </div>
-        </el-col>
-      </el-row>
+        </div>
+      </div>
 
-      <el-row style="margin-top:40px;display:flex;align-items:center;">
-        <el-col :span="14">
+      <div class="joinUsPart4-1">
+        <div class="joinUsPart4-1-1">
           <div style="display:flex;align-items:flex-start;">
             <img src="../assets/imgs/joinUs6-1.png">
             <strong style="margin:10px;">加盟条件</strong>
           </div>
           <p v-for="(el, index) in joinFlow[2]" :key="index">{{el}}</p>
-        </el-col>
-        <el-col :span="10" style="display:flex;justify-content:flex-end;">
+        </div>
+        <div class="joinUsPart4-1-2">
           <img src="../assets/imgs/joinUs6.jpg">
-        </el-col>
-      </el-row>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -222,7 +221,22 @@
 <style lang="scss" type scoped>
 @import "./common.scss";
 
-.joinUsPartOne {
+.joinUsPart1 {
+  position: relative;
+  width:80%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  top: 80px;
+
+  @media screen and (max-width: 480px) {
+    width:100%;
+    top: 20px;
+  }
+}
+
+.joinUsPart1-1 {
   display:flex;
   justify-content: flex-end;
   margin-top: 20px;
@@ -232,5 +246,209 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
+
+  @media screen and (max-width: 480px) {
+    height:250px;
+  }
+}
+
+.joinUsPart1-1-1 {
+  width:400px;
+  height:300px;
+  background-color: rgba(46, 144, 115, 0.86);
+  color:white;
+  padding:20px;
+  margin-right:20px;
+
+  @media screen and (max-width: 480px) {
+    width:280px;
+    margin-right:5px;
+    padding:10px;
+  }
+}
+
+.joinUsCircle {
+  position:relative;
+  top:200px;
+
+  @media screen and (max-width: 480px) {
+    top:80px;
+  }
+}
+
+.joinUsPart2 {
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items: center;
+  top:-200px;
+  left:10px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart2-1 {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  width:600px;
+  text-align:right;
+  margin-right:100px;
+  margin-top:200px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart2-1-1 {
+  width:100%;
+  margin-top:20px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart2-2 {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:600px;
+  text-align:left;
+  margin-left:100px;
+  margin-top:100px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart2-2-1 {
+  width:100%;
+  margin-top:20px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart3 {
+  width:80%;
+  display:flex;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart3-1 {
+  width:600px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  background-color: rgba(40, 124, 101, 1);
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart3-1-1
+{
+  width:100%;
+  height:100%;
+  flex-direction:column;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart3-1-2
+{
+  width:100%;
+  height:200px;
+  flex-direction:column;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-top-color: rgba(255, 189, 67, 1);
+  border-top-style: solid;
+  border-top-width: 10px;
+  background-color: rgba(0, 0, 0, 1);
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart3-2
+{
+  display:flex;
+  flex-direction:column;
+  margin-left:20px;
+  margin-top:20px;
+  margin-bottom:10px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart4
+{
+  width:80%;
+  display:flex;
+  flex-direction:column;
+  margin-top:100px;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart4-1
+{
+  margin-top:40px;
+  display:flex;
+  align-items:center;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart4-1-1
+{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media screen and (max-width: 480px) {
+    
+  }
+}
+
+.joinUsPart4-1-2
+{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+  @media screen and (max-width: 480px) {
+    
+  }
 }
 </style>

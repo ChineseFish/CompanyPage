@@ -126,7 +126,7 @@ import mixins from '../mixins';
 @import "../assets/css/common.scss";
 </style>
 
-<style>
+<style scoped>
   .image {
     width: 100%;
     display: block;
