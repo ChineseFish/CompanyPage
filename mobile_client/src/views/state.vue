@@ -52,7 +52,8 @@ import mixins from '../mixins';
     },
 
     watch: {
-      subTag: function(newValue) {
+      subTag: function() {
+        this.pagination.currentPage = 1
         this.getList(1)
       }
     },
