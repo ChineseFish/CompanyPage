@@ -28,16 +28,18 @@
   background-position: top center;
 }
 
-.headerTags {
-  cursor: pointer;
-  font-size: 15px;
-  border-radius: 5px;
-  padding: 5px;
-  transition: all .9s ease;
-  margin: 5px 10px 5px 10px;
+.tags {
+  display: flex;
+  justify-content:center;
+  border-bottom: 1px solid #dcdfe6;
+}
 
+.headerTags {
+  font-size: 15px;
+  padding: 15px;
+  transition: all .9s ease;
   &:hover {
-    background-color: rgb(125, 106, 236);
+    background-color: #d4b572;
   }
 }
 
@@ -62,6 +64,14 @@ div {
   overflow: hidden;
 }
 
+
+.breviaryArticleList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -71,4 +81,5 @@ div {
   height: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-bottom: 1px solid #dcdfe6;
 }

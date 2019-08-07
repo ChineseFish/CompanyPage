@@ -1,6 +1,6 @@
 <template>
-    <div style="width:100%;display:flex;justify-content:flex-end;margin-right:10px;">
-        <el-button icon="el-icon-tickets" @click="showNavPage=!showNavPage"></el-button>
+    <div style="width:100%;display:flex;justify-content:flex-end;">
+        <el-button style="margin-right:10px;" icon="el-icon-tickets" @click="showNavPage=!showNavPage"></el-button>
         <div v-show="showNavPage" class="nav" @click="showNavPage=false;">
             <router-link class="router" :to="{path: '/'}">关于增强网络</router-link>
             <router-link class="router" :to="{path: '/joinUs'}">招商加盟</router-link>

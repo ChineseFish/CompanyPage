@@ -4,12 +4,11 @@
       <span>增强网络动态</span>
     </div>
     <div style="width:95%;">
-      <div style="display:flex;">
+      <div class="tags">
         <span class="headerTags">公司动态</span>
         <span class="headerTags">行业动态</span>
       </div>
-      <el-divider></el-divider>
-      <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+      <div class="breviaryArticleList">
           <div
           v-for="(article, index) of articleContentTableData" 
           :key="index" 
@@ -19,7 +18,6 @@
               <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
               <p>{{article.desc}}</p>
           </div>
-          <el-divider></el-divider>
       </div>
       <div style="display:flex;justify-content:flex-end;">
         <el-pagination

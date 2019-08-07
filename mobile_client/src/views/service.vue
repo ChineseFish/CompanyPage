@@ -4,16 +4,19 @@
       <span>服务项目</span>
     </div>
     <div style="width:95%;">
-      <div style="display:flex;">
-        <span class="headerTags">商业活动</span>
-        <span class="headerTags">文艺演出</span>
-        <span class="headerTags">数字展馆</span>
-        <span class="headerTags">光影亮化</span>
-        <span class="headerTags">沉浸空间</span>
-        <span class="headerTags">创意互动</span>
+      <div style="width:100%:display:flex;flex-direction:column;justify-content:center;align-items:center;border-bottom: 1px solid #dcdfe6;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="headerTags">商业活动</span>
+          <span class="headerTags">文艺演出</span>
+          <span class="headerTags">数字展馆</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span class="headerTags">光影亮化</span>
+          <span class="headerTags">沉浸空间</span>
+          <span class="headerTags">创意互动</span>
+        </div>
       </div>
-    <el-divider></el-divider>
-     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+      <div class="breviaryArticleList">
           <div
           v-for="(article, index) of articleContentTableData" 
           :key="index" 
@@ -23,7 +26,6 @@
               <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
               <p>{{article.desc}}</p>
           </div>
-          <el-divider></el-divider>
       </div>
       <div style="display:flex;justify-content:flex-end;">
         <el-pagination
