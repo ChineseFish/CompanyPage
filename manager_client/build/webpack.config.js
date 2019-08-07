@@ -15,8 +15,9 @@ module.exports = {
         path.resolve(__dirname, '../src/main.js')
     ],
     output: {
+        publicPath: "/manager/",
         // 配置打包文件输出的目录
-        path: path.resolve(__dirname, '../../web_transaction_server/managerDist'),
+        path: path.resolve(__dirname, '../../server/managerDist'),
         // 生成的js文件名称
         filename: 'js/[name].[hash:8].js',
         // chunkname就是未被列在entry中，但有些场景需要被打包出来的文件命名配置。

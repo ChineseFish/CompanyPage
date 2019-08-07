@@ -9,6 +9,7 @@
     "build_mobile_client": "webpack --config ./mobile_client/build/webpack.prod.js",
     "dev_manager_client": "webpack-dev-server --progress --config ./manager_client/build/webpack.dev.js",
     "build_manager_client": "webpack --config ./manager_client/build/webpack.prod.js",
+    "build": "npm run build_pc_client & npm run build_mobile_client & npm run build_manager_client",
     "server": "pm2 start ./client/index.js --name=companyPage"
   },
   "dependencies": {

@@ -16,7 +16,9 @@ const othlogger = process[Symbol.for("othLogger")] = log4js.getLogger('oth')
 
 // express
 const app = express()
-app.use('/', express.static(path.resolve('dist')))
+app.use("/pc", express.static(path.join(__dirname + "/pcDist")));
+app.use("/mobile", express.static(path.join(__dirname + "/mobileDist")));
+app.use("/manager", express.static(path.join(__dirname + "/managerDist")));
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({
   extended: true
