@@ -12,9 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="joinUsCircle">
-      <img src="../assets/imgs/joinUs2.png" alt="" title="">
-    </div>
+    <img class="joinUsCircle" src="../assets/imgs/joinUs2.png" alt="" title="">
     <div class="joinUsPart2">
       <div class="joinUsPart2-1">
         <div v-for="(ele, index) in advantagesLeft" :key="index" class="joinUsPart2-1-1">
@@ -22,7 +20,7 @@
           <p>{{ele.data}}</p>
         </div>
       </div>
-      <img src="../assets/imgs/joinUs3.png" alt="" title="">
+      <img src="../assets/imgs/joinUs3.png" class="longChain" alt="" title="">
       <div class="joinUsPart2-2">
         <div v-for="(ele, index) in advantagesRight" :key="index" class="joinUsPart2-2-1">
           <strong>{{ele.title}}</strong>
@@ -272,7 +270,8 @@
   top:200px;
 
   @media screen and (max-width: 480px) {
-    top:80px;
+    width: 200px;
+    top:60px;
   }
 }
 
@@ -286,7 +285,9 @@
   left:10px;
 
   @media screen and (max-width: 480px) {
-    
+    align-items: flex-start;
+    top: -75px;
+    left: 5px;
   }
 }
 
@@ -300,7 +301,9 @@
   margin-top:200px;
 
   @media screen and (max-width: 480px) {
-    
+    width:calc(50% - 100px);
+    margin-right:10px;
+    margin-top:20px;
   }
 }
 
@@ -310,6 +313,14 @@
 
   @media screen and (max-width: 480px) {
     
+  }
+}
+
+.longChain {
+  position:relative;
+
+  @media screen and (max-width: 480px) {
+    width: 80px;
   }
 }
 
@@ -323,7 +334,9 @@
   margin-top:100px;
 
   @media screen and (max-width: 480px) {
-    
+    width:calc(50% - 100px);
+    margin-left:10px;
+    margin-top:20px;
   }
 }
 
@@ -341,7 +354,7 @@
   display:flex;
 
   @media screen and (max-width: 480px) {
-    
+    width:95%;
   }
 }
 
@@ -354,7 +367,7 @@
   background-color: rgba(40, 124, 101, 1);
 
   @media screen and (max-width: 480px) {
-    
+    width: 550px;
   }
 }
 
@@ -411,7 +424,8 @@
   margin-top:100px;
 
   @media screen and (max-width: 480px) {
-    
+    width:95%;
+    margin-top:20px;
   }
 }
 
@@ -422,7 +436,8 @@
   align-items:center;
 
   @media screen and (max-width: 480px) {
-    
+    margin-top:20px;
+    flex-direction: column;
   }
 }
 
@@ -435,7 +450,7 @@
   align-items: flex-start;
 
   @media screen and (max-width: 480px) {
-    
+    width: 100%;
   }
 }
 
@@ -448,7 +463,9 @@
   align-items: flex-end;
 
   @media screen and (max-width: 480px) {
-    
+    margin-top: 20px;
+    align-items: flex-start;
+    width: 100%;
   }
 }
 </style>
