@@ -5,8 +5,8 @@
     </div>
     <div style="width:95%;">
       <div class="tags">
-        <span class="headerTags">公司动态</span>
-        <span class="headerTags">行业动态</span>
+        <span class="headerTags" @click="subTag='stateCompany'">公司动态</span>
+        <span class="headerTags" @click="subTag='stateIndustry'">行业动态</span>
       </div>
       <div class="breviaryArticleList">
           <div
@@ -42,12 +42,19 @@ import mixins from '../mixins';
     mixins: [mixins],
     data () {
       return {
+        subTag: 'stateCompany',
         articleContentTableData: []
       }
     },
 
     created: function () {
       this.getList(1);
+    },
+
+    watch: {
+      subTag: function(newValue) {
+        this.getList(1)
+      }
     },
 
     methods: {
@@ -62,7 +69,8 @@ import mixins from '../mixins';
         this.tableLoading = true
         this.$axios.get("/getBreviaryArticleList", {
           page: page,
-          pageNum: this.pagination.pageSize
+          pageNum: this.pagination.pageSize,
+          tags: JSON.stringify([this.subTag])
         }).then(({ code, data, msg }) => {
           if(code !== 0)
           {
