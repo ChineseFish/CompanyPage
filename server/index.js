@@ -62,8 +62,8 @@ cache.initFsCache()
 cache.initDbCache()
 
 process[Symbol.for("stoplight")].await(() => {
-  const server = app.listen(80, function () {
+  const server = app.listen(8080, function () {
     let host = server.address().address
-    console.log('server listening at http://%s:%s', host, 80)
+    console.log('server listening at http://%s:%s', host, 8080)
   })
 })

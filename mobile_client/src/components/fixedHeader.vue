@@ -1,6 +1,6 @@
 <template>
   <div class="fixedHeader">
-      <span style="font-size:18px;width:250px;margin-left:10px;">增强网络科技</span>
+      <span style="font-size:18px;width:250px;margin-left:10px;" @click="$router.push({path: '/'})">增强网络科技</span>
       <navigator></navigator>
   </div>
   

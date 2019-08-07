@@ -9,11 +9,11 @@
       Your browser does not support the video tag.
     </video>
 
-    <div style="width:80%;border-top: 1px solid #dcdfe6;border-bottom: 1px solid #dcdfe6;margin-top:80px;padding-top:80px;padding-bottom:80px;">
-      <el-carousel :interval="4000" type="card">
+    <div class="gallery">
+      <el-carousel :interval="4000" arrow="always">
         <el-carousel-item v-for="(img, index) in imgs" :key="index">
-          <img v-if="img.type==='imgUpload'" style="width:100%" :src="`/getPhoto?filename=${img.data}`" />
-          <img v-if="img.type==='imgUrl'" style="width:100%" :src="img.data" />
+          <img v-if="img.type==='imgUpload'" :src="`/getPhoto?filename=${img.data}`" />
+          <img v-if="img.type==='imgUrl'" :src="img.data" />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -78,21 +78,5 @@ export default {
 
 <style lang="scss" scoped>
 @import './article.scss';
-
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 </style>
 
