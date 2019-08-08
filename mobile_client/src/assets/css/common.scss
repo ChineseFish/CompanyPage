@@ -30,7 +30,7 @@
 
 .tags {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   border-bottom: 1px solid #dcdfe6;
 }
 
@@ -38,6 +38,7 @@
   font-size: 15px;
   padding: 15px;
   transition: all .9s ease;
+
   &:hover {
     background-color: #d4b572;
   }

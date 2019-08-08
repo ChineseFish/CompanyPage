@@ -2,6 +2,8 @@
   <div class='container'>
     <div class="joinUsHeaderImg">
       <span>招商加盟</span>
+      <span class="staticHeaderHeader1">JOIN US</span>
+      <scroll-to-read></scroll-to-read>
     </div>
 
     <div class="joinUsPart1">
@@ -93,8 +95,11 @@
 </template>
 
 <script>
+import scrollToRead from "./scrollToRead.vue"
+
   export default {
     name: 'joinus',
+    components: { scrollToRead },
     data () {
       return {
         joinFlow: [
@@ -437,7 +442,6 @@
 
   @media screen and (max-width: 480px) {
     margin-top:20px;
-    flex-direction: column;
   }
 }
 
@@ -450,6 +454,7 @@
   align-items: flex-start;
 
   @media screen and (max-width: 480px) {
+    padding: 20px;
     width: 100%;
   }
 }
@@ -463,9 +468,9 @@
   align-items: flex-end;
 
   @media screen and (max-width: 480px) {
+    padding: 20px;
     margin-top: 20px;
-    align-items: flex-start;
-    width: 100%;
+    width: 80%;
   }
 }
 </style>

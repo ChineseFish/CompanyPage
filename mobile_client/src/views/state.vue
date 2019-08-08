@@ -12,8 +12,9 @@
           <div
           v-for="(article, index) of articleContentTableData" 
           :key="index" 
-          class="card" >
-              <img :src="`/getPhoto?filename=${article.img}`" width="100%" @click="checkArticle(article)">
+          class="card"
+          @click="checkArticle(article)">
+              <img :src="`/getPhoto?filename=${article.img}`" width="100%">
               <strong>{{article.title}}</strong>
               <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
               <p>{{article.desc}}</p>

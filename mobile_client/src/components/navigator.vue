@@ -6,10 +6,11 @@
         </div>
         <transition name="slide-fade">
             <div v-show="showNavPage" class="nav" @click="showNavPage=false;">
-                <router-link class="router1" :to="{path: '/about'}">关于增强网络</router-link>
-                <router-link class="router2" :to="{path: '/joinUs'}">招商加盟</router-link>
-                <router-link class="router3" :to="{path: '/service'}">服务项目</router-link>
-                <router-link class="router4" :to="{path: '/state'}">网络动态</router-link>
+                <router-link class="router1" :to="{path: '/'}">网站首页</router-link>
+                <router-link class="router2" :to="{path: '/about'}">关于增强网络</router-link>
+                <router-link class="router3" :to="{path: '/joinUs'}">招商加盟</router-link>
+                <router-link class="router4" :to="{path: '/service'}">服务项目</router-link>
+                <router-link class="router5" :to="{path: '/state'}">网络动态</router-link>
             </div>
         </transition>
     </div>
@@ -34,8 +35,7 @@ export default {
     position: absolute;
     top: 50px;
     left: 0px;
-    padding-top: 30px;
-    padding-bottom: 80px;
+    padding: 30px 10px 80px 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -9,8 +9,6 @@
           <span class="headerTags" @click="subTag='serviceBusiness'">商业活动</span>
           <span class="headerTags" @click="subTag='serviceShow'">文艺演出</span>
           <span class="headerTags" @click="subTag='serviceGallery'">数字展馆</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
           <span class="headerTags" @click="subTag='serviceLight'">光影亮化</span>
           <span class="headerTags" @click="subTag='serviceImmerse'">沉浸空间</span>
           <span class="headerTags" @click="subTag='serviceInteract'">创意互动</span>
@@ -20,8 +18,9 @@
           <div
           v-for="(article, index) of articleContentTableData" 
           :key="index" 
-          class="card" >
-              <img :src="`/getPhoto?filename=${article.img}`" width="100%" @click="checkArticle(article)">
+          class="card"
+          @click="checkArticle(article)">
+              <img :src="`/getPhoto?filename=${article.img}`" width="100%">
               <strong>{{article.title}}</strong>
               <time>{{ new Date(article.updateTime).Format("yyyy-MM-dd")}}</time>
               <p>{{article.desc}}</p>

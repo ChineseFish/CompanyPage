@@ -2,6 +2,7 @@
   <div class='container'>
     <div class="contractUsHeaderImg">
       <span>招商加盟</span>
+      <strong></strong>
     </div>
   </div>
 </template>

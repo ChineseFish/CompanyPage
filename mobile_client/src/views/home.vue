@@ -1,44 +1,56 @@
 <template>
-  <div style="display:flex;width:100%;">
-    <transition name="fade">
-      <img
-        v-show="show1"
-        class="homeImg"
-        src="../assets/imgs/home1.jpg"
-        @click="$router.push({path: '/service'})"
-      />
-    </transition>
-    <transition name="fade">
-      <img
-        v-show="show2"
-        class="homeImg"
-        src="../assets/imgs/home2.jpg"
-        @click="$router.push({path: '/service'})"
-      />
-    </transition>
-    <transition name="fade">
-      <img
-        v-show="show3"
-        class="homeImg"
-        src="../assets/imgs/home3.jpg"
-        @click="$router.push({path: '/service'})"
-      />
-    </transition>
-    <transition name="fade">
-      <img
-        v-show="show4"
-        class="homeImg"
-        src="../assets/imgs/home4.jpg"
-        @click="$router.push({path: '/service'})"
-      />
-    </transition>
-    <div style="position:fixed;top:50%;width:100%;display:flex;justify-content:space-between;">
-      <div class="pointerLeft" @click="moveLeft">
-        <i class="el-icon-arrow-left"></i>
+  <div
+    style="width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;"
+  >
+    <div style="display:flex;width:100%;">
+      <transition name="fade">
+        <img
+          v-show="show1"
+          class="homeImg"
+          src="../assets/imgs/home1.jpg"
+          @click="$router.push({path: '/service'})"
+        />
+      </transition>
+      <transition name="fade">
+        <img
+          v-show="show2"
+          class="homeImg"
+          src="../assets/imgs/home2.jpg"
+          @click="$router.push({path: '/service'})"
+        />
+      </transition>
+      <transition name="fade">
+        <img
+          v-show="show3"
+          class="homeImg"
+          src="../assets/imgs/home3.jpg"
+          @click="$router.push({path: '/service'})"
+        />
+      </transition>
+      <transition name="fade">
+        <img
+          v-show="show4"
+          class="homeImg"
+          src="../assets/imgs/home4.jpg"
+          @click="$router.push({path: '/service'})"
+        />
+      </transition>
+      <div style="position:fixed;top:50%;width:100%;display:flex;justify-content:space-between;">
+        <div class="pointerLeft" @click="moveLeft">
+          <i class="el-icon-arrow-left"></i>
+        </div>
+        <div class="pointerRight" @click="moveRight">
+          <i class="el-icon-arrow-right"></i>
+        </div>
       </div>
-      <div class="pointerRight" @click="moveRight">
-        <i class="el-icon-arrow-right"></i>
-      </div>
+    </div>
+    <div
+      class="footer"
+    >
+      <p >版权所有：增强网络科技</p>
+      <a style="text-decoration:none;color: rgb(255, 255, 255);" href = 'http://beian.miit.gov.cn'>
+        辽ICP备： 15003829号
+      </a>
     </div>
   </div>
 </template>
@@ -114,7 +126,7 @@ export default {
       }
     },
     moveRight: function() {
-        this.initInterval();
+      this.initInterval();
 
       this.showIndex += 1;
 
@@ -162,6 +174,17 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.footer {
+    width:100%;
+    height:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background-color: rgba(0,0,0,0.9);
+    color:#FFFFFF;
+    font-size:2px;
 }
 </style>
 
