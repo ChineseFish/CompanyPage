@@ -8,6 +8,7 @@ const cache = require('./cache')
 const levelup = require('levelup')
 const leveldown = require('leveldown')
 const cors = require("cors");
+const { host, port } = require("./config.json")
 
 const log4js = require('./logConfig')
 const logger = process[Symbol.for("logger")] = log4js.getLogger()
@@ -62,8 +63,8 @@ cache.initFsCache()
 cache.initDbCache()
 
 process[Symbol.for("stoplight")].await(() => {
-  const server = app.listen(8080, function () {
+  const server = app.listen(port, function () {
     let host = server.address().address
-    console.log('server listening at http://%s:%s', host, 8080)
+    console.log('server listening at http://%s:%s', host, port)
   })
 })
