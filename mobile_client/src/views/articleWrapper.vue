@@ -4,7 +4,7 @@
       <span v-if="whichArticleToShow === 'service'">增强网络动态</span>
       <span v-else>服务项目</span>
     </div>
-    <div style="width:80%;">
+    <div style="width:100%;">
       <service-article
         v-if="whichArticleToShow === 'service'"
         :previewVisible="true"
