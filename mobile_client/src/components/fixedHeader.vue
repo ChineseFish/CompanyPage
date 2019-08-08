@@ -27,6 +27,7 @@ export default {
   color: white;
   position: fixed;
   display: flex;
+  z-index: 99;
   align-items:center;
   width:100%;;
   height: 50px;
