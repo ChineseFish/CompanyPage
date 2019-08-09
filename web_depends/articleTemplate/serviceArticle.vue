@@ -31,15 +31,17 @@
         </div>
       </template>
     </div>
-    <navigator></navigator>
+    <navigator :preArticle="preArticle" :nextArticle="nextArticle" @articleNav="articleNav"></navigator>
   </div>
 </template>
 
 <script>
 import navigator from "./navigator.vue"
+import mixins from "./mixins.js"
 
 export default {
   name: "serviceArticle",
+  mixins: [mixins],
   components: { navigator },
   data: function() {
     return {
@@ -50,6 +52,7 @@ export default {
   },
 
   created: function() {
+    //
     for (let ele of this.previewArticle.data) {
       if(ele.type === 'videoUrl')
       {
@@ -61,22 +64,15 @@ export default {
         this.detailData.push(ele.data);
       }
     }
+
+    //
+    this.initArticleNavigator();
   },
 
-  props: {
-    previewVisible: {
-      type: Boolean,
-      default: false
-    },
-
-    previewArticle: {
-      title: "",
-      desc: "",
-      img: "",
-      tags: [],
-      createTime: 0,
-      updateTime: 0,
-      data: []
+  methods: {
+     articleNav(filename)
+    {
+      this.$emit('articleNav', filename);
     }
   }
 };

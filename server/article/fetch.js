@@ -47,6 +47,69 @@ app.get('/getArticle', function (req, res) {
   })
 });
 
+app.get('/getPreAndNextBreviaryArticle', function (req, res) {
+  if (!req.query.filename) {
+    return res.json({
+      code: ERR_PARAM,
+      msg: 'getPreAndNextBreviaryArticle, invalid param, need filename'
+    })
+  }
+
+  req.query.tags = req.query.tags || "[]"
+
+  // parse tags
+  try {
+    req.query.tags = JSON.parse(req.query.tags);
+  }
+  catch
+  {
+    return res.json({
+      code: ERR_PARAM,
+      msg: 'getPreAndNextBreviaryArticle, invalid param, param tags must be an array string'
+    })
+  }
+
+  // check tags
+  if (!Array.isArray(req.query.tags)) {
+    return res.json({
+      code: ERR_PARAM,
+      msg: 'getPreAndNextBreviaryArticle, invalid param, param tags must be an array'
+    })
+  }
+
+  let breviaryArticles = process[Symbol.for("breviaryArticles")];
+
+  // filter tags
+  let filteredTagsArticles = []
+  let i, j;
+  for (i = 0; i < breviaryArticles.length; i++) {
+    for (j = 0; j < req.query.tags.length; j++) {
+      if (breviaryArticles[i].tags.find(tag => tag === req.query.tags[j])) {
+        break;
+      }
+    }
+
+    if (j !== req.query.tags.length || req.query.tags.length === 0) {
+      filteredTagsArticles.push(breviaryArticles[i])
+    }
+  }
+
+  //
+  for (let [index, breviaryArticle] of filteredTagsArticles.entries())
+  {
+    if (breviaryArticle.filename === req.query.filename)
+    {
+      return res.json({
+        code: SUCCESS,
+        data: {
+          pre: index === 0 ? undefined : filteredTagsArticles[index - 1],
+          next: index === filteredTagsArticles.length - 1 ? undefined : filteredTagsArticles[index + 1]
+        }
+      })
+    }
+  }
+})
+
 app.get('/getBreviaryArticleList', function (req, res) {
 
   if(!req.query.page) {

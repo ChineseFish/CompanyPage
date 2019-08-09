@@ -9,8 +9,13 @@
         v-if="whichArticleToShow === 'service'"
         :previewVisible="true"
         :previewArticle="article"
+        @articleNav="articleNav"
       ></service-article>
-      <state-article v-else :previewVisible="true" :previewArticle="article"></state-article>
+      <state-article 
+      v-if="whichArticleToShow === 'state'" 
+      :previewVisible="true" 
+      :previewArticle="article"
+      @articleNav="articleNav"></state-article>
     </div>
   </div>
 </template>
@@ -31,9 +36,21 @@ export default {
   },
 
   created: function() {
-    this.$axios
+    this.getArticleDetail(this.$route.params.filename)
+  },
+
+  methods: {
+    articleNav: function(filename) {
+      this.whichArticleToShow = "";
+      setTimeout(() => {
+        this.getArticleDetail(filename);
+      });
+    },
+
+    getArticleDetail: function(filename) {
+      this.$axios
       .get("/getArticle", {
-        filename: this.$route.params.filename
+        filename: filename
       })
       .then(({ code, data, msg }) => {
         if (code !== 0) {
@@ -48,9 +65,8 @@ export default {
           this.whichArticleToShow = "state";
         }
       });
-  },
-
-  methods: {}
+    }
+  }
 };
 </script>
 

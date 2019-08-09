@@ -32,35 +32,26 @@
         >Your browser does not support the video tag.</video>
       </template>
     </div>
-    <navigator></navigator>
+    <navigator :preArticle="preArticle" :nextArticle="nextArticle"  @articleNav="articleNav"></navigator>
   </div>
 </template>
 
 <script>
 import navigator from "./navigator.vue"
+import mixins from "./mixins.js"
 
 export default {
   name: "stateArticle",
+  mixins: [mixins],
   components: { navigator },
   data: function() {
-    return {};
+    return {
+
+    }
   },
 
-  props: {
-    previewVisible: {
-      type: Boolean,
-      default: false
-    },
-
-    previewArticle: {
-      title: "",
-      desc: "",
-      img: "",
-      tags: [],
-      createTime: 0,
-      updateTime: 0,
-      data: []
-    }
+  created() {
+    this.initArticleNavigator();
   }
 };
 </script>
