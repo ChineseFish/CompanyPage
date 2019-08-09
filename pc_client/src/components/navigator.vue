@@ -24,7 +24,7 @@ export default {
     color: white;
     font-size: 25px;
     text-decoration: none;
-    margin-right: 80px;
+    margin-right: 40px;
     border-radius: 5px;
     padding: 20px;
     transition: all .9s ease;

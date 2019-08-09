@@ -1,32 +1,23 @@
 <template>
-  <div
-    style="width:100%;position:absolute;z-index:-1;display:flex;flex-direction:column;align-items:center;background-color: black;"
-  >
-    <div style="display:flex;width:100%;">
-      <div style="position:fixed;top:50%;width:100%;display:flex;justify-content:space-between;">
-        <div class="pointerLeft" @click="moveLeft">
-          <i class="el-icon-arrow-left"></i>
-        </div>
-        <div class="pointerRight" @click="moveRight">
-          <i class="el-icon-arrow-right"></i>
-        </div>
-      </div>
-    </div>
-    <div
-      class="footer"
-    >
-      <p >版权所有：增强网络科技</p>
-      <a style="text-decoration:none;color: rgb(255, 255, 255);" href = 'http://beian.miit.gov.cn'>
-        辽ICP备： 15003829号
-      </a>
-    </div>
+  <div>
+    <home-navigator></home-navigator>
+
+    <video 
+    class="homeVideo"
+    src="https://v1.cecdn.yun300.cn/100001_1812295852/3adc1200e5a48961a52ab6fb4727a19a_6401562918663981.mp4" 
+    autoplay 
+    loop>
+    </video>
   </div>
 </template>
 
 <script>
 import { clearInterval } from "timers";
+import homeNavigator from "../components/homeNavigator.vue";
+
 export default {
   name: "home",
+  components: { homeNavigator },
   data() {
     return {
       showIndex: 0,
@@ -39,69 +30,7 @@ export default {
   },
 
   created() {
-    this.initInterval();
-  },
-
-  destroyed() {
-    window.clearInterval(this.interval);
-  },
-
-  watch: {
-    showIndex: function(newValue) {
-      this.show1 = this.show2 = this.show3 = this.show4 = false;
-
-      switch (newValue) {
-        case 0:
-          {
-            this.show1 = true;
-          }
-          break;
-        case 1:
-          {
-            this.show2 = true;
-          }
-          break;
-        case 2:
-          {
-            this.show3 = true;
-          }
-          break;
-        case 3:
-          {
-            this.show4 = true;
-          }
-          break;
-      }
-    }
-  },
-  methods: {
-    initInterval: function() {
-      if (this.interval) {
-        window.clearInterval(this.interval);
-      }
-
-      this.interval = window.setInterval(() => {
-        this.moveRight();
-      }, 5000);
-    },
-    moveLeft: function() {
-      this.initInterval();
-
-      this.showIndex -= 1;
-
-      if (this.showIndex < 0) {
-        this.showIndex = 3;
-      }
-    },
-    moveRight: function() {
-      this.initInterval();
-
-      this.showIndex += 1;
-
-      if (this.showIndex > 3) {
-        this.showIndex = 0;
-      }
-    }
+    
   }
 };
 </script>
@@ -131,7 +60,7 @@ export default {
   opacity: 0.5;
 }
 .homeImg {
-  width:100%;
+  width: 100%;
   height: auto;
   overflow: hidden;
   animation-fill-mode: both;
@@ -145,16 +74,17 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-.footer {
-    width:100%;
-    height:60px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background-color: rgba(0,0,0,0.9);
-    color:#FFFFFF;
-    font-size:2px;
+
+.homeVideo {
+    z-index: -1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: fill;/*这里是关键*/
+    
+    background-size: cover;
 }
 </style>
 
