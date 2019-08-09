@@ -31,7 +31,9 @@ export default {
   },
 
   mounted() {
-    this.$refs.homeVideo.play();
+    setTimeout(() => {
+      this.$refs.homeVideo.play();
+    }, 1000)
   }
 };
 </script>
