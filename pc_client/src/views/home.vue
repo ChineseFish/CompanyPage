@@ -3,6 +3,7 @@
     <home-navigator></home-navigator>
 
     <video 
+    ref="homeVideo"
     class="homeVideo"
     src="https://v1.cecdn.yun300.cn/100001_1812295852/3adc1200e5a48961a52ab6fb4727a19a_6401562918663981.mp4" 
     autoplay 
@@ -29,8 +30,8 @@ export default {
     };
   },
 
-  created() {
-    
+  mounted() {
+    this.$refs.homeVideo.play();
   }
 };
 </script>
