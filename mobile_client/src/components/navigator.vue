@@ -12,7 +12,6 @@
                 <router-link class="router4" :to="{path: '/service'}">服务项目</router-link>
                 <router-link class="router5" :to="{path: '/state'}">网络动态</router-link>
                 <router-link class="router6" :to="{path: '/contractUs'}">联系我们</router-link>
-                <router-link class="router7" :to="{path: '/leaveMessages'}">在线留言</router-link>
             </div>
         </transition>
     </div>

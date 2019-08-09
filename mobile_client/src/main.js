@@ -10,7 +10,7 @@ import Mint from 'mint-ui';
 
 Vue.use(Mint);
 Vue.use(ElementUI, {
-	size: 'big'
+	size: 'small'
 });
 
 Vue.config.productionTip = false

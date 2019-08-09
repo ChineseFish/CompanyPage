@@ -1,18 +1,20 @@
 <template>
   <div style="display:flex;flex-direction:column;align-items:center;">
     <fixed-header></fixed-header>
-    <div style="position:absolute;z-index:-99;width:100%;top:0px;">
+    <div>
       <router-view/>
     </div>
+    <leave-messages></leave-messages>
   </div>
 </template>
 
 <script>
 import fixedHeader from "./components/fixedHeader.vue"
+import leaveMessages from "../../web_depends/staticPages/leaveMessages.vue";
 
   export default {
     name: 'App',
-    components: { fixedHeader },
+    components: { fixedHeader, leaveMessages },
     data () {
       return {
         

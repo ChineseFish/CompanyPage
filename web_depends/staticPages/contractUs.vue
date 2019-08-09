@@ -8,7 +8,7 @@
     <p class="contractUsPage1">全国咨询热线: xxxxxxxx</p>
     <div class="contractUsPage1-1" v-for="(row, index) in contractDetails" :key="index">
       <div class="contractUsPage1-1-1" v-for="(contract, index) in row" :key="index">
-        <img :src="contract.bg">
+        <img style="display: absolute;" :src="contract.bg">
         <div class="contractUsPage1-1-1-1">
           <p class="contractUsPage1-1-1-1-1">{{contract.title}}</p>
         </div>
@@ -33,36 +33,36 @@ import scrollToRead from "./scrollToRead.vue"
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs2.jpg'
+              bg: require('../assets/imgs/contractUs2.jpg')
             },
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs3.jpg'
+              bg: require('../assets/imgs/contractUs3.jpg')
             }
           ],
           [
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs4.jpg'
+              bg: require('../assets/imgs/contractUs4.jpg')
             },
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs5.jpg'
+              bg: require('../assets/imgs/contractUs5.jpg')
             }
           ],
           [
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs6.jpg'
+              bg: require('../assets/imgs/contractUs6.jpg')
             },
             {
               title: '辽宁总部',
               address: 'xxxxxxx',
-              bg: '../assets/imgs/contractUs7.jpg'
+              bg: require('../assets/imgs/contractUs7.jpg')
             }
           ]
         ]
@@ -99,6 +99,7 @@ import scrollToRead from "./scrollToRead.vue"
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
   align-items: center;
   background-repeat:no-repeat;
   background-position:top center;
@@ -116,6 +117,7 @@ import scrollToRead from "./scrollToRead.vue"
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: absolute;
   @media screen and (max-width: 480px) {
     font-size: 32px;
   }

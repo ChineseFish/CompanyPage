@@ -19,10 +19,6 @@ export default new Router({
       name: 'contractUs',
       component: () => import('../../web_depends/staticPages/contractUs.vue')
     }, {
-      path: '/leaveMessages',
-      name: 'leaveMessages',
-      component: () => import('../../web_depends/staticPages/leaveMessages.vue')
-    }, {
       path: '/joinUs',
       name: 'joinUs',
       component: () => import('../../web_depends/staticPages/joinUs.vue')
