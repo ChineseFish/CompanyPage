@@ -78,7 +78,6 @@ import scrollToRead from "../../../web_depends/staticPages/scrollToRead.vue";
       },
 
       getList(page) {
-        this.tableLoading = true
         this.$axios.get("/getBreviaryArticleList", {
           page: page,
           pageNum: this.pagination.pageSize,
@@ -105,8 +104,6 @@ import scrollToRead from "../../../web_depends/staticPages/scrollToRead.vue";
           this.articleContentTableData = tableDataTotal;
 
           this.pagination.total = data.total;
-        }).finally(() => {
-          this.tableLoading = false;
         })
       }
     },

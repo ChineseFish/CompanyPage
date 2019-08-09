@@ -33,7 +33,8 @@ export default {
 .nav {
     background-color: rgba(0,0,0,0.9);
     width: 100%;
-    position: absolute;
+    position: fixed;
+    z-index: 99;
     top: 50px;
     left: 0px;
     padding: 30px 10px 80px 10px;
