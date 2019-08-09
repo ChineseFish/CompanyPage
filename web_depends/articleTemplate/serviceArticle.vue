@@ -5,7 +5,7 @@
       <div class="title">
         <strong>{{previewArticle.title}}</strong>
       </div>
-
+      
       <video :src="videoUrl" controls="controls" class="video">
         Your browser does not support the video tag.
       </video>

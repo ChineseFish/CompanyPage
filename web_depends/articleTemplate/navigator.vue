@@ -76,9 +76,10 @@ export default {
   /*支持IE，chrome，FF不支持*/
   word-wrap: normal;
   background-color: rgba(248,248,248,1);
-  
+  width: 100%;
+
   @media screen and (max-width: 480px) {
-     width: 100%;
+     
   }
 }
 
@@ -100,16 +101,18 @@ export default {
 
   align-items: center;
   cursor: pointer;
+  justify-content: flex-end;
+  width: 50%;
 
   @media screen and (max-width: 480px) {
-    width: 50%;
+    
     height: 50px;
-   
-    justify-content: flex-end;
   }
 }
 
 .navIcon {
+  padding: 20px;
+
   @media screen and (max-width: 480px) {
      padding: 10px;
   }
