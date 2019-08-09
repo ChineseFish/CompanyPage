@@ -1,40 +1,28 @@
 <template>
   <div
-    style="width:100%;position:absolute;z-index:-1;display:flex;flex-direction:column;align-items:center;background-color: black;"
+    style="width:100%;display:flex;flex-direction:column;align-items:center;background-color: black;"
   >
     <div style="display:flex;width:100%;">
-      <transition name="fade">
-        <img
-          v-show="show1"
-          class="homeImg"
-          src="../assets/imgs/home1.jpg"
-          @click="$router.push({path: '/service'})"
-        />
-      </transition>
-      <transition name="fade">
-        <img
-          v-show="show2"
-          class="homeImg"
-          src="../assets/imgs/home2.jpg"
-          @click="$router.push({path: '/service'})"
-        />
-      </transition>
-      <transition name="fade">
-        <img
-          v-show="show3"
-          class="homeImg"
-          src="../assets/imgs/home3.jpg"
-          @click="$router.push({path: '/service'})"
-        />
-      </transition>
-      <transition name="fade">
-        <img
-          v-show="show4"
-          class="homeImg"
-          src="../assets/imgs/home4.jpg"
-          @click="$router.push({path: '/service'})"
-        />
-      </transition>
+      <img
+        v-bind:class="{ homeImgShow: show1, homeImgFade: !show1}"
+        src="../assets/imgs/home1.jpg"
+        @click="$router.push({path: '/service'})"
+      />
+      <img
+        v-bind:class="{ homeImgShow: show2, homeImgFade: !show2}"
+        src="../assets/imgs/home2.jpg"
+        @click="$router.push({path: '/service'})"
+      />
+      <img
+        v-bind:class="{ homeImgShow: show3, homeImgFade: !show3}"
+        src="../assets/imgs/home3.jpg"
+        @click="$router.push({path: '/service'})"
+      />
+      <img
+        v-bind:class="{ homeImgShow: show4, homeImgFade: !show4}"
+        src="../assets/imgs/home4.jpg"
+        @click="$router.push({path: '/service'})"
+      />
       <div style="position:fixed;top:50%;width:100%;display:flex;justify-content:space-between;">
         <div class="pointerLeft" @click="moveLeft">
           <i class="el-icon-arrow-left"></i>
@@ -44,13 +32,12 @@
         </div>
       </div>
     </div>
-    <div
-      class="footer"
-    >
-      <p >版权所有：增强网络科技</p>
-      <a style="text-decoration:none;color: rgb(255, 255, 255);" href = 'http://beian.miit.gov.cn'>
-        辽ICP备： 15003829号
-      </a>
+    <div class="footer">
+      <p>版权所有：增强网络科技</p>
+      <a
+        style="text-decoration:none;color: rgb(255, 255, 255);"
+        href="http://beian.miit.gov.cn"
+      >辽ICP备： 15003829号</a>
     </div>
   </div>
 </template>
@@ -162,31 +149,77 @@ export default {
   display: block;
   opacity: 0.5;
 }
+
 .homeImg {
-  width:100%;
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
   height: auto;
   overflow: hidden;
+  animation-duration: 1s;
   animation-fill-mode: both;
 }
-.fade-enter-active {
-  transition: opacity 0.5s;
+
+.homeImgFade {
+  @extend .homeImg;
+  animation-name: imgFade;
 }
-.fade-leave-active {
-  transition: opacity 0.3s;
+
+.homeImgShow {
+  @extend .homeImg;
+
+  animation-name: imgshow;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+
+@keyframes imgFade {
+  0% {
+    
+    opacity: 1;
+  }
+ 
+  40% {
+   
+    animation-timing-function: ease-in;
+    opacity: 0.5;
+  }
+  100% {
+    
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
 }
+
+@keyframes imgshow {
+  0% {  
+    opacity: 0;
+  }
+ 
+  40% {
+    
+    animation-timing-function: ease;
+    opacity: 0.5;
+  }
+  100% {
+    animation-timing-function: ease;
+    opacity: 1;
+  }
+}
+
 .footer {
-    width:100%;
-    height:60px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background-color: rgba(0,0,0,0.9);
-    color:#FFFFFF;
-    font-size:2px;
+  position: absolute;
+  z-index: 1;
+  bottom:0px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 1);
+  color: #ffffff;
+  font-size: 2px;
 }
 </style>
 
