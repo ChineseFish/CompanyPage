@@ -10,6 +10,8 @@
     background-image: url(../assets/imgs/joinUsBg.jpg);
     background-repeat: no-repeat;
     background-position: top center;
+    height: 400px;
+    padding-top: 150px;
 
     @media screen and (max-width: 480px) {
       padding-top: 60px;
@@ -30,6 +32,8 @@
     background-image: url(../assets/imgs/aboutBg.jpg);
     background-repeat: no-repeat;
     background-position: top center;
+    height: 400px;
+    padding-top: 150px;
 
     @media screen and (max-width: 480px) {
       padding-top: 60px;
@@ -50,6 +54,8 @@
     background-image: url(../assets/imgs/contractUs.jpg);
     background-repeat: no-repeat;
     background-position: top center;
+    height: 400px;
+    padding-top: 150px;
 
     @media screen and (max-width: 480px) {
       padding-top: 60px;
@@ -68,6 +74,7 @@
 
   .staticHeaderHeader1 {
     font-size: 100px;
+    margin-top: 30px;
 
     @media screen and (max-width: 480px) {
       padding: 5px;

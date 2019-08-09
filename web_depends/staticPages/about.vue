@@ -5,7 +5,7 @@
       <span class="staticHeaderHeader1">ABOUT US</span>
       <scroll-to-read></scroll-to-read>
     </div>
-    <div style="display:flex;justify-content:center;">
+    <div style="display:flex;justify-content:space-around;width:80%;">
       <div class="numberShow">
         <div class="numberShow1">
           <p class="numberShow1-1">{{number1}}</p>
@@ -148,6 +148,7 @@ export default {
   justify-content: space-around;
   color: #292929;
   font-family: Arial,"黑体";
+  padding: 30px;
   @media screen and (max-width: 480px) {
     padding: 10px;
   }
@@ -155,7 +156,7 @@ export default {
 
 .numberShow1 {
   display:flex;
-
+  margin-bottom: 10px;
   @media screen and (max-width: 480px) {
     margin-bottom:2px;
   }
@@ -168,6 +169,12 @@ export default {
   justify-content: flex-end;
   margin-right: 2px;
   color: #292929;
+
+  margin-top: 10px;
+  font-size: 60px;
+  font-weight: 600;
+  margin-bottom:5px;
+
   @media screen and (max-width: 480px) {
     margin-top: 10px;
     font-size: 25px;
@@ -182,6 +189,10 @@ export default {
   justify-content: flex-end;
   color: #292929;
   
+  font-weight: 400;
+  font-size: 25px;
+  margin-top: 10px;
+
   @media screen and (max-width: 480px) {
     font-weight: 400;
     font-size: 12px;
@@ -191,6 +202,8 @@ export default {
 }
 
 .numberShow2 {
+  font-size:20px;
+
   @media screen and (max-width: 480px) {
     font-size:12px;
     transform: scale(0.75, 0.75);

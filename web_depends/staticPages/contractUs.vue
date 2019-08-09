@@ -2,19 +2,19 @@
   <div class='container'>
     <div class="contractUsHeaderImg">
       <span>联系我们</span>
-      <span class="">CONTRACT US</span>
+      <span class="staticHeaderHeader1">CONTRACT US</span>
       <scroll-to-read></scroll-to-read>
     </div>
     <p class="contractUsPage1">全国咨询热线: xxxxxxxx</p>
     <div class="contractUsPage1-1" v-for="(row, index) in contractDetails" :key="index">
       <div class="contractUsPage1-1-1" v-for="(contract, index) in row" :key="index">
-        <img style="display:absolute;max-width:100%;width:auto;height:auto;" :src="contract.bg">
+        <img style="display:absolute;width:100%;height:auto;" :src="contract.bg">
         <div class="contractUsPage1-1-1-1">
           <p class="contractUsPage1-1-1-1-1">{{contract.title}}</p>
         </div>
         <div class="contractUsPage1-1-1-2">
           <img class="contractUsPage1-1-1-2-1" src="../assets/imgs/contractUsIcon1.png">
-          <p class="contractUsPage11-1-1-2-2">{{contract.address}}</p>
+          <p class="contractUsPage1-1-1-2-2">{{contract.address}}</p>
         </div>
       </div>
     </div>
@@ -82,15 +82,15 @@ import scrollToRead from "./scrollToRead.vue"
 }
 
 .contractUsPage1-1 {
-  width: 100%;
+  width: 80%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #000000;
   @media screen and (max-width: 480px) {
+    width: 100%;
     font-size: 32px;
-
+    flex-direction: column;
   }
 }
 
@@ -99,12 +99,15 @@ import scrollToRead from "./scrollToRead.vue"
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   position: relative;
   z-index: -1;
-  align-items: center;
   background-repeat:no-repeat;
   background-position:top center;
   color: #000000;
+
+  font-size: 40px;
+  margin-bottom: 45px;
   @media screen and (max-width: 480px) {
     font-size: 32px;
     margin-bottom: 20px;
@@ -137,22 +140,26 @@ import scrollToRead from "./scrollToRead.vue"
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-left: 25%;
+
   @media screen and (max-width: 480px) {
-    font-size: 10px;
-    margin-left: 25%;
+    
   }
 }
 
 .contractUsPage1-1-1-2-1 {
+  width: 30px;
+  height: 30px;
   @media screen and (max-width: 480px) {
-    width: 30px;
-    height: 30px;
+    
   }
 }
 
 .contractUsPage1-1-1-2-2 {
+  font-size: 25px;
+
   @media screen and (max-width: 480px) {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 </style>

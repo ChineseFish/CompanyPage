@@ -249,7 +249,7 @@ import scrollToRead from "./scrollToRead.vue"
   height:360px;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: auto auto;
+  background-size: 100% auto;
 
   @media screen and (max-width: 480px) {
     height:100px;
@@ -289,7 +289,7 @@ import scrollToRead from "./scrollToRead.vue"
   flex-direction:row;
   justify-content:center;
   align-items: center;
-  top:-200px;
+  top:-100px;
   left:10px;
 
   @media screen and (max-width: 480px) {

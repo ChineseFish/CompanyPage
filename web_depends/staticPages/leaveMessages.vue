@@ -69,6 +69,8 @@
   border-radius: 50%;
   background: #00aef3 url(../assets/imgs/leaveMessagesIcon1.png) center center no-repeat;
   background-size: 50px;
+  width:150px;
+  height:150px;
 
   @media screen and (max-width: 480px) {
     width:100px;

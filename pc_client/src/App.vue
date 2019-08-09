@@ -5,7 +5,7 @@
       <router-view/>
     </div>
     <fixed-footer></fixed-footer>
-    <fixed-box></fixed-box>
+    <leave-messages></leave-messages>
   </div>
 </template>
 
@@ -13,11 +13,11 @@
 import fixedHeader from "./components/fixedHeader.vue"
 import fixedFooter from "./components/fixedFooter.vue"
 import fixedBox from "./components/fixedBox.vue"
-
+import leaveMessages from "../../web_depends/staticPages/leaveMessages.vue";
 
   export default {
     name: 'App',
-    components: { fixedHeader, fixedFooter, fixedBox },
+    components: { fixedHeader, fixedFooter, fixedBox, leaveMessages },
     data () {
       return {
         
