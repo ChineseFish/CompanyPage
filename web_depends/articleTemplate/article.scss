@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    width: 80%;
     @media screen and (max-width: 480px) {
-        width: 80%;
+        width: 95%;
     }
 }
 
@@ -45,11 +45,12 @@
 }
 
 .img {
-    width: 60%;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 
     @media screen and (max-width: 480px) {
+        width: 100%;
         margin-top: 10px;
         margin-bottom: 10px;
         width: 100%;
@@ -59,7 +60,8 @@
 .video {
     width: 60%;
     margin-top: 20px;
-
+    display: relative;
+    z-index: -1;
     @media screen and (max-width: 480px) {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -83,14 +85,15 @@
 
 .gallery 
 {
-    width:80%;
+    width:100%;
     border-top: 1px solid #dcdfe6;
     border-bottom: 1px solid #dcdfe6;
     margin-top:80px;
     margin-bottom:80px;
-
+    display: relative;
+    z-index: -1;
     @media screen and (max-width: 480px) {
-        width:95%;
+        width:100%;
         margin-top:10px;
         margin-bottom:10px;
     }

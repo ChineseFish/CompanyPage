@@ -3,7 +3,6 @@
     <div class='leaveMessagesPage1' v-show="dialogVisible === false" @click="dialogVisible = true"></div>
     <el-dialog
     :visible.sync="dialogVisible"
-    style="width:100%;"
     width="80%"
     :show-close="false"
     title="请您留言">

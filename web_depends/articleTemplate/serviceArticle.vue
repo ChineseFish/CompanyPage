@@ -13,8 +13,8 @@
       <div class="gallery">
         <el-carousel :interval="4000" arrow="always">
           <el-carousel-item v-for="(img, index) in imgs" :key="index">
-            <img v-if="img.type==='imgUpload'" :src="`/getPhoto?filename=${img.data}`" />
-            <img v-if="img.type==='imgUrl'" :src="img.data" />
+            <img style="max-width:100%;width:auto;height:auto;background-color: #99a9bf;" v-if="img.type==='imgUpload'" :src="`/getPhoto?filename=${img.data}`" />
+            <img style="max-width:100%;width:auto;height:auto;background-color: #99a9bf;" v-if="img.type==='imgUrl'" :src="img.data" />
           </el-carousel-item>
         </el-carousel>
       </div>

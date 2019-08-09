@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color: black;"
+    style="width:100%;position:absolute;z-index:-1;display:flex;flex-direction:column;align-items:center;background-color: black;"
   >
     <div style="display:flex;width:100%;">
       <transition name="fade">
@@ -163,7 +163,9 @@ export default {
   opacity: 0.5;
 }
 .homeImg {
-  width: 100%;
+  width:100%;
+  height: auto;
+  overflow: hidden;
   animation-fill-mode: both;
 }
 .fade-enter-active {

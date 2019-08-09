@@ -13,7 +13,7 @@
         </el-card>
       </div>
 
-      <img :src="`/getPhoto?filename=${previewArticle.img}`" />
+      <img class="img" :src="`/getPhoto?filename=${previewArticle.img}`" />
       <template v-for="(item, index) in previewArticle.data">
         <div
           class="text"

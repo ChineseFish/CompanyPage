@@ -8,7 +8,7 @@
     <p class="contractUsPage1">全国咨询热线: xxxxxxxx</p>
     <div class="contractUsPage1-1" v-for="(row, index) in contractDetails" :key="index">
       <div class="contractUsPage1-1-1" v-for="(contract, index) in row" :key="index">
-        <img style="display: absolute;" :src="contract.bg">
+        <img style="display:absolute;max-width:100%;width:auto;height:auto;" :src="contract.bg">
         <div class="contractUsPage1-1-1-1">
           <p class="contractUsPage1-1-1-1-1">{{contract.title}}</p>
         </div>

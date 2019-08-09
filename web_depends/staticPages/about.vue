@@ -48,7 +48,7 @@
     </div>
     <div class="aboutPart1">
       <div class="aboutPart1-1">
-        <strong class="aboutPart1-1-1">关于增强</strong>
+        <p class="aboutPart1-1-1">关于增强</p>
         <p>&nbsp&nbsp&nbsp&nbsp增强网络科技是中国智慧城市全息投影工程专家团队，致力于探索全息科技与空间展示的创新结合。</p>
         <p>
           &nbsp&nbsp&nbsp&nbsp增强网络全息投影工程专家团队将全息投影、幻影成像、交互工程等前沿科技应用在不同场景的展示工程领域，与全国各地区展馆、景区、晚会、楼宇等创新项目皆有全息投影项目合作。
@@ -148,7 +148,6 @@ export default {
   justify-content: space-around;
   color: #292929;
   font-family: Arial,"黑体";
-
   @media screen and (max-width: 480px) {
     padding: 10px;
   }
@@ -202,11 +201,9 @@ export default {
   display: flex;
   flex-direction: row;
   width: 80%;
-  margin-top: 100px;
   @media screen and (max-width: 480px) {
     flex-direction: column;
     width: 95%;
-    margin-top: 50px;
   }
 }
 
@@ -222,10 +219,8 @@ export default {
 
 .aboutPart1-1-1 {
   font-size: 40px;
-  margin-bottom: 100px;
   @media screen and (max-width: 480px) {
     font-size: 25px;
-    margin-bottom: 30px;
   }
 }
 

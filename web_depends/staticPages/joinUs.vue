@@ -59,13 +59,13 @@
           <p v-for="(el, index) in joinFlow[0]" :key="index">{{el}}</p>
         </div>
         <div class="joinUsPart4-1-2">
-          <img src="../assets/imgs/joinUs4.jpg">
+          <img class="img" src="../assets/imgs/joinUs4.jpg">
         </div>
       </div>
 
       <div class="joinUsPart4-1">
         <div class="joinUsPart4-1-1">
-          <img src="../assets/imgs/joinUs5.jpg">
+          <img class="img" src="../assets/imgs/joinUs5.jpg">
         </div>
         <div class="joinUsPart4-1-2">
           <div style="display:flex;flex-direction:column;">
@@ -87,7 +87,7 @@
           <p v-for="(el, index) in joinFlow[2]" :key="index">{{el}}</p>
         </div>
         <div class="joinUsPart4-1-2">
-          <img src="../assets/imgs/joinUs6.jpg">
+          <img class="img" src="../assets/imgs/joinUs6.jpg">
         </div>
       </div>
     </div>
@@ -249,10 +249,10 @@ import scrollToRead from "./scrollToRead.vue"
   height:360px;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 100% 100%;
+  background-size: auto auto;
 
   @media screen and (max-width: 480px) {
-    height:250px;
+    height:100px;
   }
 }
 
@@ -278,7 +278,7 @@ import scrollToRead from "./scrollToRead.vue"
 
   @media screen and (max-width: 480px) {
     width: 200px;
-    top:60px;
+    top:20px;
   }
 }
 
@@ -294,7 +294,7 @@ import scrollToRead from "./scrollToRead.vue"
 
   @media screen and (max-width: 480px) {
     align-items: flex-start;
-    top: -75px;
+    top: -115px;
     left: 5px;
   }
 }
