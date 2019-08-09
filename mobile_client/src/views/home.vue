@@ -1,6 +1,6 @@
 <template>
   <div
-    style="width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;"
+    style="width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color: black;"
   >
     <div style="display:flex;width:100%;">
       <transition name="fade">
