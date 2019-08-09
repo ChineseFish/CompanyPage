@@ -1,9 +1,7 @@
 <template>
   <div style="display:flex;flex-direction:column;align-items:center;">
     <fixed-header></fixed-header>
-    <div>
-      <router-view/>
-    </div>
+    <router-view/>
     <leave-messages></leave-messages>
   </div>
 </template>
