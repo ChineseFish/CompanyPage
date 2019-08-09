@@ -2,6 +2,8 @@
   <div class='container'>
     <div class="serviceHeaderImg">
       <span>服务项目</span>
+      <span class="staticHeaderHeader1">SERVICE</span>
+      <scroll-to-read></scroll-to-read>
     </div>
     <div style="width:95%;">
       <div style="width:100%:display:flex;flex-direction:column;justify-content:center;align-items:center;border-bottom: 1px solid #dcdfe6;">
@@ -43,10 +45,12 @@
 
 <script>
 import mixins from '../mixins';
+import scrollToRead from "../../../web_depends/staticPages/scrollToRead.vue";
 
   export default {
     name: 'service',
     mixins: [mixins],
+    components: { scrollToRead },
     data () {
       return {
         subTag: 'serviceBusiness',

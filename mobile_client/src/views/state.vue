@@ -1,7 +1,9 @@
 <template>
   <div class='container'>
     <div class="stateHeaderImg">
-      <span>增强网络动态</span>
+      <span>网络动态</span>
+      <span class="staticHeaderHeader1">NEWS</span>
+      <scroll-to-read></scroll-to-read>
     </div>
     <div style="width:95%;">
       <div class="tags">
@@ -37,10 +39,12 @@
 
 <script>
 import mixins from '../mixins';
+import scrollToRead from "../../../web_depends/staticPages/scrollToRead.vue";
 
   export default {
     name: 'state',
     mixins: [mixins],
+    components: { scrollToRead },
     data () {
       return {
         subTag: 'stateCompany',
