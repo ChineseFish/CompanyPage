@@ -11,6 +11,8 @@
                 <router-link class="router3" :to="{path: '/joinUs'}">招商加盟</router-link>
                 <router-link class="router4" :to="{path: '/service'}">服务项目</router-link>
                 <router-link class="router5" :to="{path: '/state'}">网络动态</router-link>
+                <router-link class="router6" :to="{path: '/contractUs'}">联系我们</router-link>
+                <router-link class="router7" :to="{path: '/leaveMessages'}">在线留言</router-link>
             </div>
         </transition>
     </div>
@@ -72,23 +74,35 @@ export default {
 
 .router2 {
     @extend .router;
-    animation-delay: 0.3s;
+    animation-delay: 0.2s;
 }
 
 .router3 {
     @extend .router;
-    animation-delay: 0.5s;
+    animation-delay: 0.3s;
 }
 
 .router4 {
     @extend .router;
-    animation-delay: 0.7s;
+    animation-delay: 0.4s;
 }
 
 .router5 {
     @extend .router;
-    animation-delay: 0.9s;
+    animation-delay: 0.5s;
 }
+
+.router6 {
+    @extend .router;
+    animation-delay: 0.6s;
+}
+
+
+.router7 {
+    @extend .router;
+    animation-delay: 0.7s;
+}
+
 
 @keyframes flipInX {
     0% {
