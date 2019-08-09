@@ -243,6 +243,7 @@ export default {
 
 .aboutPart1-2-1 {
   position: relative;
+  z-index: -1;
   margin-top: 240px;
   left: 20px;
   @media screen and (max-width: 480px) {
@@ -254,6 +255,7 @@ export default {
 
 .aboutPart1-2-2 {
   position: relative;
+  z-index: -1;
   margin-bottom: 240px;
   @media screen and (max-width: 480px) {
     width: 50%;

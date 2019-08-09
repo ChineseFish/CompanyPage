@@ -226,6 +226,7 @@ import scrollToRead from "./scrollToRead.vue"
 
 .joinUsPart1 {
   position: relative;
+  z-index: -1;
   width:80%;
   height:100%;
   display:flex;
@@ -272,6 +273,7 @@ import scrollToRead from "./scrollToRead.vue"
 
 .joinUsCircle {
   position:relative;
+  z-index: -1;
   top:200px;
 
   @media screen and (max-width: 480px) {
@@ -282,6 +284,7 @@ import scrollToRead from "./scrollToRead.vue"
 
 .joinUsPart2 {
   position:relative;
+  z-index: -1;
   display:flex;
   flex-direction:row;
   justify-content:center;
@@ -323,7 +326,8 @@ import scrollToRead from "./scrollToRead.vue"
 
 .longChain {
   position:relative;
-
+  z-index: -1;
+  
   @media screen and (max-width: 480px) {
     width: 80px;
   }

@@ -100,6 +100,7 @@ import scrollToRead from "./scrollToRead.vue"
   flex-direction: column;
   justify-content: center;
   position: relative;
+  z-index: -1;
   align-items: center;
   background-repeat:no-repeat;
   background-position:top center;
