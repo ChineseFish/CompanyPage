@@ -7,7 +7,7 @@
       <el-button type="primary" @click="addArticleContentItem()">新增</el-button>
     </div>
     <el-table 
-      :data="articleContentTableData"
+      :data="dataList"
       style="width: 100%:"
       :border="true">
       <el-table-column label="类型">
@@ -23,7 +23,7 @@
           <el-input
           :ref="'inputData' + scope.$index"
           v-show="scope.row.ifEditing"
-          v-model="articleContentTableData[scope.$index].data"
+          v-model="dataList[scope.$index].data"
           @keyup.enter.native="scope.row.ifEditing=false"
           @blur="scope.row.ifEditing=false"></el-input>
           <div v-if="!scope.row.ifEditing">
@@ -84,10 +84,11 @@
 import mixins from '../mixins/index.js';
 
 export default {
-  name: "dataList",
+  name: "articleDataList",
   mixins: [mixins],
   data() {
     return {
+      dataList: [],
       // remark which row is upload img
       uploadingImgIndex: 0,
 
@@ -116,19 +117,25 @@ export default {
   },
 
   watch: {
-    articleContentTableData: {
+    dataList: {
       handler: function(newValue, oldValue)
       {
-        this.$emit("update:articleContentTableData", this.articleContentTableData)
+        this.$emit("update:articleContentTableData", this.dataList)
       },
       deep: true
     }
   },
 
   created: function () {
-    for(let ele of this.articleContentTableData)
+    
+  },
+
+  mounted: function() {
+    for(let data of this.articleContentTableData)
     {
-      ele.ifEditing = false;
+      this.dataList.push(Object.assign({
+        ifEditing: false,
+      }, data))
     }
   },
 
@@ -144,7 +151,7 @@ export default {
         }
       }
       
-      this.articleContentTableData[this.uploadingImgIndex].data = data;
+      this.dataList[this.uploadingImgIndex].data = data;
 
       this.$message.success('upload success')
     },
@@ -154,17 +161,17 @@ export default {
     },
     addArticleContentItem()
     {
-      this.articleContentTableData.push({
+      this.dataList.push({
         type: this.addArticleContentItemType,
         data: '',
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
       });
 
-      this._articleContentItemFocus(this.articleContentTableData.length - 1, this.addArticleContentItemType)
+      this._articleContentItemFocus(this.dataList.length - 1, this.addArticleContentItemType)
     },
     addArticleContentItemUp(index, row)
     {
-      this.articleContentTableData.splice(index, 0, {
+      this.dataList.splice(index, 0, {
         type: this.addArticleContentItemType,
         data: '',
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
@@ -174,7 +181,7 @@ export default {
     },
     addArticleContentItemNext(index, row)
     {
-      this.articleContentTableData.splice(index + 1, 0, {
+      this.dataList.splice(index + 1, 0, {
         type: this.addArticleContentItemType,
         data: '',
         ifEditing: this.addArticleContentItemType === 'imgUpload' ? false : true
@@ -184,11 +191,11 @@ export default {
     },
     deleteArticleContentItem(index, row)
     {
-      this.articleContentTableData.splice(index, 1)
+      this.dataList.splice(index, 1)
     },
     editArticleContentItem(index, row)
     {
-      this.articleContentTableData[index].ifEditing = true;
+      this.dataList[index].ifEditing = true;
 
       this._articleContentItemFocus(index)
     },
