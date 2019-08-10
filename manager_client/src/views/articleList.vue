@@ -161,54 +161,6 @@ export default {
 
       // breviary article list
       mainTableData: [],
-      mainTableOption: {
-        header: false,
-        menu: false,
-        page: true,
-        border: true,
-        column: [
-          {
-            label: "封面图片",
-            prop: "img",
-            solt: true,
-            align: "center"
-          },
-          {
-            label: "文章名称",
-            prop: "title"
-          },
-          {
-            label: "文章标签",
-            prop: "tags",
-            type: "dic",
-            dicData: [{ label: "a", value: "a" }, { label: "b", value: "b" }]
-          },
-          {
-            label: "发布人",
-            prop: "publisher"
-          },
-          {
-            label: "描述",
-            prop: "desc"
-          },
-          {
-            label: "创建时间",
-            prop: "createTime",
-            solt: true
-          },
-          {
-            label: "修改时间",
-            prop: "updateTime",
-            solt: true
-          },
-          {
-            label: "菜单",
-            prop: "menu",
-            solt: true,
-            align: "center"
-          }
-        ]
-      },
 
       // data list items
       stateArticleContentItemTypeArray: [
