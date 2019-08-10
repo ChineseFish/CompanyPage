@@ -18,6 +18,7 @@ export default {
 .arrow {
   display: block;
   position: relative;
+  z-index: 1;
   transform: translate(-10px, 0);
   animation: moveArrow .6s linear infinite;
   animation-direction: alternate;

@@ -3,6 +3,9 @@
     <div :class="whichArticleToShow === 'service' ? 'serviceHeaderImg' : 'stateHeaderImg'">
       <span v-if="whichArticleToShow === 'service'">增强网络动态</span>
       <span v-else>服务项目</span>
+      <span class="staticHeaderHeader1" v-if="whichArticleToShow === 'service'">STATE</span>
+      <span class="staticHeaderHeader1" v-else>SERVICE</span>
+      <scroll-to-read></scroll-to-read>
     </div>
     <div class="articleWrap">
       <service-article
@@ -23,15 +26,15 @@
 <script>
 import serviceArticle from "../articleTemplate/serviceArticle.vue";
 import stateArticle from "../articleTemplate/stateArticle.vue";
-
+import scrollToRead from "./scrollToRead.vue"
 export default {
   name: "articleWrapper",
-  components: { serviceArticle, stateArticle },
+  components: { serviceArticle, stateArticle, scrollToRead },
   data: function() {
     return {
       article: {},
 
-      whichArticleToShow: ""
+      whichArticleToShow: "",
     };
   },
 
@@ -71,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "./common.scss";
+
 .articleWrap {
   width:80%;
   

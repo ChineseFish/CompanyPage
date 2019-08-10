@@ -1,34 +1,36 @@
-.serviceHeaderImg {
-    font-size: 35px;
+  .serviceHeaderImg {
+    font-size: 20px;
     color: white;
-    display:flex;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    width:100%;
-    height:680px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 1);
     background-size: 100% 100%;
     background-image: url(../../../web_depends/assets/imgs/serviceBg.jpg);
     background-repeat: no-repeat;
     background-position: top center;
+    height: 400px;
+    padding-top: 150px;
   }
 
   .stateHeaderImg {
-    font-size: 35px;
+    font-size: 20px;
     color: white;
-    display:flex;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    width:100%;
-    height:680px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 1);
     background-size: 100% 100%;
     background-image: url(../../../web_depends/assets/imgs/stateBg.jpg);
     background-repeat: no-repeat;
     background-position: top center;
+    height: 400px;
+    padding-top: 150px;
   }
 
-  .headerTags {
+.headerTags {
     cursor: pointer;
     font-size: 25px;
     border-radius: 5px;
