@@ -15,7 +15,6 @@ module.exports = {
         path.resolve(__dirname, '../src/main.js')
     ],
     output: {
-        publicPath: "/manager/",
         // 配置打包文件输出的目录
         path: path.resolve(__dirname, '../../server/managerDist'),
         // 生成的js文件名称
