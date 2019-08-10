@@ -5,8 +5,8 @@
     </div>
     <div style="width:80%;">
       <div style="display:flex;">
-        <span class="headerTags">公司动态</span>
-        <span class="headerTags">行业动态</span>
+        <span class="headerTags" @click="subTag='stateCompany'">公司动态</span>
+        <span class="headerTags" @click="subTag='stateIndustry'">行业动态</span>
       </div>
       <div style="width:100%;height:100%;">
           <el-card v-for="(article, index) of articleContentTableData" :key="index" class="card" :body-style="{ padding: '0px' }" shadow="hover">
@@ -45,12 +45,20 @@ import mixins from '../mixins';
     mixins: [mixins],
     data () {
       return {
+        subTag: 'stateCompany',
         articleContentTableData: []
       }
     },
 
     created: function () {
       this.getList(1);
+    },
+
+    watch: {
+      subTag: function() {
+        this.pagination.currentPage = 1
+        this.getList(1)
+      }
     },
 
     methods: {
@@ -65,7 +73,8 @@ import mixins from '../mixins';
         this.tableLoading = true
         this.$axios.get("/getBreviaryArticleList", {
           page: page,
-          pageNum: this.pagination.pageSize
+          pageNum: this.pagination.pageSize,
+          tags: JSON.stringify([this.subTag])
         }).then(({ code, data, msg }) => {
           if(code !== 0)
           {
