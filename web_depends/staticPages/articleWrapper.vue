@@ -4,7 +4,7 @@
       <span v-if="whichArticleToShow === 'service'">增强网络动态</span>
       <span v-else>服务项目</span>
     </div>
-    <div style="width:100%;">
+    <div class="articleWrap">
       <service-article
         v-if="whichArticleToShow === 'service'"
         :previewVisible="true"
@@ -15,14 +15,14 @@
       v-if="whichArticleToShow === 'state'" 
       :previewVisible="true" 
       :previewArticle="article"
-       @articleNav="articleNav"></state-article>
+      @articleNav="articleNav"></state-article>
     </div>
   </div>
 </template>
 
 <script>
-import serviceArticle from "../../../web_depends/articleTemplate/serviceArticle.vue";
-import stateArticle from "../../../web_depends/articleTemplate/stateArticle.vue";
+import serviceArticle from "../articleTemplate/serviceArticle.vue";
+import stateArticle from "../articleTemplate/stateArticle.vue";
 
 export default {
   name: "articleWrapper",
@@ -36,7 +36,7 @@ export default {
   },
 
   created: function() {
-    this.getArticleDetail(this.$route.params.filename);
+    this.getArticleDetail(this.$route.params.filename)
   },
 
   methods: {
@@ -71,6 +71,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/common.scss";
+.articleWrap {
+  width:80%;
+  
+  @media screen and (max-width: 480px) {
+    width:100%;
+  }
+}
 </style>
 

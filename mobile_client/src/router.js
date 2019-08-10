@@ -33,7 +33,7 @@ export default new Router({
     }, {
       path: '/article/:filename',
       name: 'article',
-      component: () => import('./views/articleWrapper.vue'),
+      component: () => import('../../web_depends/staticPages/articleWrapper.vue'),
     }, {
       path: '/state',
       name: 'state',
